@@ -2,15 +2,16 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 
 const NavigationBar = styled.nav`
-  margin-top: 71px;
   font-size: 20px;
-  border-right: 1px solid rgba(128, 128, 128, 0.5);
   width: 200px;
-  height: 100vh;
+  height: auto;
   ul {
     padding: 0;
     margin: 0;
   }
+  position: sticky;
+  top: var(--top-bar-allocated-space);
+  max-height: calc(100vh - var(--top-bar-allocated-space));
 `;
 
 const NavList = styled(Link)`

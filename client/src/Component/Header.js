@@ -29,12 +29,12 @@ const Input = styled.form`
     }
   }
 `;
-const Button = styled.button`
+const Button = styled(Link)`
+  text-decoration: none;
   border-radius: 10px;
   background-color: var(--blue);
   color: white;
-  width: 100px;
-  height: 45px;
+  padding: 15px 25px;
   margin-left: 10px;
   font-size: 15px;
   font-weight: bold;
@@ -58,8 +58,8 @@ const Header = () => {
         </Input>
       </div>
       <div>
-        <Button>Log in</Button>
-        <Button>Sign up</Button>
+        <Button to="/login">Log in</Button>
+        <Button to="/signup">Sign up</Button>
       </div>
     </header>
   );

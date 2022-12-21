@@ -1,13 +1,16 @@
 import Header from '../Component/Header';
 import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
+import Main from '../Component/Main';
 
 const Home = () => {
   return (
     <>
       <Header />
-      <Nav />
-      <main></main>
+      <main>
+        <Nav />
+        <Main />
+      </main>
       <Footer />
     </>
   );

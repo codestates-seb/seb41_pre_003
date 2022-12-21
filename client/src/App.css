@@ -4,12 +4,14 @@
   --black: #212426;
   --orange: #f48024;
   --light-gray: #f8faf9;
+  --top-bar-allocated-space: 71px;
+  --bottom-bar-allocated-space: 129px;
 }
 
 .App {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 }
 
 header {
@@ -19,7 +21,7 @@ header {
   padding: 10px;
   background-color: var(--light-gray);
   border-top: 5px solid var(--orange);
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -30,4 +32,15 @@ header {
 
 header div {
   display: flex;
+}
+
+main {
+  display: flex;
+  /* border-left: 1px solid rgba(128, 128, 128, 0.5); */
+  position: sticky;
+  top: var(--top-bar-allocated-space);
+  height: calc(
+    100vh - var(--top-bar-allocated-space) - var(--bottom-bar-allocated-space)
+  );
+  /* bottom: var(--bottom-bar-allocated-space); */
 }
