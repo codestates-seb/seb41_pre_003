@@ -1,2 +1,2 @@
-function QuestionList() {}
+const QuestionList = () => {};
 export default QuestionList;
