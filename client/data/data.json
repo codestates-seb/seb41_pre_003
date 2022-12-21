@@ -1,0 +1,15 @@
+{
+  "members": [
+    {
+      "1": {
+        "password": "1234",
+        "gender": "Male",
+        "phone": "010-1234-5678",
+        "name": "홍길동",
+        "email": "hgd@gmail.com",
+        "age": "27",
+        "memberId": 1
+      }
+    }
+  ]
+}

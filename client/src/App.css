@@ -1,0 +1,26 @@
+:root {
+  box-sizing: border-box;
+  --blue: #0b96ff;
+  --black: #212426;
+  --orange: #f48024;
+  --light-gray: #f8faf9;
+}
+
+.App {
+  text-align: center;
+  position: relative;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--light-gray);
+  border-top: 5px solid var(--orange);
+  border-bottom: 1px solid gray;
+}
+
+header div {
+  display: flex;
+}
