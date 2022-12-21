@@ -1,34 +1,43 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 
+const slidefromleft = keyframes`
+0% {
+  transform: translateX(-100%);
+}
+100% {
+  transform: translateX(0%);
+}
+`;
+
 const NavigationBar = styled.nav`
-  font-size: 20px;
-  width: 200px;
+  width: 300px;
   height: auto;
+  left: -300px;
+  animation: ${slidefromleft} 1s ease-in-out forwards;
   ul {
+    position: sticky;
+    top: var(--top-bar-allocated-space);
     padding: 0;
     margin: 0;
   }
-  position: sticky;
-  top: var(--top-bar-allocated-space);
-  max-height: calc(100vh - var(--top-bar-allocated-space));
+  border-right: 1px solid rgba(128, 128, 128, 0.5);
 `;
 
 const NavList = styled(Link)`
-  box-sizing: border-box;
   width: 100%;
-  /* margin: 15px 0px 15px 0px; */
   padding: 15px 10px 15px 20px;
   text-decoration: none;
   color: black;
   display: flex;
   align-items: center;
+  font-size: 18px;
   i {
     margin-right: 10px;
-    font-size: medium;
   }
   &:hover {
     color: black;
+    transition: 0.2s ease-in-out;
   }
 
   background-color: ${(props) =>

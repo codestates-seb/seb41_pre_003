@@ -1,17 +1,40 @@
+@font-face {
+  font-family: 'Ycomputer-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ycomputer-Regular.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  box-sizing: border-box;
   --blue: #0b96ff;
   --black: #212426;
   --orange: #f48024;
   --light-gray: #f8faf9;
   --top-bar-allocated-space: 71px;
-  --bottom-bar-allocated-space: 129px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-family: 'Ycomputer-Regular';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 .App {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -26,22 +49,24 @@ header {
   top: 0;
   width: 100%;
   height: 71px;
-  box-sizing: border-box;
   box-shadow: 0px 1px 5px 2px rgba(128, 128, 128, 0.5);
   z-index: 99;
+  animation: slidefromtop 1s ease-in-out;
 }
 
-header div {
+@keyframes slidefromtop {
+  from {
+    top: -71px;
+  }
+  to {
+    top: 0px;
+  }
+}
+
+header > div {
   display: flex;
 }
 
 main {
   display: flex;
-  /* border-left: 1px solid rgba(128, 128, 128, 0.5); */
-  position: sticky;
-  top: var(--top-bar-allocated-space);
-  height: calc(
-    100vh - var(--top-bar-allocated-space) - var(--bottom-bar-allocated-space)
-  );
-  /* bottom: var(--bottom-bar-allocated-space); */
 }

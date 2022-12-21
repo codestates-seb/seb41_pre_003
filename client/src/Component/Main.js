@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import MidTitle from './MidTitle';
 
 const Main = () => {
   const MainContainer = styled.section`
-    overflow: scroll;
     width: 100%;
-    overflow-x: hidden;
+    height: auto;
+    padding: 20px;
+    margin-top: var(--top-bar-allocated-space);
   `;
   const Box = styled.div`
     width: 50px;
@@ -14,6 +16,7 @@ const Main = () => {
   `;
   return (
     <MainContainer>
+      <MidTitle title="Top Questions" />
       ※본문 글이 들어가는 자리※
       <Box />
       <Box />
@@ -32,15 +35,18 @@ const Main = () => {
       <Box />
       <Box />
       <Box />
-      <Box /> <Box />
       <Box />
       <Box />
       <Box />
-      <Box /> <Box />
       <Box />
       <Box />
       <Box />
-      <Box /> <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
       <Box />
       <Box />
       <Box />

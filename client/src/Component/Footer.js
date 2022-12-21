@@ -5,22 +5,19 @@ import { Link } from 'react-router-dom';
 const FooterBar = styled.footer`
   background-color: var(--black);
   width: 100%;
-  height: auto;
+  height: 150px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  bottom: 0;
+  font-size: 15px;
+  padding: 0px 50px;
 `;
 
 const Logo = styled(Link)`
   text-decoration: none;
   color: var(--light-gray);
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 30px;
-
   img {
     width: 50px;
     height: 50px;
@@ -36,8 +33,10 @@ const CreatorList = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 30px;
   color: var(--light-gray);
+  div {
+    margin-top: 10px;
+  }
 `;
 
 const Footer = () => {
