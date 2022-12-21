@@ -36,5 +36,11 @@ public class MemberController {
     public ResponseEntity getMember(@PathVariable("member-id") @Min(1) long memberId) {
         return new ResponseEntity<>(members.get(memberId),HttpStatus.OK);
     }
+    @PostMapping("/delete/{member-id}")
+    public ResponseEntity deleteMember(){
+        members.remove(1L);
+        if (members.size() == 0) return new ResponseEntity<>("삭제완료",HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(members,HttpStatus.OK);
+    }
 
 }
