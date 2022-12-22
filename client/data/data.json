@@ -1,13 +1,37 @@
 {
   "members": [
     {
-      "1": {
         "password": "1234",
         "gender": "Male",
         "phone": "010-1234-5678",
         "name": "홍길동",
         "email": "hgd@gmail.com",
         "age": "27",
+<<<<<<< HEAD
+        "id": 1,
+        "content": "How to use layout=”fill” in next.js image"
+    },
+    {
+      "password": "1234",
+      "gender": "Male",
+      "phone": "010-1234-5678",
+      "name": "김응찬",
+      "email": "hgd@gmail.com",
+      "age": "27",
+      "id": 2,
+      "content": "ABCDEFGEQWEQWRWQRWQ"
+  },
+  {
+    "password": "1234",
+    "gender": "Male",
+    "phone": "010-1234-5678",
+    "name": "김응찬",
+    "email": "hgd@gmail.com",
+    "age": "27",
+    "id": 2,
+    "content": "가나다라마바사아자차카파타하"
+}
+=======
         "memberId": 1
       },
       "2": {
@@ -101,5 +125,6 @@
         "memberId": 11
       }
     }
+>>>>>>> fbbabe9bc7081d49438689bf79de48458add0f49
   ]
 }
