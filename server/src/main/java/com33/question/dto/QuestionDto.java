@@ -1,5 +1,6 @@
 package com33.question.dto;
 
+import com33.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +19,15 @@ public class QuestionDto {
         @NotBlank
         private String title;
 
+        private long member_id;
+
         private String content;
 
+        public Member getMember(){
+            Member member = new Member();
+            member.setMember_id(member_id);
+            return member;
+        }
     }
     @Getter
     @AllArgsConstructor

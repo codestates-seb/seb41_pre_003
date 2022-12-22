@@ -1,5 +1,6 @@
 package com33.question.controller;
 
+import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
 import com33.question.mapper.QuestionMapper;
@@ -15,48 +16,50 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
-        private final QuestionService questionService;
+    private final QuestionService questionService;
 
-        private final QuestionMapper mapper;
+    private final QuestionMapper mapper;
 
-        public QuestionController(QuestionService questionService, QuestionMapper mapper) {
-            this.questionService = questionService;
-            this.mapper = mapper;
-        }
+    private final MemberService memberService;
 
-        @PostMapping
-        public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
-            Question question = questionService.creatQuestion(mapper.questionPostToQuestion(questionDto));
+    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService) {
+        this.questionService = questionService;
+        this.mapper = mapper;
+        this.memberService = memberService;
+    }
 
-            return  ResponseEntity.ok(mapper.questionToQuestionResponse(question));
-        }
+    @PostMapping
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
+        Question question = questionService.creatQuestion(mapper.questionPostToQuestion(questionDto));
 
-        @PatchMapping("/{question-id}")
-        public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
-                                          @Valid @RequestBody QuestionDto.Patch questionDto) {
-            questionDto.setQuestion_id(questionId);
-            Question question = questionService.updateQuestion(mapper.questionPatchToQuestion(questionDto));
+        return  ResponseEntity.ok(mapper.questionToQuestionResponse(question));
+    }
 
-            return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
-        }
+    @PatchMapping("/{question-id}")
+    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
+                                        @Valid @RequestBody QuestionDto.Patch questionDto) {
+        questionDto.setQuestion_id(questionId);
+        Question question = questionService.updateQuestion(mapper.questionPatchToQuestion(questionDto));
 
-        @GetMapping("/{question-id}")
-        public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
-            Question question = questionService.findQuestion(questionId);
+        return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
+    }
 
-            return new ResponseEntity<>(question,HttpStatus.OK);
-        }
+    @GetMapping("/{question-id}")
+    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
+        Question question = questionService.findQuestion(questionId);
+
+        return new ResponseEntity<>(question,HttpStatus.OK);
+    }
 
 
-        @DeleteMapping("/{question-id}")
-        public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {
-            questionService.deleteQuestion(questionId);
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {
+        questionService.deleteQuestion(questionId);
 
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
     @GetMapping
     public ResponseEntity getQuestions() {
         return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.findQuestions()));
     }
-
 }

@@ -1,11 +1,14 @@
 package com33.member.entity;
 
+import com33.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,5 +32,8 @@ public class Member {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "member")
+    private List<Question> questions = new ArrayList<>();
 
 }
