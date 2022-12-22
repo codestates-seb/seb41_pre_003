@@ -25,14 +25,8 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
-    public void addMember(Member member) {
-        this.member = member;
-    }
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
-    public void addQuestion(Question question) {
-        this.question = question;
-    }
 
 }

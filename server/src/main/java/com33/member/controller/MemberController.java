@@ -27,19 +27,19 @@ public class MemberController {
         this.mapper = mapper;
     }
 
-    @PostConstruct
-    public void init() { //더미 데이터
-        Member member = new Member();
-        long memberId = 1L;
-        member.setMember_id(memberId);
-        member.setPw("1234");
-        member.setName("홍길동");
-        member.setGender("m");
-        member.setAge(27);
-        member.setEmail("hgd@gmail.com");
-
-        memberService.createMember(member);
-    }
+//    @PostConstruct
+//    public void init() { //더미 데이터
+//        Member member = new Member();
+//        long memberId = 1L;
+//        member.setMember_id(memberId);
+//        member.setPw("1234");
+//        member.setName("홍길동");
+//        member.setGender("m");
+//        member.setAge(27);
+//        member.setEmail("hgd@gmail.com");
+//
+//        memberService.createMember(member);
+//    }
 
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){

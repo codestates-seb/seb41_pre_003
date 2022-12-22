@@ -1,11 +1,14 @@
 package com33.question.entity;
 
+import com33.answer.entity.Answer;
 import com33.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +28,11 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
+
+    public void addAnswer(Answer answer){
+        answers.add(answer);
+    }
 }

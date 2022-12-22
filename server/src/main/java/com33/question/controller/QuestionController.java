@@ -30,7 +30,8 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
-        Question question = questionService.creatQuestion(mapper.questionPostToQuestion(questionDto));
+        long memberId=1L;
+        Question question = questionService.creatQuestion(mapper.questionPostToQuestion(questionDto),memberId);
 
         return  ResponseEntity.ok(mapper.questionToQuestionResponse(question));
     }
@@ -38,8 +39,9 @@ public class QuestionController {
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                         @Valid @RequestBody QuestionDto.Patch questionDto) {
+        long memberId = 1L;
         questionDto.setQuestion_id(questionId);
-        Question question = questionService.updateQuestion(mapper.questionPatchToQuestion(questionDto));
+        Question question = questionService.updateQuestion(mapper.questionPatchToQuestion(questionDto),memberId);
 
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
     }

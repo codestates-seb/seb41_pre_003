@@ -30,7 +30,8 @@ public class AnswerController {
     @PostMapping("/{question-id}/answers")
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive long questionId,
                                      @Valid @RequestBody AnswerDto.Post answerDto) {
-        Answer answer = answerService.creatAnswer(mapper.answerPostToAnswer(answerDto));
+        long memberId = 1L;
+        Answer answer = answerService.creatAnswer(mapper.answerPostToAnswer(answerDto),questionId,memberId);
 
         return  ResponseEntity.ok(mapper.answerToAnswerResponse(answer));
     }
@@ -38,8 +39,9 @@ public class AnswerController {
     public ResponseEntity patchAnswer(@PathVariable("question-id") @Positive long questionId,
                                       @PathVariable("answer-id") @Positive long answerId,
                                       @Valid @RequestBody AnswerDto.Patch answerDto) {
+        long memberId = 1L;
         answerDto.setAnswer_id(answerId);
-        Answer answer = answerService.updateAnswer(mapper.answerPatchToAnswer(answerDto));
+        Answer answer = answerService.updateAnswer(mapper.answerPatchToAnswer(answerDto),questionId,memberId);
 
         return ResponseEntity.ok(mapper.answerToAnswerResponse(answer));
     }

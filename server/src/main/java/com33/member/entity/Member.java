@@ -1,5 +1,6 @@
 package com33.member.entity;
 
+import com33.answer.entity.Answer;
 import com33.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,4 +37,13 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Question> questions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Answer> answers = new ArrayList<>();
+
+    public void addQuestion(Question question){
+        questions.add(question);
+    }
+    public void addAnswer(Answer answer){
+        answers.add(answer);
+    }
 }

@@ -14,6 +14,7 @@ import java.util.Date;
 
 public class QuestionDto {
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Post{
         @NotBlank
