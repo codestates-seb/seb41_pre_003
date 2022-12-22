@@ -1,6 +1,6 @@
 import Header from '../Component/Header';
 
-const Home = () => {
+const Login = () => {
   return (
     <>
       <Header />
@@ -8,4 +8,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;
