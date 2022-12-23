@@ -100,6 +100,7 @@ const EditProfile = () => {
 
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
+  // TODO: memberId부분은 이후에 로그인 api를 통해 받은 id를 이용할 것.
   const memberId = 1;
 
   useEffect(() => {
