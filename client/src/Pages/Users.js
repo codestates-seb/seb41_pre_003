@@ -76,9 +76,9 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3002/members')
+      .get('http://localhost:3001/members')
       .then((res) => {
-        const data = Object.values(res.data[0]);
+        const data = res.data;
         setUsers(data);
         setLoading(false);
       })
@@ -97,13 +97,13 @@ const Users = () => {
           {!isLoading ? (
             <ul>
               {users.map((data) => (
-                <UserItem key={data.memberId}>
+                <UserItem key={data.id}>
                   <img
-                    src={`https://picsum.photos/seed/${data.email}/200/200`}
+                    src={`https://picsum.photos/seed/${data.id}/200/200`}
                     alt={`avatar of ${data.name}`}
                   />
                   <UserInfo>
-                    <UserName to={`/users/${data.memberId}/${data.name}`}>
+                    <UserName to={`/users/${data.id}/${data.name}`}>
                       {data.name}
                     </UserName>
                     <div>{data.email}</div>

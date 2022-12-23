@@ -4,6 +4,8 @@ import Home from './Pages/Home';
 import Users from './Pages/Users';
 import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
+import EditProfile from './Pages/EditProfile';
+import DeleteProfile from './Pages/DeleteProfile';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/users" element={<Users />}></Route>
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/users/edit/1" element={<EditProfile />}></Route>
+          <Route path="/users/delete/1" element={<DeleteProfile />}></Route>
         </Routes>
       </Router>
     </div>
