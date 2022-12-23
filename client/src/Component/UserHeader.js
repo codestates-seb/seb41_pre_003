@@ -5,7 +5,7 @@ import user from './../img/user.png';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Loading from '../Component/Loading';
 import logo from '../img/logo.png';
 
@@ -49,7 +49,24 @@ const FlexBox = styled.div`
 
 `
 
-const Button = styled.div`
+const Setting = styled(Link)`
+  width: 150px;
+  height: 60px;
+  background-color: var(--orange);
+  border: 1px solid #ffb951;
+  border-radius: 30px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 5px 5px 5px 5px gray;
+  margin-left: 20px;
+  :hover {
+    background-color: #ce800b;
+  }
+`;
+const Profile = styled.div`
   width: 150px;
   height: 60px;
   background-color: var(--orange);
@@ -70,7 +87,7 @@ const LogoImg = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 70px;
+  margin-left: 30px;
   margin-top: 70px;
 `
 const UserHeader = () => {
@@ -111,8 +128,8 @@ const UserHeader = () => {
               <LogoImg src={logo}></LogoImg>
             </section>
             <FlexBox>
-              <Button>Profile</Button>
-              <Button>Setting</Button>
+              <Profile>Profile</Profile>
+              <Setting to={"/editprofile/"}>Setting</Setting>
             </FlexBox>
           </MainContainer>
           : <Loading />

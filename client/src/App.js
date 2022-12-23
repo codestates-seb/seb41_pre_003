@@ -5,6 +5,7 @@ import Users from './Pages/Users';
 import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
 import UserDetail from './Pages/UserDetail';
+import EditProfile from './Pages/EditProfile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/userdetail/:memberId" element={<UserDetail />}></Route>
+          <Route path="/editprofile" element={<EditProfile />}></Route>
         </Routes>
       </Router>
     </div>

@@ -15,7 +15,7 @@ const QuestionList = () => {
     display: grid;
     color: #0b96ff;
     width: 900px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     background-color: var(--light-gray);
     box-shadow: 5px 5px 5px 5px gray;
     &:hover {
