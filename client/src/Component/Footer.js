@@ -42,7 +42,7 @@ const CreatorList = styled.div`
 const Footer = () => {
   return (
     <FooterBar>
-      <Logo to="/">
+      <Logo to="/userdetail">
         <img src={miniLogo} alt="mini logo" />
         <h1>STACK OVERFLOW</h1>
       </Logo>
