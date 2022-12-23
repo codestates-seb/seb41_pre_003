@@ -1,105 +1,59 @@
 {
   "members": [
     {
-      "1": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 1
-      },
-      "2": {
-        "password": "1234",
-        "gender": "Female",
-        "phone": "010-1234-5678",
-        "name": "김영희",
-        "email": "kyh@gmail.com",
-        "age": "27",
-        "memberId": 2
-      },
-      "3": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 3
-      },
-      "4": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 4
-      },
-      "5": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 5
-      },
-      "6": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 6
-      },
-      "7": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 7
-      },
-      "8": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 8
-      },
-      "9": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 9
-      },
-      "10": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 10
-      },
-      "11": {
-        "password": "1234",
-        "gender": "Male",
-        "phone": "010-1234-5678",
-        "name": "홍길동",
-        "email": "hgd@gmail.com",
-        "age": "27",
-        "memberId": 11
-      }
+      "pw": "1234",
+      "gender": "Male",
+      "phone": "010-1234-5678",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "id": 1
+    },
+    {
+      "pw": "1234",
+      "gender": "Female",
+      "phone": "010-1234-5678",
+      "name": "김영희",
+      "email": "kyh@gmail.com",
+      "age": 27,
+      "id": 2
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "phone": "010-1234-5678",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "id": 3
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "phone": "010-1234-5678",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "id": 4
+    }
+  ],
+  "question": [
+    {
+      "questionId": 1,
+      "title": "가나다라마",
+      "id": 1,
+      "content": "가나다라마",
+      "createDate": "2022-12-22"
+    },
+    {}
+  ],
+  "answer": [
+    {
+      "answerId": 1,
+      "id": 1,
+      "questionId": 1,
+      "createDate": "2022-12-22",
+      "content": "가나다라마"
     }
   ]
 }

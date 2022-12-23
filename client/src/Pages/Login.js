@@ -1,6 +1,7 @@
 import Header from '../Component/Header';
 import styled from 'styled-components';
 import miniLogo from '../img/mini-logo.png';
+import { useState } from 'react';
 
 const LogInContainer = styled.section`
   width: auto;
@@ -79,6 +80,19 @@ const LogInFormContainer = styled.div`
 `;
 
 const LogIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleButtonClick = (event) => {};
+
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <LogInContainer>
       <Header />
@@ -91,9 +105,17 @@ const LogIn = () => {
       <LogInFormContainer>
         <div>
           <div>Email</div>
-          <input type="email"></input>
+          <input
+            type="email"
+            value={email}
+            onChange={handleChangeEmail}
+          ></input>
           <div>Password</div>
-          <input type="password"></input>
+          <input
+            type="password"
+            value={password}
+            onChange={handleChangePassword}
+          ></input>
         </div>
         <button type="submit">Log in</button>
       </LogInFormContainer>
