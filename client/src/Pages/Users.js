@@ -25,6 +25,26 @@ const UsersContainer = styled.section`
   }
 `;
 
+const Filter = styled.form`
+  outline: 1px solid var(--gray);
+  padding: 10px;
+  width: 250px;
+  margin-left: 30px;
+  i {
+    margin-right: 10px;
+  }
+  input {
+    width: 200px;
+    border: none;
+    height: 30px;
+    font-size: 17px;
+    padding: 5px;
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
 const UserItem = styled.li`
   display: flex;
   flex-direction: row;
@@ -98,6 +118,25 @@ const Users = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [page]);
 
+  const handleFilterName = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const name = e.target['keyword'].value;
+    axios
+      .get('http://localhost:3001/members')
+      .then((res) => {
+        const data = res.data;
+        const filtered_data = data.filter((el) => el.name.includes(name));
+        setUsers(filtered_data);
+        setPage(1);
+        setPageCount(Math.ceil(filtered_data.length / limit));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Header />
@@ -105,6 +144,10 @@ const Users = () => {
         <Nav />
         <UsersContainer>
           <MidTitle title="Users" />
+          <Filter onSubmit={handleFilterName}>
+            <i className="fa-solid fa-magnifying-glass"></i>
+            <input placeholder="Filter by user" name="keyword" />
+          </Filter>
           {!isLoading ? (
             <>
               <ul>

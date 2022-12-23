@@ -25,15 +25,33 @@ const Settings = styled.div`
 const EditTable = styled.form`
   table {
     margin-bottom: 20px;
-
-    label,
-    td {
-      padding-bottom: 10px;
-      padding-right: 20px;
+    tr {
+      display: flex;
+      align-items: center;
       font-size: 17px;
-      input:focus {
-        outline: 2px solid var(--blue);
-        box-shadow: 0px 0px 8px 2px var(--blue);
+      height: 30px;
+      margin-bottom: 10px;
+      > td:first-child {
+        width: 150px;
+        text-align: right;
+        padding-right: 20px;
+      }
+      > td:nth-child(2) {
+        margin-right: 20px;
+      }
+      input {
+        border: none;
+        outline: 1px solid var(--gray);
+        height: 30px;
+        font-size: 17px;
+        padding: 5px;
+        &:focus {
+          outline: 1px solid var(--blue);
+          box-shadow: 0px 0px 5px 5px #d9eaf7;
+        }
+      }
+      select {
+        font-size: 17px;
       }
     }
   }

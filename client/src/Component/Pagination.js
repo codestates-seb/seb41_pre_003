@@ -38,13 +38,16 @@ const PageButton = styled.button`
   border: 1px solid rgba(1, 1, 1, 0);
   font-size: 16px;
   margin: 2px;
+  transition: 0.2s ease-in-out;
   &:not(:disabled)&:hover {
     border: 1px solid rgba(1, 1, 1, 0.3);
     cursor: pointer;
+    transition: 0.2s ease-in-out;
   }
   &:disabled {
     background-color: rbga(1, 1, 1, 0);
     color: rgba(1, 1, 1, 0.3);
+    transition: 0.2s ease-in-out;
   }
 `;
 
