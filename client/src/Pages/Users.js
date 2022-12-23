@@ -3,6 +3,7 @@ import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import MidTitle from '../Component/MidTitle';
 import Loading from '../Component/Loading';
+import Pagination from '../Component/Pagination';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -73,6 +74,10 @@ const UserName = styled(Link)`
 const Users = () => {
   const [users, setUsers] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  // TODO: 한 페이지 표시 개수
+  const limit = 12;
+  const [pageCount, setPageCount] = useState();
 
   useEffect(() => {
     axios
@@ -80,12 +85,18 @@ const Users = () => {
       .then((res) => {
         const data = res.data;
         setUsers(data);
+        setPage(1);
+        setPageCount(Math.ceil(data.length / limit));
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
 
   return (
     <>
@@ -95,23 +106,30 @@ const Users = () => {
         <UsersContainer>
           <MidTitle title="Users" />
           {!isLoading ? (
-            <ul>
-              {users.map((data) => (
-                <UserItem key={data.id}>
-                  <img
-                    src={`https://picsum.photos/seed/${data.id}/200/200`}
-                    alt={`avatar of ${data.name}`}
-                  />
-                  <UserInfo>
-                    <UserName to={`/users/${data.id}/${data.name}`}>
-                      {data.name}
-                    </UserName>
-                    <div>{data.email}</div>
-                    <div>{data.gender}</div>
-                  </UserInfo>
-                </UserItem>
-              ))}
-            </ul>
+            <>
+              <ul>
+                {users.slice((page - 1) * limit, page * limit).map((data) => (
+                  <UserItem key={data.id}>
+                    <img
+                      src={`https://picsum.photos/seed/${data.id}/200/200`}
+                      alt={`avatar of ${data.name}`}
+                    />
+                    <UserInfo>
+                      <UserName to={`/users/${data.id}/${data.name}`}>
+                        {data.name}
+                      </UserName>
+                      <div>{data.email}</div>
+                      <div>{data.gender}</div>
+                    </UserInfo>
+                  </UserItem>
+                ))}
+              </ul>
+              <Pagination
+                pageCount={pageCount}
+                active_page={page}
+                setPage={setPage}
+              />
+            </>
           ) : (
             <Loading />
           )}
