@@ -34,5 +34,8 @@ public class Question {
 
     public void addAnswer(Answer answer){
         answers.add(answer);
+        if(answer.getQuestion() != this){
+            answer.setQuestion(this);
+        }
     }
 }

@@ -42,8 +42,16 @@ public class Member {
 
     public void addQuestion(Question question){
         questions.add(question);
+        if (question.getMember() != this) {
+            question.setMember(this);
+        }
     }
     public void addAnswer(Answer answer){
         answers.add(answer);
+        if (answer.getMember() != this) {
+            answer.setMember(this);
+        }
     }
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 }
