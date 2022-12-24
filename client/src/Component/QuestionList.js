@@ -25,7 +25,7 @@ const QuestionList = () => {
   `;
   const [data, setdata] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:3001/members')
+    fetch('http://localhost:3002/members')
       .then((res) => res.json())
       .then((myJson) => {
         setdata(myJson);

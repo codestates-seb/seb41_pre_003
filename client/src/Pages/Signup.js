@@ -96,7 +96,16 @@ const SignUp = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    if (!email.includes('@')) {
+      return alert('이메일 형식이 올바르지 않습니다.');
+    }
+    if (password !== passwordRetype) {
+      return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+    }
+    validCheck(password);
+
     axios
       .post('http://localhost:3002/members', {
         pw: password,
@@ -107,6 +116,7 @@ const SignUp = () => {
       })
       .then(function (response) {
         console.log(response);
+        navigator('/login');
       })
       .catch(function (error) {
         console.log(error);
@@ -137,6 +147,27 @@ const SignUp = () => {
     setAge(event.target.value);
   };
 
+  const validCheck = (password) => {
+    if (!/^[a-zA-Z0-9]{10,15}$/.test(password)) {
+      alert('숫자와 영문자 조합으로 10~15자리를 사용해야 합니다.');
+      return false;
+    }
+
+    var checkNumber = password.search(/[0-9]/g);
+    var checkEnglish = password.search(/[a-z]/gi);
+
+    if (checkNumber < 0 || checkEnglish < 0) {
+      alert('숫자와 영문자를 혼용하여야 합니다.');
+      return false;
+    }
+
+    if (/(\w)\1\1\1/.test(password)) {
+      alert('444같은 문자를 4번 이상 사용하실 수 없습니다.');
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
       <Header />
@@ -162,23 +193,26 @@ const SignUp = () => {
                 type="email"
                 value={email}
                 onChange={handleChangeEmail}
+                // onKeyUp={changeButton}
               ></input>
               <div>Password</div>
               <input
                 type="password"
                 value={password}
                 onChange={handleChangePassword}
+                // onKeyUp={changeButton}
               ></input>
               <div>Password Retype</div>
               <input
                 type="password"
                 value={passwordRetype}
                 onChange={handleChangePasswordRetype}
+                // onKeyUp={changeButton}
               ></input>
               <div>Gender</div>
               <select name="gender" onChange={handleChangeGender}>
                 <option value="">Select your gender</option>
-                <option value="mail">Male</option>
+                <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="dwm">Do not want to mention</option>
               </select>
@@ -189,7 +223,11 @@ const SignUp = () => {
                 onChange={handleChangeAge}
               ></input>
             </div>
-            <button type="submit" onClick={handleButtonClick}>
+            <button
+              type="submit"
+              // disabled={button}
+              onClick={handleButtonClick}
+            >
               Sign up
             </button>
           </SignUpForm>
