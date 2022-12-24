@@ -76,9 +76,10 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3002/members')
+      .get('http://localhost:3001/members')
       .then((res) => {
         const data = Object.values(res.data[0]);
+        console.log(res.data[0]);
         setUsers(data);
         setLoading(false);
       })
@@ -103,7 +104,7 @@ const Users = () => {
                     alt={`avatar of ${data.name}`}
                   />
                   <UserInfo>
-                    <UserName to={`/users/${data.memberId}/${data.name}`}>
+                    <UserName to={`/userdetail/${data.memberId}`}>
                       {data.name}
                     </UserName>
                     <div>{data.email}</div>

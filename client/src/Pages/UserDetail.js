@@ -7,7 +7,11 @@ import Nav from '../Component/Nav';
 import user from './../img/user.png';
 import styled, { keyframes } from 'styled-components';
 import { useState, useEffect } from 'react';
-import { hello } from 'fund';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import Loading from '../Component/Loading';
+import logo from '../img/logo.png';
+import UserHeader from '../Component/UserHeader';
 
 
 const MainContainer = styled.section`
@@ -16,72 +20,148 @@ const MainContainer = styled.section`
   height: auto;
   padding-top: 50px;
   margin-top: var(--top-bar-allocated-space);
+  position: relative;
   display: grid;
-  img {
+  img:first-child {
     width: 200px;
     height: 200px;
   }
   section {
     margin-left: 100px;
     font-size: 50px;
+    width: 100%;
     display: flex;
-    align-items: center;
-
     div {
       margin-left: 70px;
       padding-top: 100px;
     }
+    img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;
 
-const Profile = styled.div`
+const FlexBox = styled.div`
+  display: flex;
+`
+
+const Button = styled.div`
   width: 200px;
   height: 80px;
   background-color: var(--orange);
   border: 1px solid #ffb951;
   border-radius: 30px;
-  margin-left: 100px;
+  margin-left: 30px;
   margin-top: 80px;
-  font-size: 30px;
+  font-size: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: white;
+  box-shadow: 5px 5px 5px 5px gray;
 `;
+
 const ProfileList = styled.div`
   flex-direction: column;
-  height: 500px;
-  font-size: 50px;
-  border: 1px solid black;
-  margin: 30px 30px 30px 30px;
+  height: 400px;
+  width: 1000px;
+  font-size: 40px;
+  border: 5px solid var(--orange);
+  border-radius: 30px;
+  margin: 30px 100px 20px 30px;
+  padding: 50px;
+  /* background-color: var(--orange); */
+  color: black;
+  box-shadow: 5px 5px 5px 5px gray;
+  ul {
+    li {
+      margin-bottom: 10px;
+    }
+  }
 `;
 const HellowBox = styled.div`
-  width: 100px;
+  margin-top: 20px;
+  width: 200px;
   height: 100px;
-  background-color: red;
-  margin: 0 0 0px 0px ;
+  background-color: var(--orange);
+  border-radius: 30px;
   animation-name: hello;
-  animation-duration: 3s;
-  animation-direction: normal;
-
-
+  animation-duration: 5s;
+  animation-direction: alternate;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: white;
+  font-size: 25px;
+  right: -200px;
+  box-shadow: 5px 5px 5px 5px gray;
+  :after {
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    bottom: 0;
+    left: 50%;
+    border: 20px solid transparent;
+    border-top-color: var(--orange);
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -50px;
+    margin-bottom: -20px;
+  }
   @keyframes hello {
-    from {
+    0% {
       opacity: 0;
-      top:10px
+      left: 0px;
     }
-    to {
+    50% {
       opacity: 1;
-      bottom:300px
+      left: 500px;
+    }
+    100% {
+      opacity: 0;
+      left: -200px;
     }
 }
 `
+const LogoImg = styled.img`
+  width : 400px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 70px;
+  margin-top: 70px;
+`
 const UserDetail = () => {
-  const [data, setdata] = useState([]);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const params = useParams();
   useEffect(() => {
-    fetch('http://localhost:3001/members/1')
-      .then((res) => res.json())
-      .then((myJson) => {
-        setdata(myJson);
+    console.log('memberId : ', params.memberId);
+    axios
+      .get('http://localhost:3001/members')
+      .then(async (res) => {
+        const Data = Object.values(res.data[0]);
+        console.log(Data);
+
+        let dataObj = {};
+        await Promise.all(Data.map((item) => {
+          console.log('item', item.memberId);
+          console.log('params.memberId', params.memberId);
+          if (item.memberId === parseInt(params.memberId)) {
+            dataObj = item;
+          }
+        }));
+        console.log(dataObj);
+        setData(dataObj);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
   return (
@@ -89,20 +169,30 @@ const UserDetail = () => {
       <Header />
       <main>
         <Nav />
-        <MainContainer>
-          <section>
-            <img src={user}></img>
-            <div>{data.name}</div>
-            <HellowBox></HellowBox>
-          </section>
-          <Profile>Profile</Profile>
-          <ProfileList>
-            <div>성별 : {data.gender}</div>
-            <div>나이 : {data.age}</div>
-            <div>이메일 : {data.email}</div>
-            <div>번호 : {data.phone}</div>
-          </ProfileList>
-        </MainContainer>
+        {!loading ? 
+          <MainContainer>
+            {/* <HellowBox>Hello~</HellowBox>
+            <section>
+              <img src={user}></img>
+              <div>{data.name}</div>
+              <LogoImg src={logo}></LogoImg>
+            </section>
+            <FlexBox>
+              <Button>Profile</Button>
+              <Button>Setting</Button>
+            </FlexBox> */}
+            <UserHeader></UserHeader>
+            <HellowBox>Wellcome!</HellowBox>
+            <ProfileList>
+              <ul>
+                <li>성별 : {data.gender}</li>
+                <li>나이 : {data.age}</li>
+                <li>이메일 : {data.email}</li>
+              </ul>
+            </ProfileList>
+          </MainContainer>
+          : <Loading />
+       }
       </main>
       <Footer />
     </>
