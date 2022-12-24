@@ -3,24 +3,29 @@ import styled from 'styled-components';
 import miniLogo from '../img/mini-logo.png';
 import { useState } from 'react';
 
+const Main = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(auto-fill, 1fr));
+  gap: 20px;
+`;
+
 const LogInContainer = styled.section`
-  width: auto;
-  height: calc(100vh - 71px);
+  width: 100%;
+  height: 100%;
   margin-top: var(--top-bar-allocated-space);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--light-gray);
 `;
 
 const Logo = styled.img`
-  width: 30%;
-  height: 35%;
+  width: 100px;
+  height: 120px;
 `;
 
 const OAuth = styled.div`
-  width: 20%;
+  width: 300px; //
   text-align: center;
 `;
 
@@ -50,7 +55,7 @@ const LogInFormContainer = styled.div`
   margin-top: 10px;
   border-radius: 10px;
   border: 1px solid gray;
-  width: 20%;
+  width: 300px;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -60,14 +65,13 @@ const LogInFormContainer = styled.div`
   input {
     width: 100%;
     height: auto;
-    overflow: hidden;
   }
   button {
     border-radius: 5px;
     background-color: var(--blue);
     color: white;
     border: 1px solid var(--light-gray);
-    width: 95%;
+    width: 100%;
     padding: 5px;
     margin: 10px;
     &:hover {
@@ -83,7 +87,7 @@ const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleButtonClick = (event) => {};
+  // const handleButtonClick = (event) => {};
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -94,32 +98,36 @@ const LogIn = () => {
   };
 
   return (
-    <LogInContainer>
+    <>
       <Header />
-      <OAuth>
-        <Logo src={miniLogo} alt=""></Logo>
-        <GoogleBtn>Log in with Google</GoogleBtn>
-        <GithubBtn>Log in with Github</GithubBtn>
-        <FaceBookBtn>Log in with FaceBook</FaceBookBtn>
-      </OAuth>
-      <LogInFormContainer>
-        <div>
-          <div>Email</div>
-          <input
-            type="email"
-            value={email}
-            onChange={handleChangeEmail}
-          ></input>
-          <div>Password</div>
-          <input
-            type="password"
-            value={password}
-            onChange={handleChangePassword}
-          ></input>
-        </div>
-        <button type="submit">Log in</button>
-      </LogInFormContainer>
-    </LogInContainer>
+      <Main>
+        <LogInContainer>
+          <Logo src={miniLogo} alt=""></Logo>
+          <OAuth>
+            <GoogleBtn>Log in with Google</GoogleBtn>
+            <GithubBtn>Log in with Github</GithubBtn>
+            <FaceBookBtn>Log in with FaceBook</FaceBookBtn>
+          </OAuth>
+          <LogInFormContainer>
+            <div>
+              <div>Email</div>
+              <input
+                type="email"
+                value={email}
+                onChange={handleChangeEmail}
+              ></input>
+              <div>Password</div>
+              <input
+                type="password"
+                value={password}
+                onChange={handleChangePassword}
+              ></input>
+            </div>
+            <button type="submit">Log in</button>
+          </LogInFormContainer>
+        </LogInContainer>
+      </Main>
+    </>
   );
 };
 

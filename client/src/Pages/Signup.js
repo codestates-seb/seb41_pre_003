@@ -1,32 +1,28 @@
 import Header from '../Component/Header';
 import styled from 'styled-components';
 import miniLogo from '../img/mini-logo.png';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 const SignUpContainer = styled.section`
-  width: auto;
-  height: calc(100vh - 71px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 20px;
   margin-top: var(--top-bar-allocated-space);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  background-color: var(--light-gray);
 
   p {
     font-weight: bold;
-    margin-left: 10%;
     margin-bottom: 10px;
-    padding-right: 20px;
-    width: 50%;
+    width: 400px;
   }
 `;
 
 const SignUpSec = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-  margin-right: 150px;
+  width: 300px;
+  grid-auto-flow: column;
 `;
 
 const Logo = styled.img`
@@ -92,30 +88,6 @@ const SignUpForm = styled.div`
   }
 `;
 
-// 비밀번호 체크
-const isMatch = (password1, password2) => {
-  return password1 === password2;
-};
-
-// [유효성 검증 함수]: 영어 또는 숫자만 가능
-// +이메일 형식을 지켰는지도 검사할 것
-// 백엔드에 @ 형식 검사 있다고 함.
-// const onlyNumberAndEnglish = (str) => {
-//   return /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(str);
-//   // /^[A-Za-z][A-Za-z0-9]*$/.test(str);
-// };
-
-// [비밀번호 유효성 검증 함수]: 최소 8자 이상하면서, 알파벳과 숫자 및 특수문자(@$!%*#?&) 는 하나 이상 포함
-const strongPassword = (str) => {
-  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-    str
-  );
-};
-
-// const isVaild = () => {
-//   isMatch && onlyNumberAndEnglish && strongPassword ? true : false;
-// };
-
 const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -124,7 +96,7 @@ const SignUp = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
 
-  const handleButtonClick = (event) => {
+  const handleButtonClick = () => {
     axios
       .post('http://localhost:3002/members', {
         pw: password,
@@ -166,54 +138,64 @@ const SignUp = () => {
   };
 
   return (
-    <SignUpContainer>
+    <>
       <Header />
-      <p>Join the Stack Overflow Community</p>
-      <SignUpSec>
-        <OAuth>
-          <Logo src={miniLogo} alt=""></Logo>
-          <GoogleBtn>Sign up with Google</GoogleBtn>
-          <GithubBtn>Sign up with Github</GithubBtn>
-          <FaceBookBtn>Sign up with FaceBook</FaceBookBtn>
-        </OAuth>
-        <SignUpForm>
-          <div>
-            <div>Display name</div>
-            <input type="text" value={name} onChange={handleChangeName}></input>
-            <div>Email</div>
-            <input
-              type="email"
-              value={email}
-              onChange={handleChangeEmail}
-            ></input>
-            <div>Password</div>
-            <input
-              type="password"
-              value={password}
-              onChange={handleChangePassword}
-            ></input>
-            <div>Password Retype</div>
-            <input
-              type="password"
-              value={passwordRetype}
-              onChange={handleChangePasswordRetype}
-            ></input>
-            <div>Gender</div>
-            <select name="gender" onChange={handleChangeGender}>
-              <option value="">Select your gender</option>
-              <option value="mail">Male</option>
-              <option value="female">Female</option>
-              <option value="dwm">Do not want to mention</option>
-            </select>
-            <div>Age</div>
-            <input type="number" value={age} onChange={handleChangeAge}></input>
-          </div>
-          <button type="submit" onClick={handleButtonClick}>
-            Sign up
-          </button>
-        </SignUpForm>
-      </SignUpSec>
-    </SignUpContainer>
+      <SignUpContainer>
+        <p>Join the Stack Overflow Community</p>
+        <SignUpSec>
+          <OAuth>
+            <Logo src={miniLogo} alt=""></Logo>
+            <GoogleBtn>Sign up with Google</GoogleBtn>
+            <GithubBtn>Sign up with Github</GithubBtn>
+            <FaceBookBtn>Sign up with FaceBook</FaceBookBtn>
+          </OAuth>
+          <SignUpForm>
+            <div>
+              <div>Display name</div>
+              <input
+                type="text"
+                value={name}
+                onChange={handleChangeName}
+              ></input>
+              <div>Email</div>
+              <input
+                type="email"
+                value={email}
+                onChange={handleChangeEmail}
+              ></input>
+              <div>Password</div>
+              <input
+                type="password"
+                value={password}
+                onChange={handleChangePassword}
+              ></input>
+              <div>Password Retype</div>
+              <input
+                type="password"
+                value={passwordRetype}
+                onChange={handleChangePasswordRetype}
+              ></input>
+              <div>Gender</div>
+              <select name="gender" onChange={handleChangeGender}>
+                <option value="">Select your gender</option>
+                <option value="mail">Male</option>
+                <option value="female">Female</option>
+                <option value="dwm">Do not want to mention</option>
+              </select>
+              <div>Age</div>
+              <input
+                type="number"
+                value={age}
+                onChange={handleChangeAge}
+              ></input>
+            </div>
+            <button type="submit" onClick={handleButtonClick}>
+              Sign up
+            </button>
+          </SignUpForm>
+        </SignUpSec>
+      </SignUpContainer>
+    </>
   );
 };
 
