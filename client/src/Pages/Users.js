@@ -101,6 +101,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
+
       .get('http://localhost:3001/members')
       .then((res) => {
         const data = res.data;

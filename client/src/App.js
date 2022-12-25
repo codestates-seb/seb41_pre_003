@@ -7,6 +7,7 @@ import SignUp from './Pages/Signup';
 import EditProfile from './Pages/EditProfile';
 import DeleteProfile from './Pages/DeleteProfile';
 import UserDetail from './Pages/UserDetail';
+import QuestionDetail from './Pages/QuestionDetail';
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
           <Route path="/users/edit/1" element={<EditProfile />}></Route>
           <Route path="/users/delete/1" element={<DeleteProfile />}></Route>
           <Route path="/users/:id/:name" element={<UserDetail />}></Route>
+          <Route
+            path="/questions/:memberId"
+            element={<QuestionDetail />}
+          ></Route>
         </Routes>
       </Router>
     </div>

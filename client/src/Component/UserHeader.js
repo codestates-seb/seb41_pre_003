@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/alt-text */
+
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
