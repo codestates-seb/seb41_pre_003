@@ -55,15 +55,13 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('/members')
+
+      .get('http://localhost:3001/members')
       .then((res) => {
-        console.log(res);
-        const data = Object.values(res.data);
-        console.log(res.data[0]);
+        const data = res.data;
         setUsers(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
-        console.log(res);
         setLoading(false);
       })
       .catch((err) => {

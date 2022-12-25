@@ -1,12 +1,9 @@
-/* eslint-disable import/namespace */
-/* eslint-disable import/no-named-as-default-member */
 import Header from '../Component/Header';
 import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import SettingsNav from '../Component/SettingsNav';
 import SettingsTitle from '../Component/SettingsTitle';
 import Loading from '../Component/Loading';
-// eslint-disable-next-line import/default, import/no-named-as-default
 import UserHeader from '../Component/UserHeader';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
