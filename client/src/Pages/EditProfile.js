@@ -4,6 +4,7 @@ import Footer from '../Component/Footer';
 import SettingsNav from '../Component/SettingsNav';
 import SettingsTitle from '../Component/SettingsTitle';
 import Loading from '../Component/Loading';
+import UserHeader from '../Component/UserHeader';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -172,6 +173,7 @@ const EditProfile = () => {
           <SettingsNav path={path} memberId={memberId} />
           <Settings>
             <SettingsTitle title="Edit your profile" />
+            <UserHeader id={memberId} name={name} />
             {!isLoading ? (
               <EditTable onSubmit={updateAccount}>
                 <table>
