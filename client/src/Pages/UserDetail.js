@@ -24,6 +24,7 @@ const ProfileList = styled.div`
   border-radius: 30px;
   margin: 30px;
   margin-bottom: 100px;
+  /* margin: 30px 100px 20px 30px; */
   padding: 50px;
   box-shadow: 5px 5px 5px 5px gray;
   ul {
@@ -48,7 +49,6 @@ const HellowBox = styled.div`
   display: flex;
   color: white;
   font-size: 25px;
-  top: 120px;
   right: -200px;
   box-shadow: 5px 5px 5px 5px gray;
   :after {
@@ -72,7 +72,7 @@ const HellowBox = styled.div`
     }
     50% {
       opacity: 1;
-      left: 750px;
+      left: 500px;
     }
     100% {
       opacity: 0;
@@ -88,7 +88,7 @@ const UserDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`/members/${id}`)
+      .get(`http://localhost:3001/members/${id}`)
       .then((res) => {
         setData(res.data);
         setLoading(false);

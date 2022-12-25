@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
-// import { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Loading from './Loading';
 
 const QuestionList = () => {
   const Question = styled.div`
@@ -29,14 +30,18 @@ const QuestionList = () => {
       color: black;
     }
   `;
+
   const [data, setdata] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
   useEffect(() => {
     axios
-      .get('/members')
+      .get('/question')
       .then((res) => {
-        const Data = Object.values(res.data[0].question[0]);
-        console.log(Data);
+        console.log(res);
+        const Data = Object.values(res.data);
         setdata(Data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -44,12 +49,18 @@ const QuestionList = () => {
   }, []);
   return (
     <>
-      {data.map((it) => (
-        <Question>
-          {it.content}
-          <div>{it.memberid}</div>
-        </Question>
-      ))}
+      {!isLoading ? (
+        data.map((it) => (
+          <Link to={`/questions/${it.question_id}`}>
+            <Question>
+              {it.title}
+              <div>{it.create_date}</div>
+            </Question>
+          </Link>
+        ))
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };
