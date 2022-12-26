@@ -8,6 +8,7 @@ import EditProfile from './Pages/EditProfile';
 import DeleteProfile from './Pages/DeleteProfile';
 import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
+import Question from './Pages/Question';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             path="/questions/:memberId"
             element={<QuestionDetail />}
           ></Route>
+          <Route path="/questions/ask" element={<Question />} />
         </Routes>
       </Router>
     </div>

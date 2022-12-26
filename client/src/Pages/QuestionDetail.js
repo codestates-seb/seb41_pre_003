@@ -4,6 +4,9 @@ import Footer from '../Component/Footer';
 import styled from 'styled-components';
 import Button from '../Component/Button';
 import Writer from '../Component/Writer';
+import Content from '../Component/Content';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const QDContainer = styled.div`
   width: 100%;
@@ -12,48 +15,31 @@ const QDContainer = styled.div`
   margin-top: var(--top-bar-allocated-space);
 `;
 
-const QContent = styled.div`
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-  padding: 10px;
-
-  button {
-    border: none;
-    margin: 10px;
-  }
-`;
-
-const QTitle = styled.div`
+const Title = styled.div`
   display: flex;
   justify-content: space-between;
   h1 {
     margin-bottom: 10px;
   }
-  Button {
-    width: 20%;
-    height: 5%;
+  Link {
+    width: 100%;
+    height: 100%;
   }
 `;
 
-const QInfo = styled.div`
+const Info = styled.div`
   border-bottom: 5px solid var(--light-gray);
   span {
     margin: 10px;
   }
 `;
 
-const Question = styled.div`
-  width: 100%;
+const AnswerCreate = styled.div`
+  border-top: 5px solid var(--light-gray);
   padding: 10px;
-`;
-
-const AnswerContainer = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 10px;
+  p,
   h2 {
-    margin: 10px 0 10px 0;
+    margin: 10px 0;
   }
 `;
 
@@ -66,34 +52,30 @@ const AnswerForm = styled.form`
 `;
 
 const QuestionDetail = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <>
       <Header></Header>
       <main>
         <Nav></Nav>
         <QDContainer>
-          <QContent>
-            <QTitle>
-              <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+          <Title>
+            <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+            <Link to="/questions/ask">
               <Button value="Ask Question"></Button>
-            </QTitle>
-            <QInfo>
-              <span>Asked</span>
-              <span>Modified</span>
-            </QInfo>
-            <Question>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              consectetur laoreet elit eu varius. Morbi luctus ex ac luctus
-              ultricies. Nullam tincidunt non erat vel gravida. Pellentesque
-              habitant morbi tristique senectus et netus et malesuada fames ac
-              turpis egestas. Nunc congue nisi eget ante consectetur, at porta
-              massa maximus. Ut consectetur nisi et eros aliquet efficitur sed
-              in mauris. Morbi lobortis tortor quis nibh dignissim, eu eleifend
-              sem ultricies. Aliquam bibendum a lectus a dignissim.
-            </Question>
-            <button>edit</button>
-          </QContent>
-          <AnswerContainer>
+            </Link>
+          </Title>
+          <Info>
+            <span>Asked</span>
+            <span>Modified</span>
+          </Info>
+          <Content></Content>
+          <h2>{}Answer</h2>
+          <Content></Content>
+          <AnswerCreate>
             <p>
               Know someone who can answer? Share a link to this question via
               email, Twitter, or Facebook.
@@ -103,7 +85,7 @@ const QuestionDetail = () => {
               <Writer></Writer>
               <Button value="Post Your Answer"></Button>
             </AnswerForm>
-          </AnswerContainer>
+          </AnswerCreate>
         </QDContainer>
       </main>
       <Footer></Footer>

@@ -101,7 +101,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then((res) => {
         const data = res.data;
         setUsers(data);
@@ -123,7 +123,7 @@ const Users = () => {
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then((res) => {
         const data = res.data;
         const filtered_data = data.filter((el) => el.name.includes(name));

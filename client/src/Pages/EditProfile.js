@@ -124,7 +124,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/members/${memberId}`)
+      .get(`/members/${memberId}`)
       .then((res) => {
         const data = res.data;
         setEmail(data.email);
@@ -145,7 +145,7 @@ const EditProfile = () => {
   const updateAccount = (e) => {
     e.preventDefault();
     axios
-      .patch(`http://localhost:3001/members/${memberId}`, {
+      .patch(`/members/${memberId}`, {
         pw,
         name,
         gender,

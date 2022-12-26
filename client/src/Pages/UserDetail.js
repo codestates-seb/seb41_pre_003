@@ -90,7 +90,7 @@ const UserDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/members/${id}`)
+      .get(`/members/${id}`)
       .then((res) => {
         setData(res.data);
         setLoading(false);

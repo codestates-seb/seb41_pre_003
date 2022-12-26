@@ -17,7 +17,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "WATCHPACK_POLLING=true react-scripts start",
+    "start": "WATCHPACK_POLLING=true GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -50,5 +50,5 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.1"
   },
-  "proxy": "https://b9fa-39-112-152-140.jp.ngrok.io/"
+  "proxy": "https://9037-39-112-152-140.jp.ngrok.io"
 }
