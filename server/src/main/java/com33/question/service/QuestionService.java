@@ -4,6 +4,7 @@ import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
+import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
 import com33.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
@@ -25,18 +26,20 @@ public class QuestionService {
         this.memberService = memberService;
     }
 
-    public Question creatQuestion(Question question,long memberId){
+    public Question createQuestion(Question question, long memberId) {
         Member member = memberService.findVerifiedMember(memberId);
         question.setMember(member);
         member.addQuestion(question);
 
         return questionRepository.save(question);
     }
+
     public Question findQuestion(long question_Id) {
         return findVerifiedQuestionByQuery(question_Id);
     }
+
     public Question updateQuestion(Question question, long memberId) {
-        if (memberId != findVerifiedQuestion(question.getQuestion_id()).getMember().getMember_id()){
+        if (memberId != findVerifiedQuestion(question.getQuestion_id()).getMember().getMember_id()) {
             throw new RuntimeException();
         }
         Question findQuestion = findVerifiedQuestion(question.getQuestion_id());
@@ -78,7 +81,25 @@ public class QuestionService {
 
     }
 
-    public List<Question> findQuestions(){
+    public List<Question> findQuestions() {
         return questionRepository.findAll();
     }
+
+    public List<Question> searchQuestion(String keyword) {
+        Optional<List<Question>> optionalQuestions = questionRepository.findByTitleContaining(keyword);
+        List<Question> searchQuestion = optionalQuestions.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
+        return searchQuestion;
+    }
+
+    public List<Question> searchQuestionByMember(Member member) {
+        Optional<List<Question>> optionalQuestions = questionRepository.findByMemberContaining(member);
+        List<Question> searchQuestion = optionalQuestions.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
+        return searchQuestion;
+    }
+
+
 }

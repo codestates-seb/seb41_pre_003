@@ -54,6 +54,7 @@ public class Member {
             answer.setMember(this);
         }
     }
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 }

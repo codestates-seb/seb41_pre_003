@@ -3,10 +3,13 @@ package com33.question.dto;
 import com33.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -16,23 +19,19 @@ public class QuestionDto {
     @Getter
     @Setter
     @AllArgsConstructor
-    public static class Post{
-        @NotBlank
+    public static class Post {
+        @NotBlank(message = "제목을 반드시 입력해주세요.")
         private String title;
 
         private long member_id;
-
+        @NotBlank(message = "내용을 입력해주세요.")
         private String content;
 
-        public Member getMember(){
-            Member member = new Member();
-            member.setMember_id(member_id);
-            return member;
-        }
     }
+
     @Getter
     @AllArgsConstructor
-    public static class Patch{
+    public static class Patch {
         private Long question_id;
         @NotBlank
         private String title;
@@ -44,11 +43,13 @@ public class QuestionDto {
             this.question_id = question_id;
         }
     }
+
+    @NoArgsConstructor
     @Setter
     @Getter
     @AllArgsConstructor
-    public static class Response{
-        private String question_id;
+    public static class Response {
+        private Long question_id;
         private Long member_id;
         private String title;
         private String content;

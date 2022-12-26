@@ -9,12 +9,27 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionMapper {
     Question questionPostToQuestion(QuestionDto.Post requestBody);
+
     Question questionPatchToQuestion(QuestionDto.Patch requestBody);
-    QuestionDto.Response questionToQuestionResponse(Question question);
+
+
+    default QuestionDto.Response questionToQuestionResponse(Question question) {
+        QuestionDto.Response response = new QuestionDto.Response();
+
+        response.setQuestion_id(question.getQuestion_id());
+        response.setMember_id(question.getMember().getMember_id());
+        response.setTitle(question.getTitle());
+        response.setCreate_date(question.getCreate_date());
+        response.setContent(question.getContent());
+
+
+        return response;
+    }
+
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 
 }
