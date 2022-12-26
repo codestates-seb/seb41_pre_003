@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import MidTitle from './MidTitle';
+import { Link } from 'react-router-dom';
 // import QuestionList from './QuestionList';
 
 const Main = () => {
@@ -38,7 +39,9 @@ const Main = () => {
       <MainContainer>
         <MidTitle title="Top Questions" />
         {/* <QuestionList></QuestionList> */}
-        <Question></Question>
+        <Link to={`/questions/1`}>
+          <Question></Question>
+        </Link>
       </MainContainer>
     </main>
   );

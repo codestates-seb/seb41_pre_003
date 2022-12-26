@@ -9,7 +9,6 @@ import { Link, useParams } from 'react-router-dom';
 import Loading from '../Component/Loading';
 import logo from '../img/logo.png';
 
-
 const MainContainer = styled.div`
   color: black;
   width: 100%;
@@ -46,8 +45,7 @@ const FlexBox = styled.div`
   margin-left: 10px;
   margin-top: 50px;
   padding: 0;
-
-`
+`;
 
 const Setting = styled(Link)`
   width: 150px;
@@ -82,14 +80,14 @@ const Profile = styled.div`
 `;
 
 const LogoImg = styled.img`
-  width : 450px;
+  width: 450px;
   height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 30px;
   margin-top: 70px;
-`
+`;
 const UserHeader = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -97,19 +95,21 @@ const UserHeader = () => {
   useEffect(() => {
     console.log('memberId : ', params.memberId);
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then(async (res) => {
         const Data = Object.values(res.data[0]);
         console.log(Data);
 
         let dataObj = {};
-        await Promise.all(Data.map((item) => {
-          console.log('item', item.memberId);
-          console.log('params.memberId', params.memberId);
-          if (item.memberId === parseInt(params.memberId)) {
-            dataObj = item;
-          }
-        }));
+        await Promise.all(
+          Data.map((item) => {
+            console.log('item', item.memberId);
+            console.log('params.memberId', params.memberId);
+            if (item.memberId === parseInt(params.memberId)) {
+              dataObj = item;
+            }
+          })
+        );
         console.log(dataObj);
         setData(dataObj);
         setLoading(false);
@@ -120,20 +120,21 @@ const UserHeader = () => {
   }, []);
   return (
     <>
-        {!loading ? 
-          <MainContainer>
-            <section>
-              <img src={user}></img>
-              <div>{data.name}</div>
-              <LogoImg src={logo}></LogoImg>
-            </section>
-            <FlexBox>
-              <Profile>Profile</Profile>
-              <Setting to={"/editprofile/"}>Setting</Setting>
-            </FlexBox>
-          </MainContainer>
-          : <Loading />
-       }
+      {!loading ? (
+        <MainContainer>
+          <section>
+            <img src={user}></img>
+            <div>{data.name}</div>
+            <LogoImg src={logo}></LogoImg>
+          </section>
+          <FlexBox>
+            <Profile>Profile</Profile>
+            <Setting to={'/editprofile/'}>Setting</Setting>
+          </FlexBox>
+        </MainContainer>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };

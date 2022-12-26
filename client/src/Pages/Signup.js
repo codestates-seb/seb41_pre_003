@@ -2,6 +2,7 @@ import Header from '../Component/Header';
 import styled from 'styled-components';
 import miniLogo from '../img/mini-logo.png';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignUpContainer = styled.section`
@@ -12,7 +13,6 @@ const SignUpContainer = styled.section`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
   p {
     font-weight: bold;
     margin-bottom: 10px;
@@ -95,6 +95,7 @@ const SignUp = () => {
   const [passwordRetype, setPasswordRetype] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
+  const navigate = useNavigate();
 
   const handleButtonClick = (event) => {
     event.preventDefault();
@@ -107,7 +108,7 @@ const SignUp = () => {
     validCheck(password);
 
     axios
-      .post('http://localhost:3002/members', {
+      .post('/members', {
         pw: password,
         gender: gender,
         name: name,
@@ -116,7 +117,7 @@ const SignUp = () => {
       })
       .then(function (response) {
         console.log(response);
-        navigator('/login');
+        navigate(`/login`);
       })
       .catch(function (error) {
         console.log(error);
@@ -193,26 +194,23 @@ const SignUp = () => {
                 type="email"
                 value={email}
                 onChange={handleChangeEmail}
-                // onKeyUp={changeButton}
               ></input>
               <div>Password</div>
               <input
                 type="password"
                 value={password}
                 onChange={handleChangePassword}
-                // onKeyUp={changeButton}
               ></input>
               <div>Password Retype</div>
               <input
                 type="password"
                 value={passwordRetype}
                 onChange={handleChangePasswordRetype}
-                // onKeyUp={changeButton}
               ></input>
               <div>Gender</div>
               <select name="gender" onChange={handleChangeGender}>
                 <option value="">Select your gender</option>
-                <option value="male">Male</option>
+                <option value="mail">Male</option>
                 <option value="female">Female</option>
                 <option value="dwm">Do not want to mention</option>
               </select>
@@ -223,11 +221,7 @@ const SignUp = () => {
                 onChange={handleChangeAge}
               ></input>
             </div>
-            <button
-              type="submit"
-              // disabled={button}
-              onClick={handleButtonClick}
-            >
+            <button type="submit" onClick={handleButtonClick}>
               Sign up
             </button>
           </SignUpForm>
