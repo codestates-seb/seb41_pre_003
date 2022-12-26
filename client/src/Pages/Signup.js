@@ -13,7 +13,6 @@ const SignUpContainer = styled.section`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
   p {
     font-weight: bold;
     margin-bottom: 10px;

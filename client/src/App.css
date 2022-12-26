@@ -11,6 +11,8 @@
   --black: #212426;
   --orange: #f48024;
   --light-gray: #f8faf9;
+  --gray: #bcbbbb;
+  --green: #5fba7d;
   --top-bar-allocated-space: 71px;
 }
 
@@ -32,6 +34,7 @@ code {
 
 .App {
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -52,9 +55,16 @@ header {
   z-index: 99;
   animation: slidefromtop 1s ease-in-out;
 }
+
+header > div {
+  display: flex;
+}
+
 main {
   animation: fadein 2s;
+  display: flex;
 }
+
 @keyframes fadein {
   from {
     opacity: 0;
@@ -71,12 +81,4 @@ main {
   to {
     top: 0px;
   }
-}
-
-header > div {
-  display: flex;
-}
-
-main {
-  display: flex;
 }

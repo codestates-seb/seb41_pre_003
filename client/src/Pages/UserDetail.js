@@ -14,65 +14,20 @@ import logo from '../img/logo.png';
 import UserHeader from '../Component/UserHeader';
 
 const MainContainer = styled.section`
-  color: black;
   width: 100%;
   height: auto;
-  padding-top: 50px;
   margin-top: var(--top-bar-allocated-space);
-  position: relative;
-  display: grid;
-  img:first-child {
-    width: 200px;
-    height: 200px;
-  }
-  section {
-    margin-left: 100px;
-    font-size: 50px;
-    width: 100%;
-    display: flex;
-    div {
-      margin-left: 70px;
-      padding-top: 100px;
-    }
-    img {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-`;
-
-const FlexBox = styled.div`
-  display: flex;
-`;
-
-const Button = styled.div`
-  width: 200px;
-  height: 80px;
-  background-color: var(--orange);
-  border: 1px solid #ffb951;
-  border-radius: 30px;
-  margin-left: 30px;
-  margin-top: 80px;
-  font-size: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: 5px 5px 5px 5px gray;
+  padding: 20px;
 `;
 
 const ProfileList = styled.div`
-  flex-direction: column;
-  height: 400px;
-  width: 1000px;
   font-size: 40px;
   border: 5px solid var(--orange);
   border-radius: 30px;
-  margin: 30px 100px 20px 30px;
+  margin: 30px;
+  margin-bottom: 100px;
+  /* margin: 30px 100px 20px 30px; */
   padding: 50px;
-  /* background-color: var(--orange); */
-  color: black;
   box-shadow: 5px 5px 5px 5px gray;
   ul {
     li {
@@ -80,6 +35,7 @@ const ProfileList = styled.div`
     }
   }
 `;
+
 const HellowBox = styled.div`
   margin-top: 20px;
   width: 200px;
@@ -126,45 +82,24 @@ const HellowBox = styled.div`
     }
   }
 `;
-const LogoImg = styled.img`
-  width: 400px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 70px;
-  margin-top: 70px;
-`;
+
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const params = useParams();
-  useEffect(() => {
-    console.log('memberId : ', params.memberId);
-    axios
-      .get('/members')
-      .then(async (res) => {
-        const Data = Object.values(res.data[0]);
-        console.log(Data);
+  const { id, name } = useParams();
 
-        let dataObj = {};
-        await Promise.all(
-          Data.map((item) => {
-            console.log('item', item.memberId);
-            console.log('params.memberId', params.memberId);
-            if (item.memberId === parseInt(params.memberId)) {
-              dataObj = item;
-            }
-          })
-        );
-        console.log(dataObj);
-        setData(dataObj);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/members/${id}`)
+      .then((res) => {
+        setData(res.data);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
   return (
     <>
       <Header />
@@ -182,8 +117,8 @@ const UserDetail = () => {
               <Button>Profile</Button>
               <Button>Setting</Button>
             </FlexBox> */}
-            <UserHeader></UserHeader>
-            <HellowBox>Wellcome!</HellowBox>
+            <UserHeader id={id} name={name} />
+            <HellowBox>Welcome!</HellowBox>
             <ProfileList>
               <ul>
                 <li>성별 : {data.gender}</li>
