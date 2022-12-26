@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 // import { useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const QuestionList = () => {
   const Question = styled.div`
@@ -13,8 +14,13 @@ const QuestionList = () => {
     font-size: 30px;
     display: grid;
     color: #0b96ff;
-    width: 1000px;
-    margin-bottom: 10px;
+    width: 900px;
+    margin-bottom: 30px;
+    background-color: var(--light-gray);
+    box-shadow: 5px 5px 5px 5px gray;
+    &:hover {
+      background-color: white;
+    }
     div {
       font-size: 20px;
       display: flex;
@@ -25,10 +31,15 @@ const QuestionList = () => {
   `;
   const [data, setdata] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:3002/members')
-      .then((res) => res.json())
-      .then((myJson) => {
-        setdata(myJson);
+    axios
+      .get('http://localhost:3001/members')
+      .then((res) => {
+        const Data = Object.values(res.data[0].question[0]);
+        console.log(Data);
+        setdata(Data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
   return (
@@ -36,7 +47,7 @@ const QuestionList = () => {
       {data.map((it) => (
         <Question>
           {it.content}
-          <div>{it.name}</div>
+          <div>{it.memberid}</div>
         </Question>
       ))}
     </>
