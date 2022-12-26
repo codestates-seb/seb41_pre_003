@@ -1,7 +1,9 @@
 package com33.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com33.answer.entity.Answer;
 import com33.member.entity.Member;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Getter
 @Setter
@@ -25,10 +28,13 @@ public class Question {
     private LocalDateTime create_date = LocalDateTime.now();
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
+
+    @JsonIgnore
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 

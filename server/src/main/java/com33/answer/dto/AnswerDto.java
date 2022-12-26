@@ -3,6 +3,7 @@ package com33.answer.dto;
 import com33.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
@@ -31,6 +32,7 @@ public class AnswerDto {
             this.answer_id = answer_id;
         }
     }
+    @NoArgsConstructor
     @Setter
     @Getter
     @AllArgsConstructor
