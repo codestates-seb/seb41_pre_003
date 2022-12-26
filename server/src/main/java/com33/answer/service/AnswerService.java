@@ -7,6 +7,7 @@ import com33.answer.repository.AnswerRepository;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
 import com33.question.entity.Question;
+import com33.question.repository.QuestionRepository;
 import com33.question.service.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +19,18 @@ import java.util.Optional;
 public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
+    private final QuestionRepository questionRepository;
     private final MemberService memberService;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, MemberService memberService) {
+    public AnswerService(AnswerRepository answerRepository, QuestionService questionService,
+                         QuestionRepository questionRepository, MemberService memberService) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
+        this.questionRepository = questionRepository;
         this.memberService = memberService;
     }
 
-    public Answer creatAnswer(Answer answer,long questionId, long memberId){
+    public Answer creatAnswer(Answer answer, long questionId, long memberId){
         Member member = memberService.findVerifiedMember(memberId);
         Question question = questionService.findVerifiedQuestion(questionId);
         answer.setMember(member);
@@ -82,7 +86,8 @@ public class AnswerService {
 
     }
 
-    public List<Answer> findAnswers(){
-        return answerRepository.findAll();
+    public List<Answer> findAnswers(long questionId){
+        Optional<Question> questions = questionRepository.findByQuestion_id(questionId);
+        return answerRepository.findAllByQuestion(questions.get());
     }
 }

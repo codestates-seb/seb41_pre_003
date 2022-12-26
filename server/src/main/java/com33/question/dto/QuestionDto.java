@@ -48,7 +48,7 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class Response{
-        private String question_id;
+        private Long question_id;
         private Long member_id;
         private String title;
         private String content;

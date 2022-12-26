@@ -63,6 +63,6 @@ public class AnswerController {
     @GetMapping("/{question-id}/answers")
     public ResponseEntity getAnswers(@PathVariable("question-id") @Positive long questionId) {
 
-        return ResponseEntity.ok(mapper.answersToAnswerResponses(answerService.findAnswers()));
+        return ResponseEntity.ok(mapper.answersToAnswerResponses(answerService.findAnswers(questionId)));
     }
 }

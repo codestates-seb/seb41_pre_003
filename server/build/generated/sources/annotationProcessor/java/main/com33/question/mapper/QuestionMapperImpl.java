@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-12-25T19:35:58+0900",
+    date = "2022-12-26T19:52:11+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.1.jar, environment: Java 11.0.11 (Oracle Corporation)"
 )
 @Component
@@ -54,14 +54,12 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
 
-        String question_id = null;
+        Long question_id = null;
         String title = null;
         String content = null;
         LocalDateTime create_date = null;
 
-        if ( question.getQuestion_id() != null ) {
-            question_id = String.valueOf( question.getQuestion_id() );
-        }
+        question_id = question.getQuestion_id();
         title = question.getTitle();
         content = question.getContent();
         create_date = question.getCreate_date();
