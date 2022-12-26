@@ -1,5 +1,6 @@
 package com33.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com33.answer.entity.Answer;
 import com33.question.entity.Question;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
