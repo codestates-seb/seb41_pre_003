@@ -143,7 +143,7 @@ const UserDetail = () => {
   useEffect(() => {
     console.log('memberId : ', params.memberId);
     axios
-      .get('http://localhost:3001/members')
+      .get('https://cb63-39-112-152-140.jp.ngrok.io/members')
       .then(async (res) => {
         const Data = Object.values(res.data[0]);
         console.log(Data);
