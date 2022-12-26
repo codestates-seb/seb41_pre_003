@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import MidTitle from './MidTitle';
+// import { Link } from 'react-router-dom';
 import QuestionList from './QuestionList';
 
-const Main = () => {
+function Main() {
   const MainContainer = styled.section`
     width: 100%;
     height: auto;
@@ -32,16 +33,17 @@ const Main = () => {
   //     color: black;
   //   }
   // `;
-
   return (
     <main>
       <MainContainer>
         <MidTitle title="Top Questions" />
         <QuestionList></QuestionList>
-        {/* <Question></Question> */}
+        {/* <Link to={`/questions/1`}>
+          <Question></Question>
+        </Link> */}
       </MainContainer>
     </main>
   );
-};
+}
 
 export default Main;

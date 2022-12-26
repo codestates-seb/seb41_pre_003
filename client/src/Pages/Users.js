@@ -79,7 +79,7 @@ const Users = () => {
       .get('/members')
       .then((res) => {
         console.log(res);
-        const data = Object.values(res.data[0]);
+        const data = Object.values(res.data);
         console.log(res.data[0]);
         setUsers(data);
         setLoading(false);

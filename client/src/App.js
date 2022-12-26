@@ -6,6 +6,7 @@ import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
 import UserDetail from './Pages/UserDetail';
 import EditProfile from './Pages/EditProfile';
+import QuestionDetail from './Pages/QuestionDetail';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/userdetail/:memberId" element={<UserDetail />}></Route>
           <Route path="/editprofile" element={<EditProfile />}></Route>
+          <Route path="/questions/:question_id" element={<QuestionDetail />} />
         </Routes>
       </Router>
     </div>
