@@ -52,20 +52,20 @@ const NavTab = styled(Link)`
 `;
 
 const LogoImg = styled.img`
-  width: 800px;
+  width: 300px;
 `;
 
-const UserHeader = ({ id, name }) => {
+const UserHeader = ({ member_id, name }) => {
   return (
     <MainContainer>
       <section>
-        <img src={`https://picsum.photos/seed/${id}/200/200`}></img>
+        <img src={`https://picsum.photos/seed/${member_id}/200/200`}></img>
         <div>{name}</div>
         <LogoImg src={logo}></LogoImg>
       </section>
       <FlexBox>
-        <NavTab to={`/users/${id}/${name}`}>Profile</NavTab>
-        <NavTab to={`/users/edit/${id}`}>Setting</NavTab>
+        <NavTab to={`/users/${member_id}/${name}`}>Profile</NavTab>
+        <NavTab to={`/users/edit/${member_id}`}>Setting</NavTab>
       </FlexBox>
     </MainContainer>
   );

@@ -51,11 +51,13 @@ const UserItem = ({ data }) => {
   return (
     <UserItemContainer>
       <img
-        src={`https://picsum.photos/seed/${data.id}/200/200`}
+        src={`https://picsum.photos/seed/${data.member_id}/200/200`}
         alt={`avatar of ${data.name}`}
       />
       <UserInfo>
-        <UserName to={`/users/${data.id}/${data.name}`}>{data.name}</UserName>
+        <UserName to={`/users/${data.member_id}/${data.name}`}>
+          {data.name}
+        </UserName>
         <div>{data.email}</div>
         <div>{data.gender}</div>
       </UserInfo>

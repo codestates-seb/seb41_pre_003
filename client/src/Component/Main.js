@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import MidTitle from './MidTitle';
-// import { Link } from 'react-router-dom';
 import QuestionList from './QuestionList';
 
 const MainContainer = styled.section`

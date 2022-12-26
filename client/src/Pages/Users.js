@@ -55,7 +55,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/member')
+      .get('http://localhost:3001/members')
       .then((res) => {
         const data = res.data;
         console.log(res.data);
@@ -78,7 +78,7 @@ const Users = () => {
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get('/member')
+      .get('http://localhost:3001/members')
       .then((res) => {
         const data = res.data;
         const filtered_data = data.filter((el) => el.name.includes(name));
@@ -107,7 +107,7 @@ const Users = () => {
             <>
               <ul>
                 {users.slice((page - 1) * limit, page * limit).map((data) => (
-                  <UserItem data={data} key={data.id} />
+                  <UserItem data={data} key={data.member_id} />
                 ))}
               </ul>
               <Pagination

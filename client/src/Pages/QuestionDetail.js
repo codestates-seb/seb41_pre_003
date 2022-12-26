@@ -54,7 +54,7 @@ const AnswerForm = styled.form`
 `;
 
 const QuestionDetail = () => {
-  const [question, setQuestion] = useState();
+  const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState();
   const [isLoading, setLoading] = useState(true);
   const { question_id } = useParams();
@@ -62,25 +62,19 @@ const QuestionDetail = () => {
   useEffect(() => {
     axios
       // .get(`http://:3001/questions/${question_id}`)
-      .get(`/questions/${question_id}`)
+      .get(`http://localhost:3001/questions/${question_id}`)
       .then((res) => {
-        console.log(res);
         setQuestion(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      // .get(`http://localhost:3001/questions/${question_id}/answer`)
-      .get(`/questions/${question_id}/answers`)
-      .then((res) => {
-        console.log(res);
-        setAnswer(res.data);
-        setLoading(false);
+        axios
+          // .get(`http://localhost:3001/questions/${question_id}/answer`)
+          .get(`http://localhost:3001/questions/${question_id}/answers`)
+          .then((res) => {
+            setAnswer(res.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -96,7 +90,7 @@ const QuestionDetail = () => {
       <Header></Header>
       <main>
         <Nav></Nav>
-        {isLoading ? (
+        {!isLoading ? (
           <QDContainer>
             <Title>
               <h1>{question.title}</h1>

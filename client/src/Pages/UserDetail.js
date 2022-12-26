@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable jsx-a11y/alt-text */
 import Header from '../Component/Header';
 import Footer from '../Component/Footer';
 import Nav from '../Component/Nav';
@@ -9,7 +6,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Loading from '../Component/Loading';
-// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserHeader from '../Component/UserHeader';
 
 const MainContainer = styled.section`
@@ -38,26 +34,6 @@ const MainContainer = styled.section`
       justify-content: center;
     }
   }
-`;
-
-const FlexBox = styled.div`
-  display: flex;
-`;
-
-const Button = styled.div`
-  width: 200px;
-  height: 80px;
-  background-color: var(--orange);
-  border: 1px solid #ffb951;
-  border-radius: 30px;
-  margin-left: 30px;
-  margin-top: 80px;
-  font-size: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: 5px 5px 5px 5px gray;
 `;
 
 const ProfileList = styled.div`
@@ -122,15 +98,7 @@ const HellowBox = styled.div`
     }
   }
 `;
-const LogoImg = styled.img`
-  width: 400px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 70px;
-  margin-top: 70px;
-`;
+
 const SettingsContainer = styled.div`
   width: 100%;
   height: auto;
@@ -143,28 +111,18 @@ const Settings = styled.div`
   width: 100%;
   margin-left: 20px;
 `;
+
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const params = useParams();
-  console.log(params);
+  const { member_id, name } = useParams();
+
   useEffect(() => {
     axios
-      // .get('/members')
-      .get('http://localhost:3001/member')
-      .then(async (res) => {
-        const Data = Object.values(res.data);
-        console.log(Data)
-        let dataObj = {};
-        await Promise.all(
-          Data.map((item) => {
-            if (item.id === parseInt(params.member_id)) {
-              dataObj = item;
-            }
-          })
-        );
-        // console.log(dataObj);
-        setData(dataObj);
+      .get(`http://localhost:3001/members/${member_id}`)
+      .then((res) => {
+        const data = res.data;
+        setData(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -179,8 +137,8 @@ const UserDetail = () => {
         <Nav />
         <SettingsContainer>
           <Settings>
-            <HellowBox>Wellcome!</HellowBox>
-            <UserHeader></UserHeader>
+            <HellowBox>Welcome!</HellowBox>
+            <UserHeader member_id={member_id} name={name} />
             {!loading ? (
               <MainContainer>
                 <ProfileList>
