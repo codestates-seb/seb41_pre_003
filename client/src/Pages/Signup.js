@@ -2,6 +2,7 @@ import Header from '../Component/Header';
 import styled from 'styled-components';
 import miniLogo from '../img/mini-logo.png';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignUpContainer = styled.section`
@@ -95,10 +96,20 @@ const SignUp = () => {
   const [passwordRetype, setPasswordRetype] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
+  const navigate = useNavigate();
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    if (!email.includes('@')) {
+      return alert('이메일 형식이 올바르지 않습니다.');
+    }
+    if (password !== passwordRetype) {
+      return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+    }
+    validCheck(password);
+
     axios
-      .post('http://localhost:3002/members', {
+      .post('/members', {
         pw: password,
         gender: gender,
         name: name,
@@ -107,6 +118,7 @@ const SignUp = () => {
       })
       .then(function (response) {
         console.log(response);
+        navigate(`/login`);
       })
       .catch(function (error) {
         console.log(error);
@@ -135,6 +147,27 @@ const SignUp = () => {
 
   const handleChangeAge = (event) => {
     setAge(event.target.value);
+  };
+
+  const validCheck = (password) => {
+    if (!/^[a-zA-Z0-9]{10,15}$/.test(password)) {
+      alert('숫자와 영문자 조합으로 10~15자리를 사용해야 합니다.');
+      return false;
+    }
+
+    var checkNumber = password.search(/[0-9]/g);
+    var checkEnglish = password.search(/[a-z]/gi);
+
+    if (checkNumber < 0 || checkEnglish < 0) {
+      alert('숫자와 영문자를 혼용하여야 합니다.');
+      return false;
+    }
+
+    if (/(\w)\1\1\1/.test(password)) {
+      alert('444같은 문자를 4번 이상 사용하실 수 없습니다.');
+      return false;
+    }
+    return true;
   };
 
   return (

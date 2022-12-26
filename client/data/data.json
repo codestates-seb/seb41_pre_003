@@ -44,6 +44,20 @@
       "id": 1,
       "content": "가나다라마",
       "createDate": "2022-12-22"
+    },
+    {
+      "questionId": 2,
+      "title": "가나다라마",
+      "id": 1,
+      "content": "가나다라마",
+      "createDate": "2022-12-22"
+    },
+    {
+      "questionId": 3,
+      "title": "가나다라마",
+      "id": 1,
+      "content": "가나다라마",
+      "createDate": "2022-12-22"
     }
   ],
   "answer": [

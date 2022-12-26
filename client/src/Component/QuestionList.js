@@ -32,7 +32,7 @@ const QuestionList = () => {
   const [data, setdata] = useState([]);
   useEffect(() => {
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then((res) => {
         const Data = Object.values(res.data[0].question[0]);
         console.log(Data);

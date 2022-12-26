@@ -2,6 +2,8 @@ import Header from '../Component/Header';
 import styled from 'styled-components';
 import miniLogo from '../img/mini-logo.png';
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Main = styled.div`
   display: grid;
@@ -25,7 +27,7 @@ const Logo = styled.img`
 `;
 
 const OAuth = styled.div`
-  width: 300px; //
+  width: 300px;
   text-align: center;
 `;
 
@@ -86,8 +88,22 @@ const LogInFormContainer = styled.div`
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  // const handleButtonClick = (event) => {};
+  const handleButtonClick = () => {
+    axios
+      .post('/auth/login', {
+        email: email,
+        pw: password,
+      })
+      .then((res) => {
+        console.log(res);
+        navigate(`/`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -123,7 +139,9 @@ const LogIn = () => {
                 onChange={handleChangePassword}
               ></input>
             </div>
-            <button type="submit">Log in</button>
+            <button type="submit" onClick={handleButtonClick}>
+              Log in
+            </button>
           </LogInFormContainer>
         </LogInContainer>
       </Main>

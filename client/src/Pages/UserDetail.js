@@ -13,7 +13,6 @@ import Loading from '../Component/Loading';
 import logo from '../img/logo.png';
 import UserHeader from '../Component/UserHeader';
 
-
 const MainContainer = styled.section`
   color: black;
   width: 100%;
@@ -45,7 +44,7 @@ const MainContainer = styled.section`
 
 const FlexBox = styled.div`
   display: flex;
-`
+`;
 
 const Button = styled.div`
   width: 200px;
@@ -125,17 +124,17 @@ const HellowBox = styled.div`
       opacity: 0;
       left: -200px;
     }
-}
-`
+  }
+`;
 const LogoImg = styled.img`
-  width : 400px;
+  width: 400px;
   height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 70px;
   margin-top: 70px;
-`
+`;
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -143,19 +142,21 @@ const UserDetail = () => {
   useEffect(() => {
     console.log('memberId : ', params.memberId);
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then(async (res) => {
         const Data = Object.values(res.data[0]);
         console.log(Data);
 
         let dataObj = {};
-        await Promise.all(Data.map((item) => {
-          console.log('item', item.memberId);
-          console.log('params.memberId', params.memberId);
-          if (item.memberId === parseInt(params.memberId)) {
-            dataObj = item;
-          }
-        }));
+        await Promise.all(
+          Data.map((item) => {
+            console.log('item', item.memberId);
+            console.log('params.memberId', params.memberId);
+            if (item.memberId === parseInt(params.memberId)) {
+              dataObj = item;
+            }
+          })
+        );
         console.log(dataObj);
         setData(dataObj);
         setLoading(false);
@@ -169,7 +170,7 @@ const UserDetail = () => {
       <Header />
       <main>
         <Nav />
-        {!loading ? 
+        {!loading ? (
           <MainContainer>
             {/* <HellowBox>Hello~</HellowBox>
             <section>
@@ -191,8 +192,9 @@ const UserDetail = () => {
               </ul>
             </ProfileList>
           </MainContainer>
-          : <Loading />
-       }
+        ) : (
+          <Loading />
+        )}
       </main>
       <Footer />
     </>
