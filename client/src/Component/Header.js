@@ -38,9 +38,9 @@ const Header = () => {
         <Logo to="/">
           <img src={logo} alt="logo" />
         </Logo>
-        <Search>
+        <Search action="/search" method="GET">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input placeholder="Search..." type="search" />
+          <input placeholder="Search..." name="keyword" type="text" />
         </Search>
       </div>
       <div>

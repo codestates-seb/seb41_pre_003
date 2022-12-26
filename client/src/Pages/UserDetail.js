@@ -4,17 +4,15 @@
 import Header from '../Component/Header';
 import Footer from '../Component/Footer';
 import Nav from '../Component/Nav';
-import user from './../img/user.png';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Loading from '../Component/Loading';
-import logo from '../img/logo.png';
+// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserHeader from '../Component/UserHeader';
 
 const MainContainer = styled.section`
-  color: black;
   width: 100%;
   height: auto;
   margin-top: var(--top-bar-allocated-space);
@@ -63,16 +61,13 @@ const Button = styled.div`
 `;
 
 const ProfileList = styled.div`
-  flex-direction: column;
-  height: 400px;
-  width: 1000px;
   font-size: 40px;
   border: 5px solid var(--orange);
   border-radius: 30px;
-  margin: 0px 100px 20px 30px; 
+  margin: 30px;
+  margin-bottom: 100px;
+  /* margin: 30px 100px 20px 30px; */
   padding: 50px;
-  /* background-color: var(--orange); */
-  color: black;
   box-shadow: 5px 5px 5px 5px gray;
   ul {
     li {
@@ -80,6 +75,7 @@ const ProfileList = styled.div`
     }
   }
 `;
+
 const HellowBox = styled.div`
   margin-top: 20px;
   width: 200px;
@@ -175,6 +171,7 @@ const UserDetail = () => {
         console.log(err);
       });
   }, []);
+
   return (
     <>
       <Header />
