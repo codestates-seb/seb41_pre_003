@@ -3,6 +3,7 @@ import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import MidTitle from '../Component/MidTitle';
 import Loading from '../Component/Loading';
+import Pagination from '../Component/Pagination';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,26 @@ const UsersContainer = styled.section`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
+  }
+`;
+
+const Filter = styled.form`
+  outline: 1px solid var(--gray);
+  padding: 10px;
+  width: 250px;
+  margin-left: 30px;
+  i {
+    margin-right: 10px;
+  }
+  input {
+    width: 200px;
+    border: none;
+    height: 30px;
+    font-size: 17px;
+    padding: 5px;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
@@ -73,20 +94,49 @@ const UserName = styled(Link)`
 const Users = () => {
   const [users, setUsers] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  // TODO: 한 페이지 표시 개수
+  const limit = 12;
+  const [pageCount, setPageCount] = useState();
 
   useEffect(() => {
     axios
-      .get('/members')
+
+      .get('http://localhost:3001/members')
       .then((res) => {
-        const data = Object.values(res.data[0]);
-        console.log(res.data[0]);
+        const data = res.data;
         setUsers(data);
+        setPage(1);
+        setPageCount(Math.ceil(data.length / limit));
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
+  const handleFilterName = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const name = e.target['keyword'].value;
+    axios
+      .get('http://localhost:3001/members')
+      .then((res) => {
+        const data = res.data;
+        const filtered_data = data.filter((el) => el.name.includes(name));
+        setUsers(filtered_data);
+        setPage(1);
+        setPageCount(Math.ceil(filtered_data.length / limit));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -95,24 +145,35 @@ const Users = () => {
         <Nav />
         <UsersContainer>
           <MidTitle title="Users" />
+          <Filter onSubmit={handleFilterName}>
+            <i className="fa-solid fa-magnifying-glass"></i>
+            <input placeholder="Filter by user" name="keyword" />
+          </Filter>
           {!isLoading ? (
-            <ul>
-              {users.map((data) => (
-                <UserItem key={data.memberId}>
-                  <img
-                    src={`https://picsum.photos/seed/${data.email}/200/200`}
-                    alt={`avatar of ${data.name}`}
-                  />
-                  <UserInfo>
-                    <UserName to={`/userdetail/${data.memberId}`}>
-                      {data.name}
-                    </UserName>
-                    <div>{data.email}</div>
-                    <div>{data.gender}</div>
-                  </UserInfo>
-                </UserItem>
-              ))}
-            </ul>
+            <>
+              <ul>
+                {users.slice((page - 1) * limit, page * limit).map((data) => (
+                  <UserItem key={data.id}>
+                    <img
+                      src={`https://picsum.photos/seed/${data.id}/200/200`}
+                      alt={`avatar of ${data.name}`}
+                    />
+                    <UserInfo>
+                      <UserName to={`/users/${data.id}/${data.name}`}>
+                        {data.name}
+                      </UserName>
+                      <div>{data.email}</div>
+                      <div>{data.gender}</div>
+                    </UserInfo>
+                  </UserItem>
+                ))}
+              </ul>
+              <Pagination
+                pageCount={pageCount}
+                active_page={page}
+                setPage={setPage}
+              />
+            </>
           ) : (
             <Loading />
           )}

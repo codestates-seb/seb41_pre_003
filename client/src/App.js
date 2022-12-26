@@ -4,8 +4,9 @@ import Home from './Pages/Home';
 import Users from './Pages/Users';
 import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
-import UserDetail from './Pages/UserDetail';
 import EditProfile from './Pages/EditProfile';
+import DeleteProfile from './Pages/DeleteProfile';
+import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
 
 function App() {
@@ -17,9 +18,13 @@ function App() {
           <Route path="/users" element={<Users />}></Route>
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/userdetail/:memberId" element={<UserDetail />}></Route>
-          <Route path="/editprofile" element={<EditProfile />}></Route>
-          <Route path="/questions/:memberId" element={<QuestionDetail />} />
+          <Route path="/users/edit/1" element={<EditProfile />}></Route>
+          <Route path="/users/delete/1" element={<DeleteProfile />}></Route>
+          <Route path="/users/:id/:name" element={<UserDetail />}></Route>
+          <Route
+            path="/questions/:memberId"
+            element={<QuestionDetail />}
+          ></Route>
         </Routes>
       </Router>
     </div>
