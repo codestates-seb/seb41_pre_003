@@ -9,13 +9,55 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Loading from '../Component/Loading';
+// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserHeader from '../Component/UserHeader';
 
 const MainContainer = styled.section`
   width: 100%;
   height: auto;
   margin-top: var(--top-bar-allocated-space);
-  padding: 20px;
+  position: relative;
+  display: grid;
+  img:first-child {
+    width: 200px;
+    height: 200px;
+  }
+  section {
+    margin-left: 100px;
+    margin-top: 0px;
+    font-size: 50px;
+    width: 100%;
+    display: flex;
+    div {
+      margin-left: 70px;
+      padding-top: 100px;
+    }
+    img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+`;
+
+const Button = styled.div`
+  width: 200px;
+  height: 80px;
+  background-color: var(--orange);
+  border: 1px solid #ffb951;
+  border-radius: 30px;
+  margin-left: 30px;
+  margin-top: 80px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 5px 5px 5px 5px gray;
 `;
 
 const ProfileList = styled.div`
@@ -80,17 +122,49 @@ const HellowBox = styled.div`
     }
   }
 `;
+const LogoImg = styled.img`
+  width: 400px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 70px;
+  margin-top: 70px;
+`;
+const SettingsContainer = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: var(--top-bar-allocated-space);
+  display: flex;
+`;
 
+const Settings = styled.div`
+  width: 100%;
+  margin-left: 20px;
+`;
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { id, name } = useParams();
-
+  const params = useParams();
+  // console.log(params.id);
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/members/${id}`)
-      .then((res) => {
-        setData(res.data);
+      // .get('/members')
+      .get('http://localhost:3001/members')
+      .then(async (res) => {
+        const Data = Object.values(res.data);
+        let dataObj = {};
+        await Promise.all(
+          Data.map((item) => {
+            if (item.id === parseInt(params.id)) {
+              console.log(item);
+              dataObj = item;
+            }
+          })
+        );
+        console.log(dataObj);
+        setData(dataObj);
         setLoading(false);
       })
       .catch((err) => {
@@ -103,31 +177,26 @@ const UserDetail = () => {
       <Header />
       <main>
         <Nav />
-        {!loading ? (
-          <MainContainer>
-            {/* <HellowBox>Hello~</HellowBox>
-            <section>
-              <img src={user}></img>
-              <div>{data.name}</div>
-              <LogoImg src={logo}></LogoImg>
-            </section>
-            <FlexBox>
-              <Button>Profile</Button>
-              <Button>Setting</Button>
-            </FlexBox> */}
-            <UserHeader id={id} name={name} />
-            <HellowBox>Welcome!</HellowBox>
-            <ProfileList>
-              <ul>
-                <li>성별 : {data.gender}</li>
-                <li>나이 : {data.age}</li>
-                <li>이메일 : {data.email}</li>
-              </ul>
-            </ProfileList>
-          </MainContainer>
-        ) : (
-          <Loading />
-        )}
+        <SettingsContainer>
+          <Settings>
+           <HellowBox>Wellcome!</HellowBox>
+            <UserHeader></UserHeader>
+            {!loading ? (
+              <MainContainer>
+                <ProfileList>
+                  <ul>
+                    <li>이름 : {data.name}</li>
+                    <li>성별 : {data.gender}</li>
+                    <li>나이 : {data.age}</li>
+                    <li>이메일 : {data.email}</li>
+                  </ul>
+                </ProfileList>
+              </MainContainer>
+            ) : (
+              <Loading />
+            )}
+          </Settings>
+        </SettingsContainer>
       </main>
       <Footer />
     </>

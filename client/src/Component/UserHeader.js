@@ -10,14 +10,12 @@ const MainContainer = styled.div`
   width: 100%;
   height: auto;
   padding: 30px;
-
   section {
     font-size: 50px;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-
     img:first-child {
       width: 150px;
       height: 150px;
@@ -54,7 +52,7 @@ const NavTab = styled(Link)`
 `;
 
 const LogoImg = styled.img`
-  width: 300px;
+  width: 800px;
 `;
 
 const UserHeader = ({ id, name }) => {
