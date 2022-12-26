@@ -94,7 +94,8 @@ const UserHeader = () => {
   const params = useParams();
   useEffect(() => {
     axios
-      .get('/members')
+      // .get('/members')
+      .get('http://localhost:3001/members')
       .then(async (res) => {
         const Data = Object.values(res.data[0]);
         console.log(Data);

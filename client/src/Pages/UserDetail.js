@@ -17,7 +17,6 @@ const MainContainer = styled.section`
   color: black;
   width: 100%;
   height: auto;
-  padding-top: 50px;
   margin-top: var(--top-bar-allocated-space);
   position: relative;
   display: grid;
@@ -27,6 +26,7 @@ const MainContainer = styled.section`
   }
   section {
     margin-left: 100px;
+    margin-top: 0px;
     font-size: 50px;
     width: 100%;
     display: flex;
@@ -69,7 +69,7 @@ const ProfileList = styled.div`
   font-size: 40px;
   border: 5px solid var(--orange);
   border-radius: 30px;
-  margin: 30px 100px 20px 30px;
+  margin: 0px 100px 20px 30px; 
   padding: 50px;
   /* background-color: var(--orange); */
   color: black;
@@ -135,23 +135,34 @@ const LogoImg = styled.img`
   margin-left: 70px;
   margin-top: 70px;
 `;
+const SettingsContainer = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: var(--top-bar-allocated-space);
+  display: flex;
+`;
+
+const Settings = styled.div`
+  width: 100%;
+  margin-left: 20px;
+`;
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const params = useParams();
+  // console.log(params.id);
   useEffect(() => {
-    console.log('memberId : ', params.memberId);
     axios
-      .get('/members')
+      // .get('/members')
+      .get('http://localhost:3001/members')
       .then(async (res) => {
-        const Data = Object.values(res.data[0]);
-        console.log(Data);
+        const Data = Object.values(res.data);
         let dataObj = {};
         await Promise.all(
           Data.map((item) => {
-            console.log('item', item.memberId);
-            console.log('params.memberId', params.memberId);
-            if (item.memberId === parseInt(params.memberId)) {
+            if (item.id === parseInt(params.id)) {
+              console.log(item);
               dataObj = item;
             }
           })
@@ -169,21 +180,26 @@ const UserDetail = () => {
       <Header />
       <main>
         <Nav />
-        {!loading ? (
-          <MainContainer>
+        <SettingsContainer>
+          <Settings>
+           <HellowBox>Wellcome!</HellowBox>
             <UserHeader></UserHeader>
-            <HellowBox>Wellcome!</HellowBox>
-            <ProfileList>
-              <ul>
-                <li>성별 : {data.gender}</li>
-                <li>나이 : {data.age}</li>
-                <li>이메일 : {data.email}</li>
-              </ul>
-            </ProfileList>
-          </MainContainer>
-        ) : (
-          <Loading />
-        )}
+            {!loading ? (
+              <MainContainer>
+                <ProfileList>
+                  <ul>
+                    <li>이름 : {data.name}</li>
+                    <li>성별 : {data.gender}</li>
+                    <li>나이 : {data.age}</li>
+                    <li>이메일 : {data.email}</li>
+                  </ul>
+                </ProfileList>
+              </MainContainer>
+            ) : (
+              <Loading />
+            )}
+          </Settings>
+        </SettingsContainer>
       </main>
       <Footer />
     </>
