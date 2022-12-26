@@ -103,7 +103,9 @@ const Users = () => {
     axios
       .get('/members')
       .then((res) => {
-        const data = res.data;
+        console.log(res);
+        const data = Object.values(res.data);
+        console.log(res.data[0]);
         setUsers(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
