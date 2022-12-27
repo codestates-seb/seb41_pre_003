@@ -36,8 +36,8 @@ const QuestionList = () => {
 
   useEffect(() => {
     axios
-      // .get('/question')
-      .get('http://localhost:3001/question')
+      // .get('/questions')
+      .get('http://localhost:3001/questions')
       .then((res) => {
         console.log(res);
         const Data = Object.values(res.data);
@@ -52,11 +52,11 @@ const QuestionList = () => {
     <>
       {!isLoading ? (
         data.map((it) => (
-          <Link to={`/questions/${it.id}`}>
+          <Link to={`/questions/${it.question_id}`}>
             <Question>
               {it.title}
-              <div>{it.createdate}</div>
-              <div>{it.memberid}</div>
+              <div>{it.create_date}</div>
+              <div>{it.member_id}</div>
             </Question>
           </Link>
         ))

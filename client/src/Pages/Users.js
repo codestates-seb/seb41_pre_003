@@ -55,8 +55,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
-
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then((res) => {
         const data = res.data;
         setUsers(data);
