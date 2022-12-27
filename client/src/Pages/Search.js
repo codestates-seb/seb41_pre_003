@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Header from '../Component/Header';
 import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
