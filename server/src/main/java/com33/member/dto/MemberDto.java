@@ -42,6 +42,7 @@ public class MemberDto {
         @Email
         private String email;
 
+
         public void setMember_id(long member_id) {
             this.member_id = member_id;
         }

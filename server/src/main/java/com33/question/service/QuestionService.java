@@ -26,8 +26,8 @@ public class QuestionService {
         this.memberService = memberService;
     }
 
-    public Question createQuestion(Question question, long memberId) {
-        Member member = memberService.findVerifiedMember(memberId);
+    public Question createQuestion(Question question) {
+        Member member = memberService.findVerifiedMember(question.getMember().getMember_id());
         question.setMember(member);
         member.addQuestion(question);
 
@@ -38,10 +38,8 @@ public class QuestionService {
         return findVerifiedQuestionByQuery(question_Id);
     }
 
-    public Question updateQuestion(Question question, long memberId) {
-        if (memberId != findVerifiedQuestion(question.getQuestion_id()).getMember().getMember_id()) {
-            throw new RuntimeException();
-        }
+    public Question updateQuestion(Question question) {
+
         Question findQuestion = findVerifiedQuestion(question.getQuestion_id());
         findQuestion.setModifiedAt(LocalDateTime.now());
         Optional.ofNullable(question.getTitle())
@@ -49,6 +47,7 @@ public class QuestionService {
         Optional.ofNullable(question.getContent())
                 .ifPresent(content -> findQuestion.setContent(content));
         return questionRepository.save(findQuestion);
+
     }
 
 //    public Page<Question> findQuestions(int page, int size) {
@@ -93,13 +92,6 @@ public class QuestionService {
         return searchQuestion;
     }
 
-    public List<Question> searchQuestionByMember(Member member) {
-        Optional<List<Question>> optionalQuestions = questionRepository.findByMemberContaining(member);
-        List<Question> searchQuestion = optionalQuestions.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
-        return searchQuestion;
-    }
 
 
 }
