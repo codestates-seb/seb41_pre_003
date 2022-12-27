@@ -150,8 +150,8 @@ const UserDetail = () => {
   // console.log(params.id);
   useEffect(() => {
     axios
-      // .get('/members')
-      .get('http://localhost:3001/members')
+      .get('/members')
+      // .get('http://localhost:3001/members')
       .then(async (res) => {
         const Data = Object.values(res.data);
         let dataObj = {};
@@ -179,7 +179,7 @@ const UserDetail = () => {
         <Nav />
         <SettingsContainer>
           <Settings>
-           <HellowBox>Wellcome!</HellowBox>
+            <HellowBox>Wellcome!</HellowBox>
             <UserHeader></UserHeader>
             {!loading ? (
               <MainContainer>

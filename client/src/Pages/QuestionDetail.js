@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import Button from '../Component/Button';
 import Writer from '../Component/Writer';
 import Content from '../Component/Content';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import Loading from '../Component/Loading';
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const QDContainer = styled.div`
   width: 100%;
@@ -52,6 +54,39 @@ const AnswerForm = styled.form`
 `;
 
 const QuestionDetail = () => {
+  const [question, setQuestion] = useState();
+  const [answer, setAnswer] = useState();
+  const [isLoading, setLoading] = useState(true);
+  const { question_id } = useParams();
+
+  useEffect(() => {
+    axios
+      // .get(`http://:3001/questions/${question_id}`)
+      .get(`/questions/${question_id}`)
+      .then((res) => {
+        console.log(res);
+        setQuestion(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      // .get(`http://localhost:3001/questions/${question_id}/answer`)
+      .get(`/questions/${question_id}/answers`)
+      .then((res) => {
+        console.log(res);
+        setAnswer(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -61,32 +96,36 @@ const QuestionDetail = () => {
       <Header></Header>
       <main>
         <Nav></Nav>
-        <QDContainer>
-          <Title>
-            <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
-            <Link to="/questions/ask">
-              <Button value="Ask Question"></Button>
-            </Link>
-          </Title>
-          <Info>
-            <span>Asked</span>
-            <span>Modified</span>
-          </Info>
-          <Content></Content>
-          <h2>{}Answer</h2>
-          <Content></Content>
-          <AnswerCreate>
-            <p>
-              Know someone who can answer? Share a link to this question via
-              email, Twitter, or Facebook.
-            </p>
-            <h2>Your Answer</h2>
-            <AnswerForm action="/answer" method="post">
-              <Writer></Writer>
-              <Button value="Post Your Answer"></Button>
-            </AnswerForm>
-          </AnswerCreate>
-        </QDContainer>
+        {isLoading ? (
+          <QDContainer>
+            <Title>
+              <h1>{question.title}</h1>
+              <Link to="/questions/ask">
+                <Button value="Ask Question"></Button>
+              </Link>
+            </Title>
+            <Info>
+              <span>Asked {question.create_date}</span>
+              <span>Modified {question.modifiedAt}</span>
+            </Info>
+            <Content></Content>
+            <h2>{answer.length !== undefined ? answer.length : 0}Answer</h2>
+            {answer.length > 0 ? <Content></Content> : ''}
+            <AnswerCreate>
+              <p>
+                Know someone who can answer? Share a link to this question via
+                email, Twitter, or Facebook.
+              </p>
+              <h2>Your Answer</h2>
+              <AnswerForm action="/answer" method="post">
+                <Writer></Writer>
+                <Button value="Post Your Answer"></Button>
+              </AnswerForm>
+            </AnswerCreate>
+          </QDContainer>
+        ) : (
+          <Loading></Loading>
+        )}
       </main>
       <Footer></Footer>
     </>
