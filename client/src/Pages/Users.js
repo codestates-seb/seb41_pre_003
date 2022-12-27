@@ -55,10 +55,9 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/member')
+      .get('/members')
       .then((res) => {
         const data = res.data;
-        console.log(res.data);
         setUsers(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
