@@ -4,14 +4,9 @@ import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
-import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
 import com33.question.repository.QuestionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +23,7 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question) {
-        Member member = memberService.findVerifiedMember(question.getMember().getMember_id());
+        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
         question.setMember(member);
         member.addQuestion(question);
 
@@ -98,7 +93,7 @@ public class QuestionService {
                         new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
             }
             case "3": {
-                Optional<List<Question>> optionalQuestions = questionRepository.findByMember_Member_id(keyword);
+                Optional<List<Question>> optionalQuestions = questionRepository.findByMemberMemberId(memberService.findName(keyword).get(0).getMemberId());
                 return optionalQuestions.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
             }

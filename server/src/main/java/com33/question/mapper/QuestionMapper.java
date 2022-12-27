@@ -21,7 +21,7 @@ public interface QuestionMapper {
         QuestionDto.Response response = new QuestionDto.Response();
 
         response.setQuestion_id(question.getQuestion_id());
-        response.setMember_id(question.getMember().getMember_id());
+        response.setMember_id(question.getMember().getMemberId());
         response.setTitle(question.getTitle());
         response.setCreate_date(question.getCreate_date());
         response.setContent(question.getContent());
@@ -43,11 +43,11 @@ public interface QuestionMapper {
 
         Question question = new Question();
         Member member = new Member();
-        member.setMember_id(questionPostDto.getMember_id());
+        member.setMemberId(questionPostDto.getMember_id());
 
         question.setTitle( questionPostDto.getTitle() );
         question.setContent( questionPostDto.getContent());
-        question.setMember(memberService.findMember(member.getMember_id()));
+        question.setMember(memberService.findMember(member.getMemberId()));
         question.setCreate_date(LocalDateTime.now());
 
         return question;

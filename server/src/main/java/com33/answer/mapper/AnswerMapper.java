@@ -24,11 +24,11 @@ public interface AnswerMapper {
         Member member = new Member();
         Question question = new Question();
 
-        member.setMember_id(requestBody.getMember_id());
+        member.setMemberId(requestBody.getMember_id());
         question.setQuestion_id(requestBody.getQuestion_id());
 
         answer.setContent(requestBody.getContent());
-        answer.setMember(memberService.findMember(member.getMember_id()));
+        answer.setMember(memberService.findMember(member.getMemberId()));
         answer.setQuestion(questionService.findQuestion(question.getQuestion_id()));
         answer.setCreate_date(LocalDateTime.now());
 
@@ -49,7 +49,7 @@ public interface AnswerMapper {
         AnswerDto.Response response = new AnswerDto.Response();
 
         response.setAnswer_id(answer.getAnswer_id());
-        response.setMember_id(answer.getMember().getMember_id());
+        response.setMember_id(answer.getMember().getMemberId());
         response.setContent(answer.getContent());
         response.setCreate_date(answer.getCreate_date());
         response.setQuestion_id(answer.getQuestion().getQuestion_id());

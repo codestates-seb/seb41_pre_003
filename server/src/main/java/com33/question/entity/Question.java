@@ -3,7 +3,6 @@ package com33.question.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com33.answer.entity.Answer;
 import com33.member.entity.Member;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

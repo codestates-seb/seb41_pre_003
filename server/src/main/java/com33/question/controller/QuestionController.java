@@ -1,6 +1,5 @@
 package com33.question.controller;
 
-import com33.member.entity.Member;
 import com33.member.repository.MemberRepository;
 import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
@@ -10,10 +9,8 @@ import com33.question.repository.QuestionRepository;
 import com33.question.service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 

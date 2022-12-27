@@ -3,6 +3,8 @@ import com33.member.dto.MemberDto;
 import com33.member.entity.Member;
 import com33.member.mapper.MemberMapper;
 import com33.member.service.MemberService;
+import org.mapstruct.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.util.HashMap;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/members")

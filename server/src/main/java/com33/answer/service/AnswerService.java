@@ -35,7 +35,7 @@ public class AnswerService {
 
     public Answer creatAnswer(Answer answer){
        Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestion_id());
-       Member member = memberService.findVerifiedMember(answer.getMember().getMember_id());
+       Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
 
         answer.setQuestion(question);
         answer.setMember(member);
@@ -84,7 +84,7 @@ public class AnswerService {
 
     public void verifyExistsQuestionIdAndUserId(Answer answer) {
         questionService.findVerifiedQuestion(answer.getQuestion().getQuestion_id());
-        memberService.findVerifiedMember(answer.getMember().getMember_id());
+        memberService.findVerifiedMember(answer.getMember().getMemberId());
     }
 
     public List<Answer> findAnswers(Long question_id){

@@ -2,6 +2,8 @@ package com33.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -48,8 +50,10 @@ public class MemberDto {
         }
     }
 
+    @Setter
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Response{
         private Long member_id;
         private String pw;
@@ -57,5 +61,6 @@ public class MemberDto {
         private String gender;
         private int age;
         private String email;
+
     }
 }
