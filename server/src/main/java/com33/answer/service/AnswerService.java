@@ -5,8 +5,10 @@ import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.answer.repository.AnswerRepository;
 import com33.member.entity.Member;
+import com33.member.repository.MemberRepository;
 import com33.member.service.MemberService;
 import com33.question.entity.Question;
+import com33.question.repository.QuestionRepository;
 import com33.question.service.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -17,39 +19,47 @@ import java.util.Optional;
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
     private final QuestionService questionService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, MemberService memberService) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, QuestionService questionService, MemberService memberService,
+                         MemberRepository memberRepository) {
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
         this.questionService = questionService;
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
-    public Answer creatAnswer(Answer answer,long questionId, long memberId){
-        Member member = memberService.findVerifiedMember(memberId);
-        Question question = questionService.findVerifiedQuestion(questionId);
-        answer.setMember(member);
+    public Answer creatAnswer(Answer answer){
+       Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestion_id());
+       Member member = memberService.findVerifiedMember(answer.getMember().getMember_id());
+
         answer.setQuestion(question);
-        member.addAnswer(answer);
+        answer.setMember(member);
+
         question.addAnswer(answer);
+        member.addAnswer(answer);
+
+
+
 
         return answerRepository.save(answer);
     }
     public Answer findAnswer(long answer_Id) {
-        return findVerifiedAnswerByQuery(answer_Id);
+        return findVerifiedAnswer(answer_Id);
     }
-    public Answer updateAnswer(Answer answer,long questionId, long memberId) {
-        if (memberId != findVerifiedAnswer(answer.getAnswer_id()).getMember().getMember_id() &&
-            questionId != findVerifiedAnswer(answer.getAnswer_id()).getQuestion().getQuestion_id()){
-            throw new RuntimeException();
-        }
+    public Answer updateAnswer(Answer answer) {
 
         Answer findAnswer = findVerifiedAnswer(answer.getAnswer_id());
         findAnswer.setModifiedAt(LocalDateTime.now());
         Optional.ofNullable(answer.getContent())
                 .ifPresent(content -> findAnswer.setContent(content));
         return answerRepository.save(findAnswer);
+
+
     }
 
 //    public Page<Answer> findAnswers(int page, int size) {
@@ -72,17 +82,14 @@ public class AnswerService {
     }
 
 
-    private Answer findVerifiedAnswerByQuery(long answer_Id) {
-        Optional<Answer> optionalAnswer = answerRepository.findByAnswer_id(answer_Id);
-        Answer findAnswer =
-                optionalAnswer.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
-
-        return findAnswer;
-
+    public void verifyExistsQuestionIdAndUserId(Answer answer) {
+        questionService.findVerifiedQuestion(answer.getQuestion().getQuestion_id());
+        memberService.findVerifiedMember(answer.getMember().getMember_id());
     }
 
-    public List<Answer> findAnswers(){
-        return answerRepository.findAll();
+    public List<Answer> findAnswers(Long question_id){
+
+        Optional<Question> question = questionRepository.findByQuestion_id(question_id);
+        return answerRepository.findAllByQuestion(question.get());
     }
 }

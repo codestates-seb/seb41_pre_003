@@ -1,7 +1,5 @@
 package com33.question.mapper;
 
-import com33.question.dto.QuestionDto.Patch;
-import com33.question.dto.QuestionDto.Post;
 import com33.question.dto.QuestionDto.Response;
 import com33.question.entity.Question;
 import java.util.ArrayList;
@@ -11,40 +9,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-12-26T21:09:29+0900",
+    date = "2022-12-27T02:53:50+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.1.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionMapperImpl implements QuestionMapper {
-
-    @Override
-    public Question questionPostToQuestion(Post requestBody) {
-        if ( requestBody == null ) {
-            return null;
-        }
-
-        Question question = new Question();
-
-        question.setTitle( requestBody.getTitle() );
-        question.setContent( requestBody.getContent() );
-
-        return question;
-    }
-
-    @Override
-    public Question questionPatchToQuestion(Patch requestBody) {
-        if ( requestBody == null ) {
-            return null;
-        }
-
-        Question question = new Question();
-
-        question.setQuestion_id( requestBody.getQuestion_id() );
-        question.setTitle( requestBody.getTitle() );
-        question.setContent( requestBody.getContent() );
-
-        return question;
-    }
 
     @Override
     public List<Response> questionsToQuestionResponses(List<Question> questions) {

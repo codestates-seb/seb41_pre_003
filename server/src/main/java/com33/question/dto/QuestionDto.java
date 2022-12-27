@@ -38,6 +38,8 @@ public class QuestionDto {
 
         private String content;
 
+        private Long member_id;
+
 
         public void setQuestion_id(Long question_id) {
             this.question_id = question_id;

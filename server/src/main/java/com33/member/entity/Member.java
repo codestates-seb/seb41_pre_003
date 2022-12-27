@@ -42,6 +42,15 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
 
+    public Member(long member_id, String pw, String name, String gender, int age, String email) {
+        this.member_id = member_id;
+        this.pw = pw;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.email = email;
+    }
+
     public void addQuestion(Question question){
         questions.add(question);
         if (question.getMember() != this) {
