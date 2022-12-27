@@ -55,10 +55,11 @@ const Users = () => {
 
   useEffect(() => {
     axios
-
-      .get('http://localhost:3001/members')
+      // .get('/member')
+      .get('http://localhost:3001/member')
       .then((res) => {
         const data = res.data;
+        console.log(res.data);
         setUsers(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
@@ -78,7 +79,7 @@ const Users = () => {
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get('/members')
+      .get('/member')
       .then((res) => {
         const data = res.data;
         const filtered_data = data.filter((el) => el.name.includes(name));

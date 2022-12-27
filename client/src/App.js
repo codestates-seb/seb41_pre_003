@@ -23,9 +23,12 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/users/edit/1" element={<EditProfile />}></Route>
           <Route path="/users/delete/1" element={<DeleteProfile />}></Route>
-          <Route path="/users/:id/:name" element={<UserDetail />}></Route>
           <Route
-            path="/questions/:memberId"
+            path="/users/:member_id/:name"
+            element={<UserDetail />}
+          ></Route>
+          <Route
+            path="/questions/:question_id"
             element={<QuestionDetail />}
           ></Route>
         </Routes>

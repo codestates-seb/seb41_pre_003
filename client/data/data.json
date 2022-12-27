@@ -105,34 +105,34 @@
       "id": 13
     }
   ],
-  "question": [
+  "questions": [
     {
-      "id": 1,
+      "question_id": 1,
       "title": "질문1의 title",
-      "memberid": "작성자의 아이디",
+      "member_id": "작성자의 아이디",
       "content": "질문의 내용1",
-      "createdate": "2022-12-22"
+      "create_date": "2022-12-22"
     },
     {
-      "id": 2,
+      "question_id": 2,
       "title": "질문2의 title",
-      "memberid": "작성자의 아이디",
+      "member_id": "작성자의 아이디",
       "content": "질문의 내용2",
-      "createdate": "2022-12-22"
+      "create_date": "2022-12-22"
     },
     {
-      "id": 3,
+      "question_id": 3,
       "title": "질문3의 title",
-      "memberid": "작성자의 아이디",
+      "member_id": "작성자의 아이디",
       "content": "질문의 내용3",
-      "createdate": "2022-12-22"
+      "create_date": "2022-12-22"
     },
     {
-      "id": 4,
+      "question_id": 4,
       "title": "질문4의 title",
-      "memberid": "작성자의 아이디",
+      "member_id": "작성자의 아이디",
       "content": "질문의 내용4",
-      "createdate": "2022-12-22"
+      "create_date": "2022-12-22"
     }
   ],
   "answer": [
