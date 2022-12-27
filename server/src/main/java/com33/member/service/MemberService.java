@@ -6,6 +6,7 @@ import com33.exception.ExceptionCode;
 import com33.helper.event.MemberRegistrationApplicationEvent;
 import com33.member.entity.Member;
 import com33.member.repository.MemberRepository;
+import com33.question.entity.Question;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,11 +63,11 @@ public class MemberService {
 
         memberRepository.delete(findMember);
     }
-    public Member fineMember(String name){
-        Optional<Member> optionalMember =
+    public List<Member> findName(String name){
+        Optional<List<Member>> optionalMembers =
                 memberRepository.findByName(name);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
+        List<Member> findMember =
+                optionalMembers.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
     }

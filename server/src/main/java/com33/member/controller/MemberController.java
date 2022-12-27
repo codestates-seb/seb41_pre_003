@@ -71,4 +71,8 @@ public class MemberController {
 
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/search")
+    public ResponseEntity search(@RequestParam(value = "keyword") String keyword) {
+        return ResponseEntity.ok(mapper.membersToMemberResponses(memberService.findName(keyword)));
+    }
 }
