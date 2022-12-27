@@ -67,7 +67,7 @@ const HellowBox = styled.div`
   display: flex;
   color: white;
   font-size: 25px;
-  right: -300px;
+  left: -500px;
   box-shadow: 5px 5px 5px 5px gray;
   :after {
     content: '';
