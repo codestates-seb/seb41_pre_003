@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -84,14 +85,26 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public List<Question> searchQuestion(String keyword) {
-        Optional<List<Question>> optionalQuestions = questionRepository.findByTitleContaining(keyword);
-        List<Question> searchQuestion = optionalQuestions.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    public List<Question> searchQuestion(String type, String keyword) {
+        switch (type) {
+            case "1": {
+                Optional<List<Question>> optionalQuestions = questionRepository.findByTitleContaining(keyword);
+                return optionalQuestions.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            }
+            case "2": {
+                Optional<List<Question>> optionalQuestions = questionRepository.findByContentContaining(keyword);
+                return optionalQuestions.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            }
+            case "3": {
+                Optional<List<Question>> optionalQuestions = questionRepository.findByMember_Member_id(keyword);
+                return optionalQuestions.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            }
+        }
 
-        return searchQuestion;
+            return null;
+        }
+
     }
-
-
-
-}

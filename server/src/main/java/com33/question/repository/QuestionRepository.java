@@ -15,6 +15,8 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Optional<Question> findByQuestion_id(Long question_id);
 
     Optional<List<Question>> findByTitleContaining(String keyword);
+    Optional<List<Question>> findByContentContaining(String keyword);
+    Optional<List<Question>> findByMember_Member_id(String keyword);
 
 
 }

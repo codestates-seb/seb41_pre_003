@@ -42,7 +42,7 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
 
-        Question question = questionService.createQuestion(mapper.questionPostToQuestion(memberService,questionDto));
+        Question question = questionService.createQuestion(mapper.questionPostToQuestion(memberService, questionDto));
 
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
     }
@@ -77,8 +77,10 @@ public class QuestionController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity search(@RequestParam(value = "keyword") String keyword) {
-        return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.searchQuestion(keyword)));
+    public ResponseEntity search(@RequestParam(value = "type") String type,
+                                 @RequestParam(value = "keyword") String keyword
+    ) {
+        return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.searchQuestion(type, keyword)));
     }
 
 }
