@@ -6,7 +6,7 @@
       "name": "김길동",
       "email": "hgd@gmail.com",
       "age": "12",
-      "id": 1
+      "member_id": 1
     },
     {
       "pw": "1234",
@@ -14,7 +14,7 @@
       "name": "김영희",
       "email": "kyh@gmail.com",
       "age": 27,
-      "id": 2
+      "member_id": 2
     },
     {
       "pw": "1234",
@@ -22,7 +22,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 3
+      "member_id": 3
     },
     {
       "pw": "1234",
@@ -30,7 +30,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 4
+      "member_id": 4
     },
     {
       "pw": "1234",
@@ -38,7 +38,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 5
+      "member_id": 5
     },
     {
       "pw": "1234",
@@ -46,7 +46,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 6
+      "member_id": 6
     },
     {
       "pw": "1234",
@@ -54,7 +54,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 7
+      "member_id": 7
     },
     {
       "pw": "1234",
@@ -62,7 +62,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 8
+      "member_id": 8
     },
     {
       "pw": "1234",
@@ -70,7 +70,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 9
+      "member_id": 9
     },
     {
       "pw": "1234",
@@ -78,7 +78,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 10
+      "member_id": 10
     },
     {
       "pw": "1234",
@@ -86,7 +86,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 11
+      "member_id": 11
     },
     {
       "pw": "1234",
@@ -94,7 +94,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 12
+      "member_id": 12
     },
     {
       "pw": "1234",
@@ -102,7 +102,7 @@
       "name": "홍길동",
       "email": "hgd@gmail.com",
       "age": 27,
-      "id": 13
+      "member_id": 13
     }
   ],
   "questions": [
@@ -135,12 +135,12 @@
       "create_date": "2022-12-22"
     }
   ],
-  "answer": [
+  "answers": [
     {
-      "answerId": 1,
-      "id": 1,
+      "answer_id": 1,
+      "member_id": 1,
       "questionId": 1,
-      "createDate": "2022-12-22",
+      "create_date": "2022-12-22",
       "content": "가나다라마"
     }
   ]

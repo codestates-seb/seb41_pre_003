@@ -36,8 +36,8 @@ const QuestionList = () => {
 
   useEffect(() => {
     axios
-      .get('/questions')
-      // .get('http://localhost:3001/questions')
+      //.get('/questions')
+      .get('https://47ba-39-112-152-140.jp.ngrok.io/questions')
       .then((res) => {
         console.log('여기', res);
         const Data = Object.values(res.data);

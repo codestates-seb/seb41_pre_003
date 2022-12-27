@@ -179,7 +179,7 @@ const UserDetail = () => {
         <Nav />
         <SettingsContainer>
           <Settings>
-           <HellowBox>Wellcome!</HellowBox>
+            <HellowBox>Wellcome!</HellowBox>
             <UserHeader></UserHeader>
             {!loading ? (
               <MainContainer>
