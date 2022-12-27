@@ -114,7 +114,7 @@ const HellowBox = styled.div`
     }
     50% {
       opacity: 1;
-      left: 500px;
+      left: 600px;
     }
     100% {
       opacity: 0;
@@ -147,23 +147,23 @@ const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const params = useParams();
-  // console.log(params.id);
+  console.log(params);
   useEffect(() => {
     axios
-      .get('/members')
-      // .get('http://localhost:3001/members')
+      // .get('/members')
+      .get('http://localhost:3001/member')
       .then(async (res) => {
         const Data = Object.values(res.data);
+        console.log(Data)
         let dataObj = {};
         await Promise.all(
           Data.map((item) => {
-            if (item.id === parseInt(params.id)) {
-              console.log(item);
+            if (item.id === parseInt(params.member_id)) {
               dataObj = item;
             }
           })
         );
-        console.log(dataObj);
+        // console.log(dataObj);
         setData(dataObj);
         setLoading(false);
       })

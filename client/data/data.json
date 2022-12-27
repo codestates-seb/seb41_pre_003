@@ -125,7 +125,7 @@
       "title": "질문3의 title",
       "member_id": "작성자의 아이디",
       "content": "질문의 내용3",
-      "create__date": "2022-12-22"
+      "create_date": "2022-12-22"
     },
     {
       "question_id": 4,
