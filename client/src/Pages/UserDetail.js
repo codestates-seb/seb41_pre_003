@@ -115,11 +115,11 @@ const Settings = styled.div`
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { member_id, name } = useParams();
+  const { memberId, name } = useParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/members/${member_id}`)
+      .get(`/members/${memberId}`)
       .then((res) => {
         const data = res.data;
         setData(data);
@@ -138,7 +138,7 @@ const UserDetail = () => {
         <SettingsContainer>
           <Settings>
             <HellowBox>Welcome!</HellowBox>
-            <UserHeader member_id={member_id} name={name} />
+            <UserHeader memberId={memberId} name={name} />
             {!loading ? (
               <MainContainer>
                 <ProfileList>

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import Header from '../Component/Header';
-import ToastEditor from '../Component/ToastEditor';
-import Button from '../Component/Button';
+// import ToastEditor from '../Component/ToastEditor';
+// import Button from '../Component/Button';
+import QuestionInput from '../Component/QuestionInput';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -26,22 +27,22 @@ const TipDiv = styled.div`
   }
 `;
 
-const QuestionForm = styled.form`
-  input {
-    width: 100%;
-  }
-  button {
-  }
-`;
+// const QuestionForm = styled.form`
+//   input {
+//     width: 100%;
+//   }
+//   button {
+//   }
+// `;
 
-const InputContainer = styled.div`
-  border: 1px solid black;
-  padding: 30px;
-  margin: 10px;
-  div {
-    margin-bottom: 10px;
-  }
-`;
+// const InputContainer = styled.div`
+//   border: 1px solid black;
+//   padding: 30px;
+//   margin: 10px;
+//   div {
+//     margin-bottom: 10px;
+//   }
+// `;
 
 const Question = () => {
   const [title, setTitle] = useState('');
@@ -95,7 +96,7 @@ const Question = () => {
             <li>Review your question and post it to the site.</li>
           </ul>
         </TipDiv>
-        <QuestionForm>
+        {/* <QuestionForm>
           <InputContainer>
             <div>Title</div>
             <input type="text" value={title} onChange={handleChangeTitle} />
@@ -112,7 +113,14 @@ const Question = () => {
             value="Review your question"
             onClick={handleButtonClick}
           ></Button>
-        </QuestionForm>
+        </QuestionForm> */}
+        <QuestionInput
+          title={title}
+          handleChangeTitle={handleChangeTitle}
+          inputContent={'What are the details of your problem?'}
+          setContent={setContent}
+          handleButtonClick={handleButtonClick}
+        ></QuestionInput>
       </QuestionContainer>
     </>
   );

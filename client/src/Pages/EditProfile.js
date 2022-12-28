@@ -194,7 +194,7 @@ const EditProfile = () => {
           <SettingsNav path={path} memberId={memberId} />
           <Settings>
             <SettingsTitle title="Edit your profile" />
-            <UserHeader id={memberId} name={name} />
+            <UserHeader memberId={memberId} name={name} />
             {!isLoading ? (
               <EditTable onSubmit={updateAccount}>
                 <table>

@@ -13,12 +13,12 @@ const EditContainer = styled.div`
 const EditQuestion = () => {
   //   const handlePatch = () => {
   //     axios
-  //       .patch(`/questions/${question_id}`, {
+  //       .patch(`/questions/${questionId}`, {
   //         title: question.title,
   //         content: question.content,
   //       })
   //       .then(() => {
-  //         navigate(`/questions/${question_id}`);
+  //         navigate(`/questions/${questionId}`);
   //       })
   //       .catch((err) => {
   //         console.log(err);

@@ -11,6 +11,10 @@ const MainContainer = styled.div`
   height: auto;
   padding: 30px;
   section {
+    div {
+      width: 200px;
+      height: 60px;
+    }
     font-size: 50px;
     width: 100%;
     display: flex;
@@ -22,6 +26,10 @@ const MainContainer = styled.div`
       border-radius: 50%;
       object-position: center;
       object-fit: cover;
+      div {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 `;
@@ -55,17 +63,17 @@ const LogoImg = styled.img`
   width: 300px;
 `;
 
-const UserHeader = ({ member_id, name }) => {
+const UserHeader = ({ memberId, name }) => {
   return (
     <MainContainer>
       <section>
-        <img src={`https://picsum.photos/seed/${member_id}/200/200`}></img>
+        <img src={`https://picsum.photos/seed/${memberId}/200/200`}></img>
         <div>{name}</div>
         <LogoImg src={logo}></LogoImg>
       </section>
       <FlexBox>
-        <NavTab to={`/users/${member_id}/${name}`}>Profile</NavTab>
-        <NavTab to={`/users/edit/${member_id}`}>Setting</NavTab>
+        <NavTab to={`/users/${memberId}/${name}`}>Profile</NavTab>
+        <NavTab to={`/users/edit/${memberId}`}>Setting</NavTab>
       </FlexBox>
     </MainContainer>
   );

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 const UserItemContainer = styled.li`
   display: flex;
@@ -47,20 +49,37 @@ const UserName = styled(Link)`
   font-size: 23px;
 `;
 
-const UserItem = ({ data }) => {
+const UserItem = ({ memberId }) => {
+  const [data, setData] = useState(''); //null
+
+  useEffect(() => {
+    axios
+      .get(`/members/${memberId}`)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <UserItemContainer>
-      <img
-        src={`https://picsum.photos/seed/${data.member_id}/200/200`}
-        alt={`avatar of ${data.name}`}
-      />
-      <UserInfo>
-        <UserName to={`/users/${data.member_id}/${data.name}`}>
-          {data.name}
-        </UserName>
-        <div>{data.email}</div>
-        <div>{data.gender}</div>
-      </UserInfo>
+      {data && (
+        <>
+          <img
+            src={`https://picsum.photos/seed/${data.memberId}/200/200`}
+            alt={`avatar of ${data.name}`}
+          />
+          <UserInfo>
+            <UserName to={`/users/${data.memberId}/${data.name}`}>
+              {data.name}
+            </UserName>
+            <div>{data.email}</div>
+            <div>{data.gender}</div>
+          </UserInfo>
+        </>
+      )}
     </UserItemContainer>
   );
 };

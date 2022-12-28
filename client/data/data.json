@@ -107,7 +107,7 @@
   ],
   "questions": [
     {
-      "id": 1,
+      "question_id": 1,
       "title": "질문1의 title",
       "member_id": "작성자의 아이디",
       "content": "질문의 내용1",

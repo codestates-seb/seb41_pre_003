@@ -12,6 +12,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-js-pagination": "^3.0.3",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.5.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
@@ -50,5 +51,6 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.1"
-  }
+  },
+  "proxy": "http://ec2-43-200-243-7.ap-northeast-2.compute.amazonaws.com:8080"
 }

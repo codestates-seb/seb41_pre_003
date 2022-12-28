@@ -59,29 +59,30 @@ const QuestionDetail = () => {
   const [isLoading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const { question_id } = useParams();
+  const { questionId } = useParams();
 
   useEffect(() => {
     axios
       // .get(`/questions/${question_id}`)
-      .get(`http://localhost:3001/questions/${question_id}`)
+      .get(`/questions/${questionId}`)
       .then((res) => {
         setQuestion(res.data);
+        console.log('question: ', question);
+
         axios
-          // .get(`/questions/${question_id}/answers`)
-          // .get(`http://localhost:3001/questions/${question_id}/answers`)
-          .get(`http://localhost:3001/answers`)
+          .get(`/questions/${questionId}/answers`)
+          // .get(`http://localhost:3001/questions/${questionId}/answers`)
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
             console.log('answer: ', answer);
           })
           .catch((err) => {
-            console.log(err);
+            console.log('answer err: ', err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.log('question err:', err);
       });
   }, []);
 
@@ -91,7 +92,7 @@ const QuestionDetail = () => {
 
   const handleDelete = () => {
     axios
-      .delete(`/questions/${question_id}`)
+      .delete(`/questions/${questionId}`)
       .then((res) => {
         console.log(res);
         navigate(`/questions`);
@@ -100,7 +101,6 @@ const QuestionDetail = () => {
         console.log(err);
       });
   };
-
   return (
     <>
       <Header></Header>
@@ -119,12 +119,20 @@ const QuestionDetail = () => {
               <span>Modified {question.modifiedAt}</span>
             </Info>
             <Content data={question} handleDelete={handleDelete}></Content>
-            <h2>{answer.length !== undefined ? answer.length : 0} Answer</h2>
-            {answer.length > 0
-              ? answer.map((el) => {
-                  <Content data={el} handleDelete={handleDelete}></Content>;
-                })
-              : ''}
+            <h2>
+              {answer.length > 1
+                ? `${answer.length} Answers`
+                : `${answer.length} Answer`}
+            </h2>
+            {answer.map((el) => {
+              return (
+                <Content
+                  data={el}
+                  handleDelete={handleDelete}
+                  key={el.answerId}
+                ></Content>
+              );
+            })}
             <AnswerCreate>
               <p>
                 Know someone who can answer? Share a link to this question via
@@ -134,6 +142,7 @@ const QuestionDetail = () => {
               <AnswerForm>
                 <ToastEditor></ToastEditor>
               </AnswerForm>
+              <Button value="Submit your Answer"></Button>
             </AnswerCreate>
           </QDContainer>
         ) : (

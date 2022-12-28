@@ -35,19 +35,20 @@ const UserItemContainer = styled.div`
 `;
 
 const Content = ({ data, handleDelete }) => {
+  console.log(data);
   return (
     <>
       <ContentContainer>
         <MiniContent>{data.content}</MiniContent>
         <div>
           <ButtonContainer>
-            {!data.answer_id ? (
-              <Link to={`/questions/edit/${data.question_id}`}>
+            {data.answerId === undefined ? (
+              <Link to={`/questions/edit/${data.questionId}`}>
                 <button>edit</button>
               </Link>
             ) : (
               <Link
-                to={`/questions/${data.question_id}/answers/edit/${data.answer_id}`}
+                to={`/questions/${data.questionId}/answers/edit/${data.answerId}`}
               >
                 <button>edit</button>
               </Link>
@@ -55,7 +56,7 @@ const Content = ({ data, handleDelete }) => {
             <button onClick={handleDelete}>delete</button>
           </ButtonContainer>
           <UserItemContainer>
-            <UserItem data={data.member_id}></UserItem>
+            <UserItem memberId={data.memberId}></UserItem>
           </UserItemContainer>
         </div>
       </ContentContainer>

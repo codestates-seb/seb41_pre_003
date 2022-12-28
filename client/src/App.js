@@ -26,21 +26,18 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/users/edit/1" element={<EditProfile />}></Route>
           <Route path="/users/delete/1" element={<DeleteProfile />}></Route>
+          <Route path="/users/:memberId/:name" element={<UserDetail />}></Route>
           <Route
-            path="/users/:member_id/:name"
-            element={<UserDetail />}
-          ></Route>
-          <Route
-            path="/questions/:question_id"
+            path="/questions/:questionId"
             element={<QuestionDetail />}
           ></Route>
           <Route path="/questions/ask" element={<Question />} />
           <Route
-            path="/questions/edit/:question_id"
+            path="/questions/edit/:questionId"
             element={<EditQuestion></EditQuestion>}
           ></Route>
           <Route
-            path="/questions/:question_id/answers/edit/:answer_id"
+            path="/questions/:questionId/answers/edit/:answerId"
             element={<EditAnswer></EditAnswer>}
           ></Route>
         </Routes>

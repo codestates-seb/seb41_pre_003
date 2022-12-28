@@ -55,10 +55,9 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then((res) => {
         const data = res.data;
-        console.log(res.data);
         setUsers(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
@@ -78,7 +77,7 @@ const Users = () => {
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get('http://localhost:3001/members')
+      .get('/members')
       .then((res) => {
         const data = res.data;
         const filtered_data = data.filter((el) => el.name.includes(name));
@@ -107,7 +106,7 @@ const Users = () => {
             <>
               <ul>
                 {users.slice((page - 1) * limit, page * limit).map((data) => (
-                  <UserItem data={data} key={data.member_id} />
+                  <UserItem memberId={data.memberId} key={data.memberId} />
                 ))}
               </ul>
               <Pagination
