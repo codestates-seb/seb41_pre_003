@@ -9,6 +9,7 @@ import com33.question.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class QuestionService {
 
     public Question updateQuestion(Question question) {
 
-        Question findQuestion = findVerifiedQuestion(question.getQuestion_id());
+        Question findQuestion = findVerifiedQuestion(question.getQuestionId());
         findQuestion.setModifiedAt(LocalDateTime.now());
         Optional.ofNullable(question.getTitle())
                 .ifPresent(title -> findQuestion.setTitle(title));
@@ -67,7 +68,7 @@ public class QuestionService {
 
 
     private Question findVerifiedQuestionByQuery(long question_Id) {
-        Optional<Question> optionalQuestion = questionRepository.findByQuestion_id(question_Id);
+        Optional<Question> optionalQuestion = questionRepository.findByQuestionId(question_Id);
         Question findQuestion =
                 optionalQuestion.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
@@ -99,7 +100,7 @@ public class QuestionService {
             }
         }
 
-            return null;
-        }
-
+        return null;
     }
+
+}

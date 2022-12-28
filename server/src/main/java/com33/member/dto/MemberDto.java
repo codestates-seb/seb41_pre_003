@@ -31,7 +31,7 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Patch{
 
-        private Long member_id;
+        private Long memberId;
         @NotBlank
         private String pw;
 
@@ -46,7 +46,7 @@ public class MemberDto {
 
 
         public void setMember_id(long member_id) {
-            this.member_id = member_id;
+            this.memberId = memberId;
         }
     }
 
@@ -55,7 +55,7 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
-        private Long member_id;
+        private Long memberId;
         private String pw;
         private String name;
         private String gender;

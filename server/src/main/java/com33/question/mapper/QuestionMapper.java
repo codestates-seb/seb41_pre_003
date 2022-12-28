@@ -20,8 +20,8 @@ public interface QuestionMapper {
     default QuestionDto.Response questionToQuestionResponse(Question question) {
         QuestionDto.Response response = new QuestionDto.Response();
 
-        response.setQuestion_id(question.getQuestion_id());
-        response.setMember_id(question.getMember().getMemberId());
+        response.setQuestionId(question.getQuestionId());
+        response.setMemberId(question.getMember().getMemberId());
         response.setTitle(question.getTitle());
         response.setCreate_date(question.getCreate_date());
         response.setContent(question.getContent());
@@ -30,7 +30,7 @@ public interface QuestionMapper {
     default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
         Question question = new Question();
 
-        question.setQuestion_id(requestBody.getQuestion_id());
+        question.setQuestionId(requestBody.getQuestionId());
         question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
 
@@ -43,7 +43,7 @@ public interface QuestionMapper {
 
         Question question = new Question();
         Member member = new Member();
-        member.setMemberId(questionPostDto.getMember_id());
+        member.setMemberId(questionPostDto.getMemberId());
 
         question.setTitle( questionPostDto.getTitle() );
         question.setContent( questionPostDto.getContent());

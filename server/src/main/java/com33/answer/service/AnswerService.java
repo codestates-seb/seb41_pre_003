@@ -34,7 +34,7 @@ public class AnswerService {
     }
 
     public Answer creatAnswer(Answer answer){
-       Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestion_id());
+       Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
        Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
 
         answer.setQuestion(question);
@@ -53,7 +53,7 @@ public class AnswerService {
     }
     public Answer updateAnswer(Answer answer) {
 
-        Answer findAnswer = findVerifiedAnswer(answer.getAnswer_id());
+        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
         findAnswer.setModifiedAt(LocalDateTime.now());
         Optional.ofNullable(answer.getContent())
                 .ifPresent(content -> findAnswer.setContent(content));
@@ -83,13 +83,13 @@ public class AnswerService {
 
 
     public void verifyExistsQuestionIdAndUserId(Answer answer) {
-        questionService.findVerifiedQuestion(answer.getQuestion().getQuestion_id());
+        questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
         memberService.findVerifiedMember(answer.getMember().getMemberId());
     }
 
-    public List<Answer> findAnswers(Long question_id){
+    public List<Answer> findAnswers(Long questionId){
 
-        Optional<Question> question = questionRepository.findByQuestion_id(question_id);
+        Optional<Question> question = questionRepository.findByQuestionId(questionId);
         return answerRepository.findAllByQuestion(question.get());
     }
 }

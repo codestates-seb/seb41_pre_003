@@ -42,8 +42,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
 
-    public Member(long member_id, String pw, String name, String gender, int age, String email) {
-        this.memberId = member_id;
+    public Member(long memberId, String pw, String name, String gender, int age, String email) {
+        this.memberId = memberId;
         this.pw = pw;
         this.name = name;
         this.gender = gender;

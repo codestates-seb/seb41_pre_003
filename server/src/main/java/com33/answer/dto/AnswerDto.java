@@ -16,8 +16,8 @@ public class AnswerDto {
     @Setter
     @AllArgsConstructor
     public static class Post {
-        private long question_id;
-        private long member_id;
+        private long questionId;
+        private long memberId;
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
 
@@ -27,15 +27,15 @@ public class AnswerDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
-        private long answer_id;
-        private long member_id;
-        private long question_id;
+        private long answerId;
+        private long memberId;
+        private long questionId;
         @NotBlank
         private String content;
         private LocalDateTime create_date;
 
-        public void setAnswer_id(long answer_id) {
-            this.answer_id = answer_id;
+        public void setAnswerId(long answerId) {
+            this.answerId = answerId;
         }
     }
 
@@ -44,9 +44,9 @@ public class AnswerDto {
     @Getter
     @AllArgsConstructor
     public static class Response {
-        private long answer_id;
-        private long question_id;
-        private long member_id;
+        private long answerId;
+        private long questionId;
+        private long memberId;
         private String content;
         private LocalDateTime create_date;
     }

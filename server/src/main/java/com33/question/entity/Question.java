@@ -18,7 +18,7 @@ import java.util.List;
 public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long question_id;
+    private Long questionId;
     @Column(length = 20, nullable = false)
     private String title;
     @Column(nullable = false)
@@ -30,7 +30,7 @@ public class Question {
 
     @JsonIgnore
     @ManyToOne(optional = false)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "memberId")
     private Member member;
 
     @JsonIgnore
