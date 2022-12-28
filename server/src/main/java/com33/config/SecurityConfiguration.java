@@ -48,6 +48,9 @@ public class SecurityConfiguration {
                 .httpBasic().disable()
                 .apply(new CustomFilterConfigurer())
                 .and()
+                .logout()
+                .logoutUrl("/auth/logout") //logout 처리 url
+                .and()
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
@@ -76,7 +79,7 @@ public class SecurityConfiguration {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");          // default url
+            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");          // login url
 
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
