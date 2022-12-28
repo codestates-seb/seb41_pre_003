@@ -26,6 +26,8 @@ public class MemberDto {
 
         @Email
         private String email;
+
+
     }
     @Getter
     @AllArgsConstructor
@@ -44,6 +46,14 @@ public class MemberDto {
         @Email
         private String email;
 
+
+//        public Patch(String pw, String name, String gender, int age, String email) {
+//            this.pw = pw;
+//            this.name =  name;
+//            this.gender = gender;
+//            this.age = age;
+//            this.email = email;
+//        }
 
         public void setMember_id(long member_id) {
             this.member_id = member_id;

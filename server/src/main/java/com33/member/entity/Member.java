@@ -51,6 +51,14 @@ public class Member {
         this.email = email;
     }
 
+    public Member(String pw, String name, String gender, int age, String email) {
+        this.pw = pw;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.email = email;
+    }
+
     public void addQuestion(Question question){
         questions.add(question);
         if (question.getMember() != this) {
