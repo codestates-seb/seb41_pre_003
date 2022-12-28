@@ -27,6 +27,10 @@ public class Question {
     private LocalDateTime create_date = LocalDateTime.now();
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private int viewCount;
+    @Column(nullable = false)
+    private int voteCount;
 
     @JsonIgnore
     @ManyToOne(optional = false)

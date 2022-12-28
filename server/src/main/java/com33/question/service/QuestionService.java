@@ -27,13 +27,18 @@ public class QuestionService {
 //        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
         Member member = memberService.getLoginMember();
         question.setMember(member);
+        question.setViewCount(0);
+        question.setVoteCount(0);
         member.addQuestion(question);
 
         return questionRepository.save(question);
     }
 
     public Question findQuestion(long question_Id) {
-        return findVerifiedQuestionByQuery(question_Id);
+        Question question = findVerifiedQuestionByQuery(question_Id);
+        question.setViewCount(question.getViewCount()+1);
+        questionRepository.save(question);
+        return question;
     }
 
     public Question updateQuestion(Question question) {
@@ -76,6 +81,16 @@ public class QuestionService {
 
         return findQuestion;
 
+    }
+    public Question voteQuestion(Question question, Boolean vote) {
+        Question findQuestion = findVerifiedQuestionByQuery(question.getQuestionId());
+        if (vote.equals(true)) {
+            findQuestion.setVoteCount(question.getVoteCount()+1);
+        } else {
+            findQuestion.setVoteCount(question.getVoteCount()-1);
+        }
+
+        return questionRepository.save(findQuestion);
     }
 
     public List<Question> findQuestions() {

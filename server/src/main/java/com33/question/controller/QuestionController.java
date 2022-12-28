@@ -1,18 +1,19 @@
 package com33.question.controller;
 
-import com33.member.repository.MemberRepository;
 import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
 import com33.question.mapper.QuestionMapper;
 import com33.question.repository.QuestionRepository;
 import com33.question.service.QuestionService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/questions")
@@ -22,13 +23,16 @@ public class QuestionController {
     private final QuestionMapper mapper;
 
     private final MemberService memberService;
+    private final QuestionRepository questionRepository;
 
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService) {
+    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService,
+                              QuestionRepository questionRepository) {
         this.questionService = questionService;
         this.mapper = mapper;
         this.memberService = memberService;
 
+        this.questionRepository = questionRepository;
     }
 
     @PostMapping
@@ -51,7 +55,6 @@ public class QuestionController {
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
-
         return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
@@ -75,4 +78,14 @@ public class QuestionController {
         return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.searchQuestion(type, keyword)));
     }
 
+    @PatchMapping("/{question-id}/vote")
+    public ResponseEntity patchVote(@PathVariable("question-id") @Positive Long questionId,
+                                    @RequestParam(value = "vote") boolean vote) {
+
+
+        Question question = questionService.voteQuestion(questionRepository.findByQuestionId(questionId).get(),vote);
+
+        return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
+
+    }
 }
