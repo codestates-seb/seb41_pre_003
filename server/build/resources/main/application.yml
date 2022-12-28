@@ -3,9 +3,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://pre-database.cw5xe4m9mnym.ap-northeast-2.rds.amazonaws.com:3306/pre?serverTimezone=Asia/Seoul&characterEncoding=UTF-8

@@ -22,17 +22,13 @@ public class QuestionController {
     private final QuestionMapper mapper;
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
-    private final QuestionRepository questionRepository;
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService,
-                              MemberRepository memberRepository,
-                              QuestionRepository questionRepository) {
+
+    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService) {
         this.questionService = questionService;
         this.mapper = mapper;
         this.memberService = memberService;
-        this.memberRepository = memberRepository;
-        this.questionRepository = questionRepository;
+
     }
 
     @PostMapping

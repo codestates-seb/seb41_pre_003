@@ -3,7 +3,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
     hibernate:
       ddl-auto: none
   datasource:
