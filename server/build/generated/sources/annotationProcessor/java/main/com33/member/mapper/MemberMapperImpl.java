@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-12-27T09:46:50+0900",
-    comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.1.jar, environment: Java 11.0.11 (Oracle Corporation)"
+    date = "2022-12-28T15:46:53+0900",
+    comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.1.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
@@ -42,7 +42,7 @@ public class MemberMapperImpl implements MemberMapper {
 
         Member member = new Member();
 
-        member.setMember_id( requestBody.getMember_id() );
+        member.setMemberId( requestBody.getMemberId() );
         member.setPw( requestBody.getPw() );
         member.setName( requestBody.getName() );
         member.setGender( requestBody.getGender() );
@@ -58,21 +58,14 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        Long member_id = null;
-        String pw = null;
-        String name = null;
-        String gender = null;
-        int age = 0;
-        String email = null;
+        Response response = new Response();
 
-        member_id = member.getMember_id();
-        pw = member.getPw();
-        name = member.getName();
-        gender = member.getGender();
-        age = member.getAge();
-        email = member.getEmail();
-
-        Response response = new Response( member_id, pw, name, gender, age, email );
+        response.setMemberId( member.getMemberId() );
+        response.setPw( member.getPw() );
+        response.setName( member.getName() );
+        response.setGender( member.getGender() );
+        response.setAge( member.getAge() );
+        response.setEmail( member.getEmail() );
 
         return response;
     }

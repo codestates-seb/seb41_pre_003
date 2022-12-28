@@ -24,12 +24,12 @@ public interface AnswerMapper {
         Member member = new Member();
         Question question = new Question();
 
-        member.setMember_id(requestBody.getMember_id());
-        question.setQuestion_id(requestBody.getQuestion_id());
+        member.setMemberId(requestBody.getMemberId());
+        question.setQuestionId(requestBody.getQuestionId());
 
         answer.setContent(requestBody.getContent());
-        answer.setMember(memberService.findMember(member.getMember_id()));
-        answer.setQuestion(questionService.findQuestion(question.getQuestion_id()));
+        answer.setMember(memberService.findMember(member.getMemberId()));
+        answer.setQuestion(questionService.findQuestion(question.getQuestionId()));
         answer.setCreate_date(LocalDateTime.now());
 
         return answer;
@@ -37,7 +37,7 @@ public interface AnswerMapper {
     default Answer answerPatchToAnswer(AnswerDto.Patch requestBody){
         Answer answer = new Answer();
 
-        answer.setAnswer_id(requestBody.getAnswer_id());
+        answer.setAnswerId(requestBody.getAnswerId());
         answer.setContent(requestBody.getContent());
         answer.setCreate_date(requestBody.getCreate_date());
 
@@ -48,11 +48,11 @@ public interface AnswerMapper {
     default AnswerDto.Response answerToAnswerResponse(Answer answer) {
         AnswerDto.Response response = new AnswerDto.Response();
 
-        response.setAnswer_id(answer.getAnswer_id());
-        response.setMember_id(answer.getMember().getMember_id());
+        response.setAnswerId(answer.getAnswerId());
+        response.setMemberId(answer.getMember().getMemberId());
         response.setContent(answer.getContent());
         response.setCreate_date(answer.getCreate_date());
-        response.setQuestion_id(answer.getQuestion().getQuestion_id());
+        response.setQuestionId(answer.getQuestion().getQuestionId());
 
 
         return response;

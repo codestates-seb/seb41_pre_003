@@ -4,15 +4,12 @@ import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
-import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
 import com33.question.repository.QuestionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +24,7 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question) {
-        Member member = memberService.findVerifiedMember(question.getMember().getMember_id());
+        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
         question.setMember(member);
         member.addQuestion(question);
 
@@ -40,7 +37,7 @@ public class QuestionService {
 
     public Question updateQuestion(Question question) {
 
-        Question findQuestion = findVerifiedQuestion(question.getQuestion_id());
+        Question findQuestion = findVerifiedQuestion(question.getQuestionId());
         findQuestion.setModifiedAt(LocalDateTime.now());
         Optional.ofNullable(question.getTitle())
                 .ifPresent(title -> findQuestion.setTitle(title));
@@ -60,8 +57,8 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
-    public Question findVerifiedQuestion(long question_Id) {
-        Optional<Question> optionalQuestion = questionRepository.findById(question_Id);
+    public Question findVerifiedQuestion(long questionId) {
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findQuestion =
                 optionalQuestion.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
@@ -70,8 +67,8 @@ public class QuestionService {
     }
 
 
-    private Question findVerifiedQuestionByQuery(long question_Id) {
-        Optional<Question> optionalQuestion = questionRepository.findByQuestion_id(question_Id);
+    private Question findVerifiedQuestionByQuery(long questionId) {
+        Optional<Question> optionalQuestion = questionRepository.findByQuestionId(questionId);
         Question findQuestion =
                 optionalQuestion.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
@@ -84,14 +81,26 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public List<Question> searchQuestion(String keyword) {
-        Optional<List<Question>> optionalQuestions = questionRepository.findByTitleContaining(keyword);
-        List<Question> searchQuestion = optionalQuestions.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    public List<Question> searchQuestion(String type, String keyword) {
+        switch (type) {
+            case "1": {
+                Optional<List<Question>> optionalQuestions = questionRepository.findByTitleContaining(keyword);
+                return optionalQuestions.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            }
+            case "2": {
+                Optional<List<Question>> optionalQuestions = questionRepository.findByContentContaining(keyword);
+                return optionalQuestions.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            }
+            case "3": {
+                Optional<List<Question>> optionalQuestions = questionRepository.findByMemberMemberId(memberService.findName(keyword).get(0).getMemberId());
+                return optionalQuestions.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            }
+        }
 
-        return searchQuestion;
+        return null;
     }
-
-
 
 }

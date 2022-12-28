@@ -3,7 +3,6 @@ package com33.question.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com33.answer.entity.Answer;
 import com33.member.entity.Member;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,7 @@ import java.util.List;
 public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long question_id;
+    private Long questionId;
     @Column(length = 20, nullable = false)
     private String title;
     @Column(nullable = false)
@@ -31,7 +30,7 @@ public class Question {
 
     @JsonIgnore
     @ManyToOne(optional = false)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "memberId")
     private Member member;
 
     @JsonIgnore

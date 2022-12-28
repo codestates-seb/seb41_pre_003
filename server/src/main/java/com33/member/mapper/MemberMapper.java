@@ -3,7 +3,9 @@ package com33.member.mapper;
 import com33.member.dto.MemberDto;
 import com33.member.entity.Member;
 import org.mapstruct.Mapper;
+import org.mapstruct.Qualifier;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 

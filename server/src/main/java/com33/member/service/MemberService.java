@@ -44,7 +44,7 @@ public class MemberService {
         return savedMember;
     }
     public Member updateMember(Member member){
-        Member findMember = findVerifiedMember(member.getMember_id());
+        Member findMember = findVerifiedMember(member.getMemberId());
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
         Optional.ofNullable(member.getAge())
@@ -66,10 +66,8 @@ public class MemberService {
     public List<Member> findName(String name){
         Optional<List<Member>> optionalMembers =
                 memberRepository.findByName(name);
-        List<Member> findMember =
-                optionalMembers.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return findMember;
+        return optionalMembers.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =

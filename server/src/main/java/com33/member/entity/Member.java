@@ -21,7 +21,7 @@ import java.util.List;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long member_id;
+    private Long memberId;
     @Column(nullable = false)
     private String pw;
 
@@ -42,8 +42,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
 
-    public Member(long member_id, String pw, String name, String gender, int age, String email) {
-        this.member_id = member_id;
+    public Member(long memberId, String pw, String name, String gender, int age, String email) {
+        this.memberId = memberId;
         this.pw = pw;
         this.name = name;
         this.gender = gender;
