@@ -27,17 +27,20 @@ public class QuestionDto {
     public static class Patch {
         private Long questionId;
         @NotBlank
-        private String title;
-
         private String content;
-
-        private Long memberId;
-
-
         public void setQuestionId(Long questionId) {
             this.questionId = questionId;
         }
     }
+    @Getter
+    @AllArgsConstructor
+    public static class Vote {
+        private Long questionId;
+        public void setQuestionId(Long questionId) {
+            this.questionId = questionId;
+        }
+    }
+
 
     @NoArgsConstructor
     @Setter
@@ -49,5 +52,7 @@ public class QuestionDto {
         private String title;
         private String content;
         private LocalDateTime create_date;
+        private int viewCount;
+        private int voteCount;
     }
 }

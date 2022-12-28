@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionMapper {
 
@@ -25,19 +24,23 @@ public interface QuestionMapper {
         response.setTitle(question.getTitle());
         response.setCreate_date(question.getCreate_date());
         response.setContent(question.getContent());
+        response.setViewCount(question.getViewCount());
+        response.setVoteCount(question.getVoteCount());
+
         return response;
     }
+
     default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
         Question question = new Question();
 
         question.setQuestionId(requestBody.getQuestionId());
-        question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
 
         return question;
     }
+
     default Question questionPostToQuestion(MemberService memberService, QuestionDto.Post questionPostDto) {
-        if ( questionPostDto == null ) {
+        if (questionPostDto == null) {
             return null;
         }
 
@@ -45,8 +48,8 @@ public interface QuestionMapper {
         Member member = new Member();
         member.setMemberId(questionPostDto.getMemberId());
 
-        question.setTitle( questionPostDto.getTitle() );
-        question.setContent( questionPostDto.getContent());
+        question.setTitle(questionPostDto.getTitle());
+        question.setContent(questionPostDto.getContent());
         question.setMember(memberService.findMember(member.getMemberId()));
         question.setCreate_date(LocalDateTime.now());
 
@@ -54,5 +57,16 @@ public interface QuestionMapper {
     }
 
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
+
+    default Question questionVoteToQuestion(QuestionDto.Vote questionVoteDto) {
+        if (questionVoteDto == null) {
+            return null;
+        }
+
+        Question question = new Question();
+        question.setQuestionId(questionVoteDto.getQuestionId());
+
+        return question;
+    }
 
 }
