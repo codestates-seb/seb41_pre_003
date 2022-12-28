@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/members")
 public class MemberController {

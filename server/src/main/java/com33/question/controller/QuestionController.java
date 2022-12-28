@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
