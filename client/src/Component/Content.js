@@ -1,3 +1,4 @@
+import UserItem from '../Component/UserItem';
 import styled from 'styled-components';
 
 const ContentContainer = styled.div`
@@ -6,9 +7,9 @@ const ContentContainer = styled.div`
   margin-bottom: 10px;
   padding: 10px;
 
-  button {
-    border: none;
-    margin: 10px;
+  div {
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -17,22 +18,35 @@ const MiniContent = styled.div`
   padding: 10px;
 `;
 
-const Content = () => {
+const ButtonContainer = styled.div`
+  width: 200px;
+
+  button {
+    border: none;
+    margin: 10px;
+    height: 40px;
+    width: 100px;
+  }
+`;
+
+const UserItemContainer = styled.div`
+  /* width: 200px; */
+`;
+
+const Content = ({ data, handlePatch, handleDelete }) => {
   return (
     <>
       <ContentContainer>
-        <MiniContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-          consectetur laoreet elit eu varius. Morbi luctus ex ac luctus
-          ultricies. Nullam tincidunt non erat vel gravida. Pellentesque
-          habitant morbi tristique senectus et netus et malesuada fames ac
-          turpis egestas. Nunc congue nisi eget ante consectetur, at porta massa
-          maximus. Ut consectetur nisi et eros aliquet efficitur sed in mauris.
-          Morbi lobortis tortor quis nibh dignissim, eu eleifend sem ultricies.
-          Aliquam bibendum a lectus a dignissim.
-        </MiniContent>
-        <button>edit</button>
-        <button>delete</button>
+        <MiniContent>{data.content}</MiniContent>
+        <div>
+          <ButtonContainer>
+            <button onClick={handlePatch}>edit</button>
+            <button onClick={handleDelete}>delete</button>
+          </ButtonContainer>
+          <UserItemContainer>
+            <UserItem data={data.member_id}></UserItem>
+          </UserItemContainer>
+        </div>
       </ContentContainer>
     </>
   );

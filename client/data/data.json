@@ -138,10 +138,17 @@
   "answers": [
     {
       "answer_id": 1,
-      "member_id": 1,
-      "questionId": 1,
+      "member_id": 3,
+      "question_id": 1,
       "create_date": "2022-12-22",
       "content": "가나다라마"
+    },
+    {
+      "answer_id": 2,
+      "member_id": 2,
+      "question_id": 1,
+      "create_date": "2022-12-22",
+      "content": "아자차카타"
     }
   ]
 }

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Header from '../Component/Header';
-import Writer from '../Component/Writer';
+import ToastEditor from '../Component/ToastEditor';
 import Button from '../Component/Button';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const QuestionContainer = styled.div`
   width: 100%;
@@ -43,7 +44,8 @@ const InputContainer = styled.div`
 `;
 
 const Question = () => {
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -52,6 +54,20 @@ const Question = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  const handleButtonClick = () => {
+    axios
+      .post(`/questions/`, {
+        title: title,
+        content: content,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -85,14 +101,17 @@ const Question = () => {
             <input type="text" value={title} onChange={handleChangeTitle} />
           </InputContainer>
           <InputContainer>
-            <div>What are the details of your problem?</div>
-            <Writer></Writer>
+            <div>
+              What are the details of your problem?
+              <br></br>
+              What did you try and what were you expecting?
+            </div>
+            <ToastEditor setContent={setContent}></ToastEditor>
           </InputContainer>
-          <InputContainer>
-            <div>What did you try and what were you expecting?</div>
-            <Writer></Writer>
-          </InputContainer>
-          <Button value="Review your question"></Button>
+          <Button
+            value="Review your question"
+            onClick={handleButtonClick}
+          ></Button>
         </QuestionForm>
       </QuestionContainer>
     </>

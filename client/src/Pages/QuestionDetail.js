@@ -3,10 +3,10 @@ import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import styled from 'styled-components';
 import Button from '../Component/Button';
-import Writer from '../Component/Writer';
+import ToastEditor from '../Component/ToastEditor';
 import Content from '../Component/Content';
 import Loading from '../Component/Loading';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -57,20 +57,24 @@ const QuestionDetail = () => {
   const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState();
   const [isLoading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
   const { question_id } = useParams();
 
   useEffect(() => {
     axios
-      // .get(`http://:3001/questions/${question_id}`)
+      // .get(`/questions/${question_id}`)
       .get(`http://localhost:3001/questions/${question_id}`)
       .then((res) => {
         setQuestion(res.data);
         axios
-          // .get(`http://localhost:3001/questions/${question_id}/answer`)
-          .get(`http://localhost:3001/questions/${question_id}/answers`)
+          // .get(`/questions/${question_id}/answers`)
+          // .get(`http://localhost:3001/questions/${question_id}/answers`)
+          .get(`http://localhost:3001/answers`)
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
+            console.log('answer: ', answer);
           })
           .catch((err) => {
             console.log(err);
@@ -84,6 +88,32 @@ const QuestionDetail = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  const handlePatch = () => {
+    axios
+      .patch(`/questions/${question_id}`, {
+        title: question.title,
+        content: question.content,
+      })
+      .then(() => {
+        navigate(`/questions/${question_id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`/questions/${question_id}`)
+      .then((res) => {
+        console.log(res);
+        navigate(`/questions`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -102,18 +132,30 @@ const QuestionDetail = () => {
               <span>Asked {question.create_date}</span>
               <span>Modified {question.modifiedAt}</span>
             </Info>
-            <Content></Content>
-            <h2>{answer.length !== undefined ? answer.length : 0}Answer</h2>
-            {answer.length > 0 ? <Content></Content> : ''}
+            <Content
+              data={question}
+              handlePatch={handlePatch}
+              handleDelete={handleDelete}
+            ></Content>
+            <h2>{answer.length !== undefined ? answer.length : 0} Answer</h2>
+            {answer.length > 0
+              ? answer.map((el) => {
+                  <Content
+                    data={el}
+                    handlePatch={handlePatch}
+                    handleDelete={handleDelete}
+                  ></Content>;
+                })
+              : ''}
             <AnswerCreate>
               <p>
                 Know someone who can answer? Share a link to this question via
                 email, Twitter, or Facebook.
               </p>
               <h2>Your Answer</h2>
-              <AnswerForm action="/answer" method="post">
-                <Writer></Writer>
-                <Button value="Post Your Answer"></Button>
+              <AnswerForm>
+                <ToastEditor></ToastEditor>
+                {/* <Button value="Post Your Answer"></Button> */}
               </AnswerForm>
             </AnswerCreate>
           </QDContainer>
