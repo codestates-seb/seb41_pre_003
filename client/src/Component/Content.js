@@ -1,5 +1,6 @@
 import UserItem from '../Component/UserItem';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -33,14 +34,24 @@ const UserItemContainer = styled.div`
   /* width: 200px; */
 `;
 
-const Content = ({ data, handlePatch, handleDelete }) => {
+const Content = ({ data, handleDelete }) => {
   return (
     <>
       <ContentContainer>
         <MiniContent>{data.content}</MiniContent>
         <div>
           <ButtonContainer>
-            <button onClick={handlePatch}>edit</button>
+            {!data.answer_id ? (
+              <Link to={`/questions/edit/${data.question_id}`}>
+                <button>edit</button>
+              </Link>
+            ) : (
+              <Link
+                to={`/questions/${data.question_id}/answers/edit/${data.answer_id}`}
+              >
+                <button>edit</button>
+              </Link>
+            )}
             <button onClick={handleDelete}>delete</button>
           </ButtonContainer>
           <UserItemContainer>

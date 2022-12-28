@@ -9,8 +9,10 @@ import DeleteProfile from './Pages/DeleteProfile';
 // eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
-import Question from './Pages/Question';
+import Question from './Pages/CreateQuestion';
 import Questions from './Pages/Questions';
+import EditQuestion from './Pages/EditQuestion';
+import EditAnswer from './Pages/EditAnswer';
 
 function App() {
   return (
@@ -33,6 +35,14 @@ function App() {
             element={<QuestionDetail />}
           ></Route>
           <Route path="/questions/ask" element={<Question />} />
+          <Route
+            path="/questions/edit/:question_id"
+            element={<EditQuestion></EditQuestion>}
+          ></Route>
+          <Route
+            path="/questions/:question_id/answers/edit/:answer_id"
+            element={<EditAnswer></EditAnswer>}
+          ></Route>
         </Routes>
       </Router>
     </div>

@@ -54,8 +54,8 @@ const AnswerForm = styled.form`
 `;
 
 const QuestionDetail = () => {
-  const [question, setQuestion] = useState(null);
-  const [answer, setAnswer] = useState();
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -89,20 +89,6 @@ const QuestionDetail = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const handlePatch = () => {
-    axios
-      .patch(`/questions/${question_id}`, {
-        title: question.title,
-        content: question.content,
-      })
-      .then(() => {
-        navigate(`/questions/${question_id}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleDelete = () => {
     axios
       .delete(`/questions/${question_id}`)
@@ -132,19 +118,11 @@ const QuestionDetail = () => {
               <span>Asked {question.create_date}</span>
               <span>Modified {question.modifiedAt}</span>
             </Info>
-            <Content
-              data={question}
-              handlePatch={handlePatch}
-              handleDelete={handleDelete}
-            ></Content>
+            <Content data={question} handleDelete={handleDelete}></Content>
             <h2>{answer.length !== undefined ? answer.length : 0} Answer</h2>
             {answer.length > 0
               ? answer.map((el) => {
-                  <Content
-                    data={el}
-                    handlePatch={handlePatch}
-                    handleDelete={handleDelete}
-                  ></Content>;
+                  <Content data={el} handleDelete={handleDelete}></Content>;
                 })
               : ''}
             <AnswerCreate>
@@ -155,7 +133,6 @@ const QuestionDetail = () => {
               <h2>Your Answer</h2>
               <AnswerForm>
                 <ToastEditor></ToastEditor>
-                {/* <Button value="Post Your Answer"></Button> */}
               </AnswerForm>
             </AnswerCreate>
           </QDContainer>
