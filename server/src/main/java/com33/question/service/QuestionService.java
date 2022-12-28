@@ -24,7 +24,8 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question) {
-        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+//        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+        Member member = memberService.getLoginMember();
         question.setMember(member);
         question.setViewCount(0);
         question.setVoteCount(0);

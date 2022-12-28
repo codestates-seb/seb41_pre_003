@@ -8,6 +8,7 @@ import com33.member.entity.Member;
 import com33.member.repository.MemberRepository;
 import com33.question.entity.Question;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +69,12 @@ public class MemberService {
                 memberRepository.findByName(name);
         return optionalMembers.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+    public Member getLoginMember(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Member> optionalMember = memberRepository.findByEmail(principal.toString());
+        if (optionalMember.isPresent()) return optionalMember.get();
+        else return null;
     }
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
