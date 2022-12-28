@@ -35,7 +35,8 @@ public class AnswerService {
 
     public Answer creatAnswer(Answer answer){
        Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
-       Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
+//       Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
+        Member member = memberService.getLoginMember();
 
         answer.setQuestion(question);
         answer.setMember(member);
