@@ -52,7 +52,7 @@ public class QuestionController {
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
 
-        return new ResponseEntity<>(question, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
 
