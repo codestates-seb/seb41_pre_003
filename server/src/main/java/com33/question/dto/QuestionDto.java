@@ -36,9 +36,6 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Vote {
         private Long questionId;
-        public void setQuestionId(Long questionId) {
-            this.questionId = questionId;
-        }
     }
 
 

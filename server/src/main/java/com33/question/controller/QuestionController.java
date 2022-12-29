@@ -83,7 +83,7 @@ public class QuestionController {
                                     @RequestParam(value = "vote") boolean vote) {
 
 
-        Question question = questionService.voteQuestion(questionRepository.findByQuestionId(questionId).get(),vote);
+        Question question = questionService.voteQuestion(questionRepository.findByQuestionId(questionId).get(), vote);
 
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
 

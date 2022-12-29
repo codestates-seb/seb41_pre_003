@@ -58,15 +58,5 @@ public interface QuestionMapper {
 
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 
-    default Question questionVoteToQuestion(QuestionDto.Vote questionVoteDto) {
-        if (questionVoteDto == null) {
-            return null;
-        }
-
-        Question question = new Question();
-        question.setQuestionId(questionVoteDto.getQuestionId());
-
-        return question;
-    }
 
 }
