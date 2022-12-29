@@ -2,11 +2,11 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Loading from './Loading';
 
-const QuestionList = () => {
+const QuestionList = ({ _data }) => {
   const Question = styled.div`
     height: 140px;
     border: 1px solid black;
@@ -35,18 +35,8 @@ const QuestionList = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      //.get('/questions')
-      .get('/questions')
-      .then((res) => {
-        console.log('여기', res);
-        const Data = Object.values(res.data);
-        setdata(Data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log('여기2', err);
-      });
+    setdata(_data);
+    setLoading(false);
   }, []);
 
   return (

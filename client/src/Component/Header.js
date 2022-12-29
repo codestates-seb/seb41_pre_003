@@ -32,71 +32,56 @@ const Search = styled.form`
 `;
 
 const Header = () => {
-  // const token = localStorage.getItem('AccessToken');
+  const token = localStorage.getItem('AccessToken');
+  // 로그아웃버튼 누르면 localstorage에 있는 token 없애기 후 home 페이지로 리다이렉션
+
+  const Logout = () => {
+    window.localStorage.removeItem('AccessToken');
+    window.localStorage.removeItem('freshToken');
+  };
   return (
-    <Header>
-      <div>
-        <Logo to="/">
-          <img src={logo} alt="logo" />
-        </Logo>
-        <Search action="/search" method="GET">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input placeholder="Search..." name="keyword" type="text" />
-        </Search>
-      </div>
-      <div>
-        <Link to="/login">
-          <Button value="Log in" />
-        </Link>
-        <Link to="/signup">
-          <Button value="Sign up" />
-        </Link>
-      </div>
-    </Header>
+    <>
+      {token ? (
+        <header>
+          <div>
+            <Logo to="/">
+              <img src={logo} alt="logo" />
+            </Logo>
+            <Search action="/search" method="GET">
+              <i className="fa-solid fa-magnifying-glass"></i>
+              <input placeholder="Search..." name="keyword" type="text" />
+            </Search>
+          </div>
+          <div>
+            <Link to="/login">
+              <Button value="Log in" />
+            </Link>
+            <Link to="/signup">
+              <Button value="Sign up" />
+            </Link>
+          </div>
+        </header>
+      ) : (
+        <header>
+          <div>
+            <Logo to="/">
+              <img src={logo} alt="logo" />
+            </Logo>
+            <Search action="/search" method="GET">
+              <i className="fa-solid fa-magnifying-glass"></i>
+              <input placeholder="Search..." name="keyword" type="text" />
+            </Search>
+          </div>
+          <div>
+            <Link to="/">
+              <Button value="Logout" onClick={Logout} />
+            </Link>
+          </div>
+        </header>
+      )}
+      ;
+    </>
   );
-  // return (
-  //   <>
-  //     {token ? (
-  //       <header>
-  //         <div>
-  //           <Logo to="/">
-  //             <img src={logo} alt="logo" />
-  //           </Logo>
-  //           <Search action="/search" method="GET">
-  //             <i className="fa-solid fa-magnifying-glass"></i>
-  //             <input placeholder="Search..." name="keyword" type="text" />
-  //           </Search>
-  //         </div>
-  //         <div>
-  //           <Link to="/login">
-  //             <Button value="Log in" />
-  //           </Link>
-  //           <Link to="/signup">
-  //             <Button value="Sign up" />
-  //           </Link>
-  //         </div>
-  //       </header>
-  //     ) : (
-  //       <header>
-  //         <div>
-  //           <Logo to="/">
-  //             <img src={logo} alt="logo" />
-  //           </Logo>
-  //           <Search action="/search" method="GET">
-  //             <i className="fa-solid fa-magnifying-glass"></i>
-  //             <input placeholder="Search..." name="keyword" type="text" />
-  //           </Search>
-  //         </div>
-  //         <div>
-  //           <Link to="/login">
-  //             <Button value="Logout" />
-  //           </Link>
-  //         </div>
-  //       </header>
-  //     )}
-  //     ;
-  //   </>
-  // );
 };
 
 export default Header;
