@@ -2,6 +2,7 @@ import logo from '../img/logo.png';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './Button';
+import { useEffect, useState } from 'react';
 
 const Logo = styled(Link)`
   margin-left: 10px;
@@ -32,13 +33,18 @@ const Search = styled.form`
 `;
 
 const Header = () => {
-  const token = localStorage.getItem('AccessToken');
   // 로그아웃버튼 누르면 localstorage에 있는 token 없애기 후 home 페이지로 리다이렉션
+  const [token, setToken] = useState(null);
 
   const Logout = () => {
-    window.localStorage.removeItem('AccessToken');
-    window.localStorage.removeItem('freshToken');
+    localStorage.removeItem('AccessToken');
+    localStorage.removeItem('freshToken');
+    setToken(null);
   };
+  useEffect(() => {
+    const temp = localStorage.getItem('AccessToken');
+    setToken(temp);
+  });
   return (
     <>
       {token ? (
