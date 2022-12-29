@@ -125,6 +125,14 @@ const LogIn = () => {
       })
       .then((res) => {
         console.log(res);
+        const AccessToken = res.headers.get('Authorization');
+        const RefreshToken = res.headers.get('Refresh');
+        console.log('Access:', AccessToken);
+        console.log('Refresh: ', RefreshToken);
+        console.log(res.data.memberId);
+        localStorage.setItem('AccessToken', AccessToken);
+        localStorage.setItem('RefreshToken', RefreshToken);
+        localStorage.setItem('memberId', res.data.memberId);
         navigate(`/`);
       })
       .catch((err) => {

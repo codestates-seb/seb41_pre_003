@@ -6,6 +6,7 @@ import Button from '../Component/Button';
 import ToastEditor from '../Component/ToastEditor';
 import Content from '../Component/Content';
 import Loading from '../Component/Loading';
+// import Vote from '../Component/Vote';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -56,10 +57,11 @@ const AnswerForm = styled.form`
 const QuestionDetail = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [inputContent, setInputContent] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const { questionId } = useParams();
+  const { questionId, answerId } = useParams();
 
   useEffect(() => {
     axios
@@ -86,17 +88,74 @@ const QuestionDetail = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [isLoading]);
 
-  const handleDelete = () => {
+  const handleDeleteQuestion = () => {
+    {
+      confirm('삭제하시겠습니까?') === true
+        ? axios
+            .delete(`/questions/${questionId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              navigate(`/questions`);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        : '';
+    }
+  };
+
+  const handleDeleteAnswer = () => {
+    {
+      confirm('삭제하시겠습니까?') === true
+        ? axios
+            .delete(`/questions/${questionId}/answers/${answerId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              navigate(`/questions`);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        : '';
+    }
+  };
+
+  const handleCreateAnswer = (e) => {
+    e.preventDefault();
     axios
-      .delete(`/questions/${questionId}`)
+      .post(
+        `/questions/${question.questionId}/answers`,
+        {
+          content: inputContent,
+          memberId: `${localStorage.getItem('memberId')}`,
+          questionId: question.questionId,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('AccessToken')}`,
+            Refresh: `${localStorage.getItem('RefreshToken')}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
-        navigate(`/questions`);
+        navigate(`/questions/${question.questionId}`);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <>
       <Header></Header>
@@ -112,9 +171,14 @@ const QuestionDetail = () => {
             </Title>
             <Info>
               <span>Asked {question.create_date}</span>
-              <span>Modified {question.modifiedAt}</span>
+              {/* <span>Modified {question.modifiedAt}</span> */}
+              <span>View {question.viewCount}</span>
             </Info>
-            <Content data={question} handleDelete={handleDelete}></Content>
+            {/* <Vote count={question.voteCount}></Vote> */}
+            <Content
+              data={question}
+              handleDelete={handleDeleteQuestion}
+            ></Content>
             <h2>
               {answer.length > 1
                 ? `${answer.length} Answers`
@@ -124,7 +188,7 @@ const QuestionDetail = () => {
               return (
                 <Content
                   data={el}
-                  handleDelete={handleDelete}
+                  handleDelete={handleDeleteAnswer}
                   key={el.answerId}
                 ></Content>
               );
@@ -135,10 +199,10 @@ const QuestionDetail = () => {
                 email, Twitter, or Facebook.
               </p>
               <h2>Your Answer</h2>
-              <AnswerForm>
-                <ToastEditor></ToastEditor>
+              <AnswerForm onSubmit={handleCreateAnswer}>
+                <ToastEditor setContent={setInputContent}></ToastEditor>
+                <Button type="submit" value="Submit your Answer"></Button>
               </AnswerForm>
-              <Button value="Submit your Answer"></Button>
             </AnswerCreate>
           </QDContainer>
         ) : (

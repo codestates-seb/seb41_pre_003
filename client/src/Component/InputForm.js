@@ -17,16 +17,18 @@ const InputContainer = styled.div`
   }
 `;
 
-const QuestionInput = ({
-  title = '',
-  handleChangeTitle = '',
+const InputForm = ({
+  title,
+  handleChangeTitle,
   inputContent,
+  content,
   setContent,
   handleButtonClick,
+  buttonContent,
 }) => {
   return (
-    <QuestionForm>
-      {title === '' ? (
+    <QuestionForm onSubmit={handleButtonClick}>
+      {title !== undefined ? (
         <InputContainer>
           <div>Title</div>
           <input type="text" value={title} onChange={handleChangeTitle} />
@@ -34,21 +36,12 @@ const QuestionInput = ({
       ) : (
         ''
       )}
-      {/* <InputContainer>
-        <div>Title</div>
-        <input type="text" value={title} onChange={handleChangeTitle} />
-      </InputContainer> */}
       <InputContainer>
-        <div>
-          {/* What are the details of your problem?
-          <br></br>
-          What did you try and what were you expecting? */}
-          {inputContent}
-        </div>
-        <ToastEditor setContent={setContent}></ToastEditor>
+        <div>{inputContent}</div>
+        <ToastEditor content={content} setContent={setContent}></ToastEditor>
       </InputContainer>
-      <Button value="Review your question" onClick={handleButtonClick}></Button>
+      <Button value={buttonContent} type="submit"></Button>
     </QuestionForm>
   );
 };
-export default QuestionInput;
+export default InputForm;
