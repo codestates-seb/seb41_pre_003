@@ -17,19 +17,30 @@ const InputContainer = styled.div`
   }
 `;
 
-const AnswerInput = ({ setContent, handleButtonClick }) => {
+const InputForm = ({
+  title,
+  handleChangeTitle,
+  inputContent,
+  setContent,
+  handleButtonClick,
+  buttonContent,
+}) => {
   return (
     <QuestionForm>
+      {title !== undefined ? (
+        <InputContainer>
+          <div>Title</div>
+          <input type="text" value={title} onChange={handleChangeTitle} />
+        </InputContainer>
+      ) : (
+        ''
+      )}
       <InputContainer>
-        <div>
-          What are the details of your problem?
-          <br></br>
-          What did you try and what were you expecting?
-        </div>
+        <div>{inputContent}</div>
         <ToastEditor setContent={setContent}></ToastEditor>
       </InputContainer>
-      <Button value="Review your question" onClick={handleButtonClick}></Button>
+      <Button value={buttonContent} onClick={handleButtonClick}></Button>
     </QuestionForm>
   );
 };
-export default AnswerInput;
+export default InputForm;

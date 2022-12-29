@@ -30,10 +30,6 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const UserItemContainer = styled.div`
-  /* width: 200px; */
-`;
-
 const Content = ({ data, handleDelete }) => {
   console.log(data);
   return (
@@ -55,9 +51,7 @@ const Content = ({ data, handleDelete }) => {
             )}
             <button onClick={handleDelete}>delete</button>
           </ButtonContainer>
-          <UserItemContainer>
-            <UserItem memberId={data.memberId}></UserItem>
-          </UserItemContainer>
+          <UserItem memberId={data.memberId}></UserItem>
         </div>
       </ContentContainer>
     </>

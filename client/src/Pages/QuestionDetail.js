@@ -6,6 +6,7 @@ import Button from '../Component/Button';
 import ToastEditor from '../Component/ToastEditor';
 import Content from '../Component/Content';
 import Loading from '../Component/Loading';
+// import Vote from '../Component/Vote';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -56,6 +57,7 @@ const AnswerForm = styled.form`
 const QuestionDetail = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [inputContent, setInputContent] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -90,17 +92,42 @@ const QuestionDetail = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  //question, answer 경로 따로
+  //delete 안을 변수로 놓고 주면 어떨까?
   const handleDelete = () => {
+    //{input}
+    {
+      confirm('삭제하시겠습니까?') === true
+        ? axios
+            .delete(`/questions/${questionId}`)
+            // .delete(input)
+            .then((res) => {
+              console.log(res);
+              navigate(`/questions`); //여기도
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        : '';
+    }
+  };
+
+  const handleCreateAnswer = () => {
     axios
-      .delete(`/questions/${questionId}`)
+      .post(`/questions/${question.questionId}`, {
+        content: inputContent,
+        //memberId: memberId, //이건 어떻게 알고 주지
+        questionId: question.questionId,
+      })
       .then((res) => {
         console.log(res);
-        navigate(`/questions`);
+        navigate(`/questions/${question.questionId}`);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <>
       <Header></Header>
@@ -116,8 +143,10 @@ const QuestionDetail = () => {
             </Title>
             <Info>
               <span>Asked {question.create_date}</span>
-              <span>Modified {question.modifiedAt}</span>
+              {/* <span>Modified {question.modifiedAt}</span> */}
+              <span>View {question.viewCount}</span>
             </Info>
+            {/* <Vote count={question.voteCount}></Vote> */}
             <Content data={question} handleDelete={handleDelete}></Content>
             <h2>
               {answer.length > 1
@@ -140,9 +169,12 @@ const QuestionDetail = () => {
               </p>
               <h2>Your Answer</h2>
               <AnswerForm>
-                <ToastEditor></ToastEditor>
+                <ToastEditor setInputContent={setInputContent}></ToastEditor>
               </AnswerForm>
-              <Button value="Submit your Answer"></Button>
+              <Button
+                value="Submit your Answer"
+                onClick={handleCreateAnswer}
+              ></Button>
             </AnswerCreate>
           </QDContainer>
         ) : (
