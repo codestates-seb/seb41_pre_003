@@ -21,12 +21,13 @@ const InputForm = ({
   title,
   handleChangeTitle,
   inputContent,
+  content,
   setContent,
   handleButtonClick,
   buttonContent,
 }) => {
   return (
-    <QuestionForm>
+    <QuestionForm onSubmit={handleButtonClick}>
       {title !== undefined ? (
         <InputContainer>
           <div>Title</div>
@@ -37,9 +38,9 @@ const InputForm = ({
       )}
       <InputContainer>
         <div>{inputContent}</div>
-        <ToastEditor setContent={setContent}></ToastEditor>
+        <ToastEditor content={content} setContent={setContent}></ToastEditor>
       </InputContainer>
-      <Button value={buttonContent} onClick={handleButtonClick}></Button>
+      <Button value={buttonContent} type="submit"></Button>
     </QuestionForm>
   );
 };

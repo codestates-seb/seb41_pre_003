@@ -15,17 +15,18 @@ const EditContainer = styled.div`
 `;
 
 const EditQuestion = () => {
-  const [data, setData] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const { questionId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      //.get('/questions')
       .get(`/questions/${questionId}`)
       .then((res) => {
         console.log(res);
-        setData(res.data);
+        setTitle(res.data.title);
+        setContent(res.data.content);
       })
       .catch((err) => {
         console.log('err: ', err);
@@ -35,9 +36,9 @@ const EditQuestion = () => {
   const handlePatch = () => {
     axios
       .patch(`/questions/${questionId}`, {
-        title: data.title,
-        content: data.content,
-        memberId: data.memberId,
+        title: title,
+        content: content,
+        memberId: `${localStorage.getItem('memberId')}`,
       })
       .then(() => {
         navigate(`/questions/${questionId}`);
@@ -50,17 +51,20 @@ const EditQuestion = () => {
   return (
     <>
       <Header></Header>
-      <Nav></Nav>
-      <EditContainer>
-        <InputForm
-          title={data.title}
-          // handleChangeTitle={handleChangeTitle}
-          inputContent={'질문을 수정하세요.'}
-          // setContent={setContent}
-          handleButtonClick={handlePatch}
-          buttonContent={'Submit your Question'}
-        ></InputForm>
-      </EditContainer>
+      <main>
+        <Nav></Nav>
+        <EditContainer>
+          <InputForm
+            title={title}
+            handleChangeTitle={(e) => setTitle(e.target.value)}
+            inputContent={'질문을 수정하세요.'}
+            content={content}
+            setContent={setContent}
+            handleButtonClick={handlePatch}
+            buttonContent={'Submit your Question'}
+          ></InputForm>
+        </EditContainer>
+      </main>
       <Footer></Footer>
     </>
   );

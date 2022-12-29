@@ -3,6 +3,7 @@ import Header from '../Component/Header';
 import InputForm from '../Component/InputForm';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionContainer = styled.div`
   width: 100%;
@@ -28,6 +29,7 @@ const TipDiv = styled.div`
 const CreateQuestion = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const navigate = useNavigate();
 
   const handleChangeTitle = (event) => {
     setTitle('');
@@ -38,19 +40,30 @@ const CreateQuestion = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
+    e.preventDefault();
     axios
-      .post(`/questions/`, {
-        title: title,
-        content: content,
-        // memberId: memberId,
-        memberId: 1,
-      })
+      .post(
+        `/questions/`,
+        {
+          title: title,
+          content: content,
+          memberId: `${localStorage.getItem('memberId')}`,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('AccessToken')}`,
+            Refresh: `${localStorage.getItem('RefreshToken')}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
+        navigate('/login');
       });
   };
 
@@ -84,6 +97,7 @@ const CreateQuestion = () => {
           title={title}
           handleChangeTitle={handleChangeTitle}
           inputContent={'What are the details of your problem?'}
+          content={content} //
           setContent={setContent}
           handleButtonClick={handleButtonClick}
           buttonContent={'Submit your Question'}

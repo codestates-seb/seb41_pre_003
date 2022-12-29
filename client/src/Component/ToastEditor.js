@@ -6,24 +6,11 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import { Editor } from '@toast-ui/react-editor';
 import { useRef } from 'react';
-// import Button from './Button';
-export default function ToastEditor({ setContent }) {
-  //{setContent}
+export default function ToastEditor({ content, setContent }) {
   const editorRef = useRef();
 
-  // const handleRegisterButton = (e) => {
-  //   e.preventDefault();
-  //   console.log(editorRef.current?.getInstance().getHTML());
-  //   console.log(editorRef.current?.getInstance().getMarkdown());
-  //   setContent(editorRef.current?.getInstance().getMarkdown());
-  // };
-
-  // const handleRegister = () => {
-  //   setContent(editorRef.current?.getInstance().getMarkdown());
-  // };
-
   const onChange = () => {
-    const data = editorRef.current.getInstance().getMarkdown(); //or getMarkdown
+    const data = editorRef.current.getInstance().getMarkdown(); //getMarkdown or getHTML
     console.log(data);
     setContent(data);
   };
@@ -31,8 +18,7 @@ export default function ToastEditor({ setContent }) {
   return (
     <div>
       <Editor
-        initialValue="내용을 입력하세요"
-        // onChange={handleRegister}
+        initialValue={`${content}`}
         onChange={onChange}
         ref={editorRef}
         previewStyle="vertical" // 미리보기 스타일 지정
@@ -50,10 +36,6 @@ export default function ToastEditor({ setContent }) {
         plugins={[colorSyntax]}
         language="KO-KR"
       ></Editor>
-      {/* <Button
-        value="Done"
-        // onClick={handleRegisterButton}
-      ></Button> */}
     </div>
   );
 }
