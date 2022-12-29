@@ -63,32 +63,28 @@ const QuestionDetail = () => {
 
   useEffect(() => {
     axios
-      // .get(`/questions/${question_id}`)
       .get(`/questions/${questionId}`)
       .then((res) => {
         setQuestion(res.data);
-        console.log('question: ', question);
 
         axios
           .get(`/questions/${questionId}/answers`)
-          // .get(`http://localhost:3001/questions/${questionId}/answers`)
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
-            console.log('answer: ', answer);
           })
           .catch((err) => {
-            console.log('answer err: ', err);
+            console.log(err);
           });
       })
       .catch((err) => {
-        console.log('question err:', err);
+        console.log(err);
       });
   }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [isLoading]);
 
   const handleDelete = () => {
     axios

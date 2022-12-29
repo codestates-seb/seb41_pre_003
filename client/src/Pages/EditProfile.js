@@ -78,7 +78,7 @@ const UpdateButton = styled.button`
   font-weight: bold;
   border: none;
   transition: 0.2s ease-in-out;
-  &:not(:disabled)&:hover {
+  &:not(:disabled):hover {
     background-color: #0074cc;
     cursor: pointer;
     box-shadow: inset 0 0 10px #00457a;

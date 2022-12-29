@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable jsx-a11y/alt-text */
-
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
@@ -67,7 +63,10 @@ const UserHeader = ({ memberId, name }) => {
   return (
     <MainContainer>
       <section>
-        <img src={`https://picsum.photos/seed/${memberId}/200/200`}></img>
+        <img
+          src={`https://picsum.photos/seed/${memberId}/200/200`}
+          alt={`avatar of ${name}`}
+        ></img>
         <div>{name}</div>
         <LogoImg src={logo}></LogoImg>
       </section>

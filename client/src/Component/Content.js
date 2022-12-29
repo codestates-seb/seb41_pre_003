@@ -35,7 +35,6 @@ const UserItemContainer = styled.div`
 `;
 
 const Content = ({ data, handleDelete }) => {
-  console.log(data);
   return (
     <>
       <ContentContainer>

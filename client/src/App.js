@@ -6,7 +6,6 @@ import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
 import EditProfile from './Pages/EditProfile';
 import DeleteProfile from './Pages/DeleteProfile';
-// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
 import Question from './Pages/CreateQuestion';
@@ -34,11 +33,11 @@ function App() {
           <Route path="/questions/ask" element={<Question />} />
           <Route
             path="/questions/edit/:questionId"
-            element={<EditQuestion></EditQuestion>}
+            element={<EditQuestion />}
           ></Route>
           <Route
             path="/questions/:questionId/answers/edit/:answerId"
-            element={<EditAnswer></EditAnswer>}
+            element={<EditAnswer />}
           ></Route>
         </Routes>
       </Router>

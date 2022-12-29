@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Loading from './Loading';
 
 const UserItemContainer = styled.li`
   display: flex;
@@ -51,12 +52,14 @@ const UserName = styled(Link)`
 
 const UserItem = ({ memberId }) => {
   const [data, setData] = useState(''); //null
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(`/members/${memberId}`)
       .then((res) => {
         setData(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +68,7 @@ const UserItem = ({ memberId }) => {
 
   return (
     <UserItemContainer>
-      {data && (
+      {!isLoading ? (
         <>
           <img
             src={`https://picsum.photos/seed/${data.memberId}/200/200`}
@@ -79,6 +82,8 @@ const UserItem = ({ memberId }) => {
             <div>{data.gender}</div>
           </UserInfo>
         </>
+      ) : (
+        <Loading />
       )}
     </UserItemContainer>
   );
