@@ -90,47 +90,47 @@ const QuestionDetail = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const handleDeleteQuestion = () => {
-    {
-      confirm('삭제하시겠습니까?') === true
-        ? axios
-            .delete(`/questions/${questionId}`, {
-              headers: {
-                Authorization: `${localStorage.getItem('AccessToken')}`,
-                Refresh: `${localStorage.getItem('RefreshToken')}`,
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              navigate(`/questions`);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-        : '';
-    }
-  };
+  // const handleDeleteQuestion = () => {
+  //   {
+  //     confirm('삭제하시겠습니까?') === true
+  //       ? axios
+  //           .delete(`/questions/${questionId}`, {
+  //             headers: {
+  //               Authorization: `${localStorage.getItem('AccessToken')}`,
+  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
+  //             },
+  //           })
+  //           .then((res) => {
+  //             console.log(res);
+  //             navigate(`/questions`);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           })
+  //       : '';
+  //   }
+  // };
 
-  const handleDeleteAnswer = () => {
-    {
-      confirm('삭제하시겠습니까?') === true
-        ? axios
-            .delete(`/questions/${questionId}/answers/${answerId}`, {
-              headers: {
-                Authorization: `${localStorage.getItem('AccessToken')}`,
-                Refresh: `${localStorage.getItem('RefreshToken')}`,
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              navigate(`/questions`);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-        : '';
-    }
-  };
+  // const handleDeleteAnswer = () => {
+  //   {
+  //     confirm('삭제하시겠습니까?') === true
+  //       ? axios
+  //           .delete(`/questions/${questionId}/answers/${answerId}`, {
+  //             headers: {
+  //               Authorization: `${localStorage.getItem('AccessToken')}`,
+  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
+  //             },
+  //           })
+  //           .then((res) => {
+  //             console.log(res);
+  //             navigate(`/questions`);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           })
+  //       : '';
+  //   }
+  // };
 
   const handleCreateAnswer = (e) => {
     e.preventDefault();
