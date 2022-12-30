@@ -1,12 +1,17 @@
 package com33.question.controller;
 
+import com33.answer.entity.Answer;
 import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
+import com33.question.entity.Like;
 import com33.question.entity.Question;
 import com33.question.mapper.QuestionMapper;
 import com33.question.repository.QuestionRepository;
+import com33.question.service.LikeService;
 import com33.question.service.QuestionService;
 import com33.tag.service.TagService;
+import lombok.AllArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +31,19 @@ public class QuestionController {
     private final MemberService memberService;
     private final QuestionRepository questionRepository;
     private final TagService tagService;
-
+    private final LikeService likeService;
 
     public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService,
-                              QuestionRepository questionRepository, TagService tagService) {
+                              QuestionRepository questionRepository, TagService tagService, LikeService likeService) {
         this.questionService = questionService;
         this.mapper = mapper;
         this.memberService = memberService;
 
         this.questionRepository = questionRepository;
         this.tagService = tagService;
+        this.likeService = likeService;
     }
+
 
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
@@ -81,15 +88,17 @@ public class QuestionController {
     ) {
         return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.searchQuestion(type, keyword)));
     }
+    @PostMapping("/{question-id}/like")
+    public ResponseEntity postLike(@PathVariable("question-id") long questionId,
+                               @Valid @RequestBody QuestionDto.Like questionDto){
+        questionDto.setQuestionId(questionId);
 
-    @PatchMapping("/{question-id}/vote")
-    public ResponseEntity patchVote(@PathVariable("question-id") @Positive Long questionId,
-                                    @RequestParam(value = "vote") boolean vote) {
+        Like like = likeService.createLike(mapper.questionLikeToQuestion(questionService, memberService, questionDto));
 
 
-        Question question = questionService.voteQuestion(questionRepository.findByQuestionId(questionId).get(), vote);
 
-        return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
+        return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
+    }
 
     }
 //    @GetMapping("tags")
@@ -97,4 +106,4 @@ public class QuestionController {
 //        return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.searchQuestion(keyword)));
 //    }
 
-}
+

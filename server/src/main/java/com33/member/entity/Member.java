@@ -1,7 +1,9 @@
 package com33.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com33.answer.entity.Answer;
+import com33.question.entity.Like;
 import com33.question.entity.Question;
 import com33.tag.entity.Tag;
 import lombok.AllArgsConstructor;
@@ -46,6 +48,11 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "question")
+    private List<Like> likes = new ArrayList<>();
+
+
     public Member(long memberId, String pw, String name, String gender, int age, String email) {
         this.memberId = memberId;
         this.pw = pw;
@@ -65,6 +72,13 @@ public class Member {
         answers.add(answer);
         if (answer.getMember() != this) {
             answer.setMember(this);
+        }
+    }
+
+    public void addLike(Like like){
+        likes.add(like);
+        if (like.getMember() != this) {
+            like.setMember(this);
         }
     }
 

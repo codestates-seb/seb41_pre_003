@@ -35,31 +35,21 @@ public class QuestionDto {
         private Long questionId;
         @NotBlank
         private String content;
-
         public void setQuestionId(Long questionId) {
             this.questionId = questionId;
         }
     }
-
-    @Getter
-    @AllArgsConstructor
-    public static class Vote {
-        private Long questionId;
-    }
-
     @Getter
     @Setter
     public class QuestionTagResponseDto {
         private String tagName;
     }
-
     @Getter
     public class QuestionTagDto {
         @Positive
         private Long tagId;
 
     }
-
     @NoArgsConstructor
     @Setter
     @Getter
@@ -73,5 +63,23 @@ public class QuestionDto {
         private int viewCount;
         private int voteCount;
         private List<QuestionTagResponseDto> questionTags;
+        private int likeCount;
+    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class Like {
+        private long questionId;
+        private long memberId;
+    }
+    @NoArgsConstructor
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    public static class LikeResponse {
+        private Long likeId;
+        private Long questionId;
+        private Long memberId;
+
     }
 }
