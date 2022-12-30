@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 // import axios from 'axios';

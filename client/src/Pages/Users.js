@@ -4,9 +4,9 @@ import Footer from '../Component/Footer';
 import MidTitle from '../Component/MidTitle';
 import Loading from '../Component/Loading';
 import Pagination from '../Component/Pagination';
-import UserItem from '../Component/UserItem';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const UsersContainer = styled.section`
@@ -20,8 +20,12 @@ const UsersContainer = styled.section`
     margin: 40px 0px;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
+  }
+
+  > div:first-child {
+    margin-bottom: 40px;
   }
 `;
 
@@ -43,6 +47,52 @@ const Filter = styled.form`
       outline: none;
     }
   }
+`;
+
+const UserItem = styled.li`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  &:hover {
+    background-color: var(--light-gray);
+    box-shadow: inset 0 0 20px #b7b7b7;
+    transition: 0.2s ease-in-out;
+  }
+
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    margin-right: 10px;
+  }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  font-size: 15px;
+
+  .fa-person {
+    color: #3f51b5;
+  }
+
+  .fa-person-dress {
+    color: #ef6191;
+  }
+`;
+
+const UserName = styled(Link)`
+  text-decoration: none;
+  color: var(--blue);
+  font-weight: bold;
+  font-size: 23px;
 `;
 
 const Users = () => {
@@ -77,13 +127,11 @@ const Users = () => {
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get('/members')
+      .get(`/members/search?keyword=${name}`)
       .then((res) => {
-        const data = res.data;
-        const filtered_data = data.filter((el) => el.name.includes(name));
-        setUsers(filtered_data);
+        setUsers(res.data);
         setPage(1);
-        setPageCount(Math.ceil(filtered_data.length / limit));
+        setPageCount(Math.ceil(res.data.length / limit));
         setLoading(false);
       })
       .catch((err) => {
@@ -97,7 +145,9 @@ const Users = () => {
       <main>
         <Nav />
         <UsersContainer>
-          <MidTitle title="Users" />
+          <div>
+            <MidTitle title="Users" />
+          </div>
           <Filter onSubmit={handleFilterName}>
             <i className="fa-solid fa-magnifying-glass"></i>
             <input placeholder="Filter by user" name="keyword" />
@@ -106,7 +156,19 @@ const Users = () => {
             <>
               <ul>
                 {users.slice((page - 1) * limit, page * limit).map((data) => (
-                  <UserItem memberId={data.memberId} key={data.memberId} />
+                  <UserItem key={data.memberId}>
+                    <img
+                      src={`https://picsum.photos/seed/${data.memberId}/200/200`}
+                      alt={`avatar of ${data.name}`}
+                    />
+                    <UserInfo>
+                      <UserName to={`/users/${data.memberId}/${data.name}`}>
+                        {data.name}
+                      </UserName>
+                      <div>{data.email}</div>
+                      <div>{data.gender}</div>
+                    </UserInfo>
+                  </UserItem>
                 ))}
               </ul>
               <Pagination

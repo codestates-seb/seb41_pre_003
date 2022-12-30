@@ -1,19 +1,18 @@
-/* eslint-disable prettier/prettier */
 import Header from '../Component/Header';
 import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
-import Main from '../Component/Main';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const Search = () => {
-  console.log(useParams);
+  const [searchParams] = useSearchParams();
+  console.log(searchParams);
 
   return (
     <>
       <Header />
       <main>
         <Nav />
-        <Main />
+        <div />
       </main>
       <Footer />
     </>

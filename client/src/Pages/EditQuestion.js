@@ -2,6 +2,7 @@ import Header from '../Component/Header';
 import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import InputForm from '../Component/InputForm';
+import Loading from '../Component/Loading';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -17,6 +18,7 @@ const EditContainer = styled.div`
 const EditQuestion = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isLoading, setLoading] = useState(true);
   const { questionId } = useParams();
   const navigate = useNavigate();
 
@@ -24,28 +26,34 @@ const EditQuestion = () => {
     axios
       .get(`/questions/${questionId}`)
       .then((res) => {
-        console.log(res);
         setTitle(res.data.title);
         setContent(res.data.content);
+        setLoading(false);
       })
-      .catch((err) => {
-        console.log('err: ', err);
-      });
+      .catch((err) => console.log(err));
   }, []);
 
-  const handlePatch = () => {
+  const handlePatch = (e) => {
+    e.preventDefault();
     axios
-      .patch(`/questions/${questionId}`, {
-        title: title,
-        content: content,
-        memberId: `${localStorage.getItem('memberId')}`,
-      })
+      .patch(
+        `/questions/${questionId}`,
+        {
+          title: title,
+          content: content,
+          memberId: `${localStorage.getItem('memberId')}`,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('AccessToken')}`,
+            Refresh: `${localStorage.getItem('RefreshToken')}`,
+          },
+        }
+      )
       .then(() => {
         navigate(`/questions/${questionId}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -54,15 +62,19 @@ const EditQuestion = () => {
       <main>
         <Nav></Nav>
         <EditContainer>
-          <InputForm
-            title={title}
-            handleChangeTitle={(e) => setTitle(e.target.value)}
-            inputContent={'질문을 수정하세요.'}
-            content={content}
-            setContent={setContent}
-            handleButtonClick={handlePatch}
-            buttonContent={'Submit your Question'}
-          ></InputForm>
+          {!isLoading ? (
+            <InputForm
+              title={title}
+              handleChangeTitle={(e) => setTitle(e.target.value)}
+              inputContent={'질문을 수정하세요.'}
+              content={content}
+              setContent={setContent}
+              handleButtonClick={handlePatch}
+              buttonContent={'Submit your Question'}
+            ></InputForm>
+          ) : (
+            <Loading />
+          )}
         </EditContainer>
       </main>
       <Footer></Footer>

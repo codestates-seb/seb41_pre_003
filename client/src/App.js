@@ -1,20 +1,20 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import PublicRoute from './util/PublicRoute';
-// import PrivateRoute from './util/PrivateRoute';
+// import PublicRoute from './utils/PublicRoute';
+// import PrivateRoute from './utils/PrivateRoute';
 import Home from './Pages/Home';
 import Users from './Pages/Users';
 import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
 import EditProfile from './Pages/EditProfile';
 import DeleteProfile from './Pages/DeleteProfile';
-// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
 import Question from './Pages/CreateQuestion';
 import Questions from './Pages/Questions';
 import EditQuestion from './Pages/EditQuestion';
 import EditAnswer from './Pages/EditAnswer';
+import Search from './Pages/Search';
 
 // const isLogin = true;
 
@@ -38,24 +38,22 @@ function App() {
             path="/"
             render={() => <LogIn setToken={setToken} />}
             element={<Home />}
-          ></Route>
-          <Route path="/questions" element={<Questions />}></Route>
-          <Route path="/users" element={<Users />}></Route>
-          <Route path="/login" element={<LogIn />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
+          />
+          <Route path="/questions" element={<Questions />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
             path="/users/edit/1"
-            element={token ? <EditProfile /> : <LogIn />}
-          ></Route>
+            element={<EditProfile />}
+            // element={token ? <EditProfile /> : <LogIn />}
+          />
           <Route
             path="/users/delete/1"
             element={token ? <DeleteProfile /> : <LogIn />}
-          ></Route>
-          <Route path="/users/:memberId/:name" element={<UserDetail />}></Route>
-          <Route
-            path="/questions/:questionId"
-            element={<QuestionDetail />}
-          ></Route>
+          />
+          <Route path="/users/:memberId/:name" element={<UserDetail />} />
+          <Route path="/questions/:questionId" element={<QuestionDetail />} />
           <Route
             path="/questions/ask"
             element={token ? <Question /> : <LogIn />}
@@ -63,11 +61,12 @@ function App() {
           <Route
             path="/questions/edit/:questionId"
             element={token ? <EditQuestion /> : <LogIn />}
-          ></Route>
+          />
           <Route
             path="/questions/:questionId/answers/edit/:answerId"
             element={token ? <EditAnswer /> : <LogIn />}
-          ></Route>
+          />
+          <Route path="/questions/search" element={<Search />} />
         </Routes>
       </Router>
     </div>

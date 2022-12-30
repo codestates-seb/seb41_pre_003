@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const SettingNaviBar = styled.nav`
+const SettingNaviBar = styled.div`
   width: auto;
   padding-right: 20px;
   border-right: 1px solid rgba(128, 128, 128, 0.5);
   font-size: 15px;
-  h3 {
-    padding: 10px;
-    width: 100%;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
+  position: relative;
+  nav {
+    position: sticky;
+    h3 {
+      padding: 10px;
+      width: 100%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
   }
 `;
 
@@ -39,13 +43,15 @@ const SettingBtn = styled(Link)`
 const SettingsNav = ({ memberId, path }) => {
   return (
     <SettingNaviBar>
-      <h3>PERSONAL INFORMATION</h3>
-      <SettingBtn to={`/users/edit/${memberId}`} path={path}>
-        Edit profile
-      </SettingBtn>
-      <SettingBtn to={`/users/delete/${memberId}`} path={path}>
-        Delete profile
-      </SettingBtn>
+      <nav>
+        <h3>PERSONAL INFORMATION</h3>
+        <SettingBtn to={`/users/edit/${memberId}`} path={path}>
+          Edit profile
+        </SettingBtn>
+        <SettingBtn to={`/users/delete/${memberId}`} path={path}>
+          Delete profile
+        </SettingBtn>
+      </nav>
     </SettingNaviBar>
   );
 };

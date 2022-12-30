@@ -40,7 +40,11 @@ const InputForm = ({
         <div>{inputContent}</div>
         <ToastEditor content={content} setContent={setContent}></ToastEditor>
       </InputContainer>
-      <Button value={buttonContent} type="submit"></Button>
+      <Button
+        value={buttonContent}
+        type="submit"
+        onClick={handleButtonClick}
+      ></Button>
     </QuestionForm>
   );
 };

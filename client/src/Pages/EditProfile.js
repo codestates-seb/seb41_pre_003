@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import validCheck from '../utils/validCheck';
 
 const SettingsContainer = styled.div`
   width: 100%;
@@ -46,6 +47,7 @@ const EditTable = styled.form`
         height: 30px;
         font-size: 17px;
         padding: 5px;
+        width: 230px;
         &:focus {
           outline: 1px solid var(--blue);
           box-shadow: 0px 0px 5px 5px #d9eaf7;
@@ -53,6 +55,11 @@ const EditTable = styled.form`
       }
       select {
         font-size: 17px;
+        width: 230px;
+        &:focus {
+          outline: 1px solid var(--blue);
+          box-shadow: 0px 0px 5px 5px #d9eaf7;
+        }
       }
     }
   }
@@ -65,6 +72,7 @@ const EditGender = styled.select``;
 const AlertMsg = styled.span`
   color: ${(props) => (props.isValid ? 'var(--green)' : 'var(--orange)')};
   font-weight: bold;
+  font-size: 15px;
 `;
 
 const UpdateButton = styled.button`
@@ -78,7 +86,7 @@ const UpdateButton = styled.button`
   font-weight: bold;
   border: none;
   transition: 0.2s ease-in-out;
-  &:not(:disabled)&:hover {
+  &:not(:disabled):hover {
     background-color: #0074cc;
     cursor: pointer;
     box-shadow: inset 0 0 10px #00457a;
@@ -120,7 +128,7 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
   // TODO: memberId부분은 이후에 로그인 api를 통해 받은 id를 이용할 것.
-  const memberId = 1;
+  const memberId = localStorage.getItem('memberId');
 
   useEffect(() => {
     axios
@@ -144,6 +152,8 @@ const EditProfile = () => {
 
   const updateAccount = (e) => {
     e.preventDefault();
+    console.log(typeof pw, typeof name, typeof gender, typeof age);
+    console.log(pw, name, gender, age);
     axios
       .patch(`/members/${memberId}`, {
         pw,
@@ -163,27 +173,6 @@ const EditProfile = () => {
     e.preventDefault();
     navigate(`/users/${memberId}/${name}`);
   };
-
-  // const validCheck = (password) => {
-  //   if (!/^[a-zA-Z0-9]{10,15}$/.test(password)) {
-  //     alert('숫자와 영문자 조합으로 10~15자리를 사용해야 합니다.');
-  //     return false;
-  //   }
-
-  //   var checkNumber = password.search(/[0-9]/g);
-  //   var checkEnglish = password.search(/[a-z]/gi);
-
-  //   if (checkNumber < 0 || checkEnglish < 0) {
-  //     alert('숫자와 영문자를 혼용하여야 합니다.');
-  //     return false;
-  //   }
-
-  //   if (/(\w)\1\1\1/.test(password)) {
-  //     alert('444같은 문자를 4번 이상 사용하실 수 없습니다.');
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
   return (
     <>
@@ -216,6 +205,13 @@ const EditProfile = () => {
                           onChange={(e) => setPW(e.target.value)}
                         />
                       </td>
+                      <td>
+                        <AlertMsg
+                          isValid={validCheck(pw) === '사용하실 수 있습니다!'}
+                        >
+                          {validCheck(pw)}
+                        </AlertMsg>
+                      </td>
                     </tr>
                     <tr>
                       <td>
@@ -230,11 +226,10 @@ const EditProfile = () => {
                         />
                       </td>
                       <td>
-                        <AlertMsg hidden={validPW} isValid={validPW}>
-                          패스워드가 일치하지 않습니다
-                        </AlertMsg>
-                        <AlertMsg hidden={!validPW} isValid={validPW}>
-                          일치합니다!
+                        <AlertMsg isValid={validPW}>
+                          {validPW
+                            ? `일치합니다!`
+                            : `패스워드가 일치하지 않습니다`}
                         </AlertMsg>
                       </td>
                     </tr>
@@ -260,9 +255,11 @@ const EditProfile = () => {
                           onChange={(e) => setGender(e.target.value)}
                           value={gender}
                         >
-                          <option value="m">Male</option>
-                          <option value="f">Female</option>
-                          <option value="n">Not Specified</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="No Comment">
+                            Do not want to mention
+                          </option>
                         </EditGender>
                       </td>
                     </tr>
@@ -281,7 +278,12 @@ const EditProfile = () => {
                     </tr>
                   </tbody>
                 </table>
-                <UpdateButton type="submit" disabled={!validPW}>
+                <UpdateButton
+                  type="submit"
+                  disabled={
+                    !(validCheck(pw) === '사용하실 수 있습니다!' && validPW)
+                  }
+                >
                   Save profile
                 </UpdateButton>
                 <CancelButton onClick={cancelUpdate}>Cancel</CancelButton>

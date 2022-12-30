@@ -3,11 +3,12 @@ import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import styled from 'styled-components';
 import Button from '../Component/Button';
+import ButtonLink from '../Component/ButtonLink';
 import ToastEditor from '../Component/ToastEditor';
 import Content from '../Component/Content';
 import Loading from '../Component/Loading';
 // import Vote from '../Component/Vote';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -93,7 +94,7 @@ const QuestionDetail = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [isLoading]);
 
   const handleDeleteQuestion = () => {
     {
@@ -110,14 +111,35 @@ const QuestionDetail = () => {
               navigate(`/questions`);
             })
             .catch((err) => {
-              console.log('err: ', err);
+              console.log(err);
             })
         : '';
     }
   };
 
+  // const handleDeleteAnswer = () => {
+  //   {
+  //     confirm('삭제하시겠습니까?') === true
+  //       ? axios
+  //           .delete(`/questions/${questionId}/answers/${answerId}`, {
+  //             headers: {
+  //               Authorization: `${localStorage.getItem('AccessToken')}`,
+  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
+  //             },
+  //           })
+  //           .then((res) => {
+  //             console.log(res);
+  //             navigate(`/questions`);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           })
+  //       : '';
+  //   }
+  // };
+
   const handleCreateAnswer = (e) => {
-    e.preventDefault(e);
+    e.preventDefault();
     axios
       .post(
         `/questions/${question.questionId}/answers`,
@@ -153,9 +175,7 @@ const QuestionDetail = () => {
           <QDContainer>
             <Title>
               <h1>{question.title}</h1>
-              <Link to="/questions/ask">
-                <Button value="Ask Question"></Button>
-              </Link>
+              <ButtonLink value="Ask Question" to="/questions/ask"></ButtonLink>
             </Title>
             <Info>
               <span>Asked {question.create_date}</span>
@@ -186,6 +206,7 @@ const QuestionDetail = () => {
                   type="submit"
                   value="Submit your Answer"
                   disabled={token ? false : true}
+                  onClick={handleCreateAnswer}
                 ></Button>
               </AnswerForm>
             </AnswerCreate>

@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable jsx-a11y/alt-text */
-
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
@@ -47,7 +43,7 @@ const NavTab = styled(Link)`
   border: 1px solid #ffb951;
   border-radius: 25px;
   font-size: 25px;
-  display: flex;
+  display: ${(props) => (props.activate ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   color: white;
@@ -64,16 +60,26 @@ const LogoImg = styled.img`
 `;
 
 const UserHeader = ({ memberId, name }) => {
+  // TODO: 로그인된 멤버아이디와 회원정보페이지의 멤버아이디가 같아야만 Setting 탭이 활성화.
+  const loginId = localStorage.getItem('memberId');
+
   return (
     <MainContainer>
       <section>
-        <img src={`https://picsum.photos/seed/${memberId}/200/200`}></img>
+        <img
+          src={`https://picsum.photos/seed/${memberId}/200/200`}
+          alt={`avatar of ${name}`}
+        ></img>
         <div>{name}</div>
         <LogoImg src={logo}></LogoImg>
       </section>
       <FlexBox>
-        <NavTab to={`/users/${memberId}/${name}`}>Profile</NavTab>
-        <NavTab to={`/users/edit/${memberId}`}>Setting</NavTab>
+        <NavTab to={`/users/${memberId}/${name}`} activate={true}>
+          Profile
+        </NavTab>
+        <NavTab to={`/users/edit/${memberId}`} activate={memberId === loginId}>
+          Setting
+        </NavTab>
       </FlexBox>
     </MainContainer>
   );

@@ -1,6 +1,6 @@
 // import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
-import isLogin from '../util/isLogin';
+import isLogin from './isLogin';
 
 const PublicRoute = ({ element: Element, restricted, path, ...rest }) => {
   return (
