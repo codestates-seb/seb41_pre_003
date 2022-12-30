@@ -132,7 +132,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`/members/${memberId}`)
+      .get(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then((res) => {
         const data = res.data;
         setEmail(data.email);
@@ -155,7 +155,7 @@ const EditProfile = () => {
     console.log(typeof pw, typeof name, typeof gender, typeof age);
     console.log(pw, name, gender, age);
     axios
-      .patch(`/members/${memberId}`, {
+      .patch(`${process.env.REACT_APP_API_URL}/members/${memberId}`, {
         pw,
         name,
         gender,

@@ -105,7 +105,7 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get('/members')
+      .get(`${process.env.REACT_APP_API_URL}/members`)
       .then((res) => {
         const data = res.data;
         setUsers(data);
@@ -127,7 +127,7 @@ const Users = () => {
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get(`/members/search?keyword=${name}`)
+      .get(`${process.env.REACT_APP_API_URL}/members/search?keyword=${name}`)
       .then((res) => {
         setUsers(res.data);
         setPage(1);

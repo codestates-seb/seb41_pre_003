@@ -81,7 +81,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get('/questions')
+      .get(`${process.env.REACT_APP_API_URL}/questions`)
       .then((res) => {
         setData(res.data);
         setLoading(false);

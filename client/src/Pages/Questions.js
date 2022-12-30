@@ -72,7 +72,7 @@ const Questions = () => {
 
   useEffect(() => {
     axios
-      .get('/questions')
+      .get(`${process.env.REACT_APP_API_URL}/questions`)
       .then((res) => {
         // TODO: 최신등록순으로 정렬합니다.
         setData(res.data.sort((a, b) => b.questionId - a.questionId));

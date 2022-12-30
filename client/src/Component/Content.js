@@ -39,12 +39,15 @@ const Content = ({ data, handleDelete }) => {
     {
       confirm('삭제하시겠습니까?') === true
         ? axios
-            .delete(`/questions/${data.questionId}/answers/${data.answerId}`, {
-              headers: {
-                Authorization: `${localStorage.getItem('AccessToken')}`,
-                Refresh: `${localStorage.getItem('RefreshToken')}`,
-              },
-            })
+            .delete(
+              `${process.env.REACT_APP_API_URL}/questions/${data.questionId}/answers/${data.answerId}`,
+              {
+                headers: {
+                  Authorization: `${localStorage.getItem('AccessToken')}`,
+                  Refresh: `${localStorage.getItem('RefreshToken')}`,
+                },
+              }
+            )
             .then((res) => {
               console.log(res);
               navigate(`/questions`);

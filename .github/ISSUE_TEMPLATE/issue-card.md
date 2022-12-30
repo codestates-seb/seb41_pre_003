@@ -1,10 +1,6 @@
 ---
 name: Issue card
-<<<<<<< HEAD
-about: Issue card
-=======
 about: Describe this issue template's purpose here.
->>>>>>> 3e7cd1acab9e49c08da4a53d4cbb583fc3742ab7
 title: ''
 labels: ''
 assignees: ''

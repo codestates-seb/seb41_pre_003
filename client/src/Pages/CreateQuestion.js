@@ -44,7 +44,7 @@ const CreateQuestion = () => {
     e.preventDefault();
     axios
       .post(
-        `/questions/`,
+        `${process.env.REACT_APP_API_URL}/questions/`,
         {
           title: title,
           content: content,

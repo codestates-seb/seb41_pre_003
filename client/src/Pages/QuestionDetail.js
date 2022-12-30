@@ -71,13 +71,15 @@ const QuestionDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`/questions/${questionId}`)
+      .get(`${process.env.REACT_APP_API_URL}/questions/${questionId}`)
       .then((res) => {
         setQuestion(res.data);
         console.log('question: ', question);
 
         axios
-          .get(`/questions/${questionId}/answers`)
+          .get(
+            `${process.env.REACT_APP_API_URL}/questions/${questionId}/answers`
+          )
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
@@ -100,12 +102,15 @@ const QuestionDetail = () => {
     {
       confirm('삭제하시겠습니까?') === true
         ? axios
-            .delete(`/questions/${questionId}`, {
-              headers: {
-                Authorization: `${localStorage.getItem('AccessToken')}`,
-                Refresh: `${localStorage.getItem('RefreshToken')}`,
-              },
-            })
+            .delete(
+              `${process.env.REACT_APP_API_URL}/questions/${questionId}`,
+              {
+                headers: {
+                  Authorization: `${localStorage.getItem('AccessToken')}`,
+                  Refresh: `${localStorage.getItem('RefreshToken')}`,
+                },
+              }
+            )
             .then((res) => {
               console.log(res);
               navigate(`/questions`);
@@ -121,7 +126,7 @@ const QuestionDetail = () => {
   //   {
   //     confirm('삭제하시겠습니까?') === true
   //       ? axios
-  //           .delete(`/questions/${questionId}/answers/${answerId}`, {
+  //           .delete(`${process.env.REACT_APP_API_URL}/questions/${questionId}/answers/${answerId}`, {
   //             headers: {
   //               Authorization: `${localStorage.getItem('AccessToken')}`,
   //               Refresh: `${localStorage.getItem('RefreshToken')}`,
@@ -142,7 +147,7 @@ const QuestionDetail = () => {
     e.preventDefault();
     axios
       .post(
-        `/questions/${question.questionId}/answers`,
+        `${process.env.REACT_APP_API_URL}/questions/${question.questionId}/answers`,
         {
           content: inputContent,
           memberId: `${localStorage.getItem('memberId')}`,

@@ -56,7 +56,7 @@ const UserItem = ({ memberId }) => {
 
   useEffect(() => {
     axios
-      .get(`/members/${memberId}`)
+      .get(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then((res) => {
         setData(res.data);
         setLoading(false);

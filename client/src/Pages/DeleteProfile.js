@@ -73,7 +73,7 @@ const DeleteProfile = () => {
 
   const deleteAccount = () => {
     axios
-      .delete(`/members/${memberId}`)
+      .delete(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then(() => {
         // TODO: 성공하면 로그아웃
         localStorage.removeItem('AccessToken');
