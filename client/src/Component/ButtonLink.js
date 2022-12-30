@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled(Link)`
   text-decoration: none;
   border-radius: 12px;
   background-color: var(--blue);
@@ -18,16 +19,10 @@ const ButtonContainer = styled.button`
     box-shadow: inset 0 0 10px #00457a;
     transition: 0.2s ease-in-out;
   }
-
-  &:disabled {
-    background-color: rbga(1, 1, 1, 0);
-    color: rgba(1, 1, 1, 0.3);
-    transition: 0.2s ease-in-out;
-  }
 `;
 
-const Button = ({ value, onClick }) => {
-  return <ButtonContainer onClick={onClick}>{value}</ButtonContainer>;
+const ButtonLink = ({ value, to }) => {
+  return <ButtonContainer to={to}>{value}</ButtonContainer>;
 };
 
-export default Button;
+export default ButtonLink;

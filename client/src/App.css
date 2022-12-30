@@ -11,7 +11,7 @@
   --black: #212426;
   --orange: #f48024;
   --light-gray: #f8faf9;
-  --gray: #bcbbbb;
+  --gray: rgb(188, 187, 187);
   --green: #5fba7d;
   --top-bar-allocated-space: 71px;
 }
@@ -39,30 +39,9 @@ code {
   flex-direction: column;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: var(--light-gray);
-  border-top: 5px solid var(--orange);
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 71px;
-  box-shadow: 0px 1px 5px 2px rgba(128, 128, 128, 0.5);
-  z-index: 99;
-  animation: slidefromtop 1s ease-in-out;
-}
-
-header > div {
-  display: flex;
-}
-
 main {
-  animation: fadein 2s;
   display: flex;
+  animation: fadein 2s;
 }
 
 @keyframes fadein {
@@ -71,14 +50,5 @@ main {
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes slidefromtop {
-  from {
-    top: -71px;
-  }
-  to {
-    top: 0px;
   }
 }

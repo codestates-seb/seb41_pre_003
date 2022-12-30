@@ -4,11 +4,12 @@ import miniLogo from '../img/mini-logo.png';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import validCheck from '../utils/validCheck';
 
 const SignUpContainer = styled.section`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
-  gap: 20px;
+  width: 100%;
+  height: auto;
+  padding: 20px;
   margin-top: var(--top-bar-allocated-space);
   display: flex;
   justify-content: space-evenly;
@@ -22,8 +23,7 @@ const SignUpContainer = styled.section`
 
 const SignUpSec = styled.section`
   width: 300px;
-  grid-auto-flow: column;
-  margin: 50px 0px;
+  margin: 40px 0px;
 `;
 
 const Logo = styled.img`
@@ -73,6 +73,7 @@ const SignUpForm = styled.form`
     display: flex;
     align-items: center;
     margin-bottom: 3px;
+    position: relative;
   }
 
   input,
@@ -92,22 +93,63 @@ const SignUpForm = styled.form`
   }
 
   button {
-    border-radius: 5px;
+    border-radius: 12px;
     background-color: var(--blue);
     color: white;
-    border: 1px solid var(--light-gray);
+    margin-top: 20px;
+    padding: 13px 20px;
     width: 95%;
     font-size: 15px;
     font-weight: bold;
-    padding: 7px;
-    margin-top: 20px;
+    border: none;
+    transition: 0.2s ease-in-out;
 
-    &:hover {
+    &:not(:disabled):hover {
       background-color: #0074cc;
       cursor: pointer;
       box-shadow: inset 0 0 10px #00457a;
       transition: 0.2s ease-in-out;
     }
+    &:disabled {
+      background-color: #b5dfff;
+      transition: 0.2s ease-in-out;
+    }
+  }
+`;
+
+const MessagePop = styled.div`
+  position: absolute;
+  top: 70%;
+  right: 105%;
+  color: ${(props) => (props.isValid ? 'var(--green)' : 'var(--orange)')};
+  font-weight: ${(props) => (props.isValid ? 'bold' : '')};
+  font-size: 15px;
+
+  .speech-bubble {
+    word-break: keep-all;
+    position: relative;
+    border: 1px solid var(--gray);
+    border-radius: 0.4em;
+    background-color: var(--light-gray);
+    min-width: 250px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .speech-bubble:after {
+    content: '';
+    height: 9px;
+    position: absolute;
+    top: 12px;
+    right: -5px;
+    background-color: var(--light-gray);
+    transform: rotate(210deg) skew(-24deg);
+    width: 9px;
+    border-left: 1px solid var(--gray);
+    border-bottom: 1px solid var(--gray);
   }
 `;
 
@@ -151,11 +193,11 @@ const SignUp = () => {
     validCheck(password);
 
     axios
-      .post('/members', {
-        pw: password,
-        gender: gender,
+      .post(`${process.env.REACT_APP_API_URL}/members`, {
         name: name,
         email: email,
+        pw: password,
+        gender: gender,
         age: age,
       })
       .then((res) => {
@@ -165,35 +207,6 @@ const SignUp = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const handleChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleChangePasswordRetype = (event) => {
-    setPasswordRetype(event.target.value);
-  };
-
-  const validCheck = (password) => {
-    if (!/^[a-zA-Z0-9]{10,15}$/.test(password)) {
-      alert('숫자와 영문자 조합으로 10~15자리를 사용해야 합니다.');
-      return false;
-    }
-
-    let checkNumber = password.search(/[0-9]/g);
-    let checkEnglish = password.search(/[a-z]/gi);
-
-    if (checkNumber < 0 || checkEnglish < 0) {
-      alert('숫자와 영문자를 혼용하여야 합니다.');
-      return false;
-    }
-
-    if (/(\w)\1\1\1/.test(password)) {
-      alert('444같은 문자를 4번 이상 사용하실 수 없습니다.');
-      return false;
-    }
-    return true;
   };
 
   return (
@@ -216,7 +229,7 @@ const SignUp = () => {
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
-            ></input>
+            />
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -224,23 +237,40 @@ const SignUp = () => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-            ></input>
-            <label htmlFor="password">Password</label>
+            />
+
+            <label htmlFor="password">
+              Password
+              <MessagePop
+                isValid={validCheck(password) === '사용하실 수 있습니다!'}
+              >
+                <div className="speech-bubble">{validCheck(password)}</div>
+              </MessagePop>
+            </label>
             <input
               type="password"
               id="password"
               value={password}
               required
-              onChange={handleChangePassword}
-            ></input>
-            <label htmlFor="confirm-pw">Password Retype</label>
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <label htmlFor="confirm-pw">
+              Password Retype
+              <MessagePop isValid={password === passwordRetype}>
+                <div className="speech-bubble">
+                  {password === passwordRetype
+                    ? '일치합니다!'
+                    : '일치하지 않습니다'}
+                </div>
+              </MessagePop>
+            </label>
             <input
               type="password"
               id="confirm-pw"
               value={passwordRetype}
               required
-              onChange={handleChangePasswordRetype}
-            ></input>
+              onChange={(e) => setPasswordRetype(e.target.value)}
+            />
             <label htmlFor="gender">Gender</label>
             <select
               name="gender"
@@ -249,9 +279,9 @@ const SignUp = () => {
               onChange={(e) => setGender(e.target.value)}
             >
               <option value="">Select your gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="dwm">Do not want to mention</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="No Comment">Do not want to mention</option>
             </select>
             <label htmlFor="age">Age</label>
             <input
@@ -260,8 +290,18 @@ const SignUp = () => {
               value={age}
               required
               onChange={(e) => setAge(e.target.value)}
-            ></input>
-            <button type="submit">Sign up</button>
+            />
+            <button
+              type="submit"
+              disabled={
+                !(
+                  validCheck(password) === '사용하실 수 있습니다!' &&
+                  password === passwordRetype
+                )
+              }
+            >
+              Sign up
+            </button>
           </SignUpForm>
         </SignUpSec>
       </SignUpContainer>

@@ -1,20 +1,20 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import PublicRoute from './util/PublicRoute';
-// import PrivateRoute from './util/PrivateRoute';
+// import PublicRoute from './utils/PublicRoute';
+// import PrivateRoute from './utils/PrivateRoute';
 import Home from './Pages/Home';
 import Users from './Pages/Users';
 import LogIn from './Pages/Login';
 import SignUp from './Pages/Signup';
 import EditProfile from './Pages/EditProfile';
 import DeleteProfile from './Pages/DeleteProfile';
-// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
 import Question from './Pages/CreateQuestion';
 import Questions from './Pages/Questions';
 import EditQuestion from './Pages/EditQuestion';
 import EditAnswer from './Pages/EditAnswer';
+import Search from './Pages/Search';
 
 const setToken = (AccessToken) => {
   localStorage.setItem('token', AccessToken);

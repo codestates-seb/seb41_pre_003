@@ -11,7 +11,6 @@ export default function ToastEditor({ content, setContent }) {
 
   const onChange = () => {
     const data = editorRef.current.getInstance().getMarkdown(); //getMarkdown or getHTML
-    console.log(data);
     setContent(data);
   };
 
