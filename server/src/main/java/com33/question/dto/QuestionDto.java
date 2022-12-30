@@ -28,19 +28,11 @@ public class QuestionDto {
         private Long questionId;
         @NotBlank
         private String content;
-        public void setQuestionId(Long questionId) {
-            this.questionId = questionId;
-        }
-    }
-    @Getter
-    @AllArgsConstructor
-    public static class Vote {
-        private Long questionId;
-        public void setQuestionId(Long questionId) {
-            this.questionId = questionId;
-        }
-    }
 
+        public void setQuestionId(Long questionId) {
+            this.questionId = questionId;
+        }
+    }
 
     @NoArgsConstructor
     @Setter
@@ -53,6 +45,23 @@ public class QuestionDto {
         private String content;
         private LocalDateTime create_date;
         private int viewCount;
-        private int voteCount;
+        private int likeCount;
+    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class Like {
+        private long questionId;
+        private long memberId;
+    }
+    @NoArgsConstructor
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    public static class LikeResponse {
+        private Long likeId;
+        private Long questionId;
+        private Long memberId;
+
     }
 }

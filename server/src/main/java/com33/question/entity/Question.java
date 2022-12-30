@@ -30,8 +30,7 @@ public class Question {
     @Column(nullable = false)
     private int viewCount;
     @Column(nullable = false)
-    private int voteCount;
-
+    private int likeCount;
     @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "memberId")
@@ -41,10 +40,20 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "question")
+    private List<Like> likes = new ArrayList<>();
+
     public void addAnswer(Answer answer){
         answers.add(answer);
         if(answer.getQuestion() != this){
             answer.setQuestion(this);
+        }
+    }
+    public void addLike(Like like){
+        likes.add(like);
+        if(like.getQuestion() != this){
+            like.setQuestion(this);
         }
     }
 }

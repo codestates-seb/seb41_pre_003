@@ -3,8 +3,10 @@ package com33.question.mapper;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
+import com33.question.entity.Like;
 import com33.question.entity.Question;
 
+import com33.question.service.QuestionService;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -25,7 +27,16 @@ public interface QuestionMapper {
         response.setCreate_date(question.getCreate_date());
         response.setContent(question.getContent());
         response.setViewCount(question.getViewCount());
-        response.setVoteCount(question.getVoteCount());
+        response.setLikeCount(question.getLikeCount());
+
+        return response;
+    }
+    default QuestionDto.LikeResponse questionLikeToQuestionResponse(Like like) {
+        QuestionDto.LikeResponse response = new QuestionDto.LikeResponse();
+
+        response.setLikeId(like.getLikeId());
+        response.setQuestionId(like.getQuestion().getQuestionId());
+        response.setMemberId(like.getMember().getMemberId());
 
         return response;
     }
@@ -58,15 +69,22 @@ public interface QuestionMapper {
 
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 
-    default Question questionVoteToQuestion(QuestionDto.Vote questionVoteDto) {
-        if (questionVoteDto == null) {
+    default Like questionLikeToQuestion(QuestionService questionService, MemberService memberService,
+                                            QuestionDto.Like questionLikeDto) {
+        if (questionLikeDto == null) {
             return null;
         }
-
+        Like like = new Like();
         Question question = new Question();
-        question.setQuestionId(questionVoteDto.getQuestionId());
+        Member member = new Member();
 
-        return question;
+        member.setMemberId(questionLikeDto.getMemberId());
+        question.setQuestionId(questionLikeDto.getQuestionId());
+
+        like.setQuestion(questionService.findQuestion(question.getQuestionId()));
+        like.setMember(memberService.findMember(member.getMemberId()));
+
+        return like;
     }
 
 }
