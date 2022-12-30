@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Header from '../Component/Header';
-import Writer from '../Component/Writer';
-import Button from '../Component/Button';
+import InputForm from '../Component/InputForm';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionContainer = styled.div`
   width: 100%;
@@ -25,33 +26,46 @@ const TipDiv = styled.div`
   }
 `;
 
-const QuestionForm = styled.form`
-  input {
-    width: 100%;
-  }
-  button {
-  }
-`;
-
-const InputContainer = styled.div`
-  border: 1px solid black;
-  padding: 30px;
-  margin: 10px;
-  div {
-    margin-bottom: 10px;
-  }
-`;
-
-const Question = () => {
-  const [title, setTitle] = useState();
+const CreateQuestion = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const navigate = useNavigate();
 
   const handleChangeTitle = (event) => {
+    setTitle('');
     setTitle(event.target.value);
   };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `/questions/`,
+        {
+          title: title,
+          content: content,
+          memberId: `${localStorage.getItem('memberId')}`,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('AccessToken')}`,
+            Refresh: `${localStorage.getItem('RefreshToken')}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate('/login');
+      });
+  };
 
   return (
     <>
@@ -79,23 +93,17 @@ const Question = () => {
             <li>Review your question and post it to the site.</li>
           </ul>
         </TipDiv>
-        <QuestionForm>
-          <InputContainer>
-            <div>Title</div>
-            <input type="text" value={title} onChange={handleChangeTitle} />
-          </InputContainer>
-          <InputContainer>
-            <div>What are the details of your problem?</div>
-            <Writer></Writer>
-          </InputContainer>
-          <InputContainer>
-            <div>What did you try and what were you expecting?</div>
-            <Writer></Writer>
-          </InputContainer>
-          <Button value="Review your question"></Button>
-        </QuestionForm>
+        <InputForm
+          title={title}
+          handleChangeTitle={handleChangeTitle}
+          inputContent={'What are the details of your problem?'}
+          content={content} //
+          setContent={setContent}
+          handleButtonClick={handleButtonClick}
+          buttonContent={'Submit your Question'}
+        ></InputForm>
       </QuestionContainer>
     </>
   );
 };
-export default Question;
+export default CreateQuestion;

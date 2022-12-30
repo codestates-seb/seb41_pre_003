@@ -16,6 +16,12 @@ const ButtonContainer = styled.button`
     box-shadow: inset 0 0 10px #00457a;
     transition: 0.2s ease-in-out;
   }
+
+  &:disabled {
+    background-color: rbga(1, 1, 1, 0);
+    color: rgba(1, 1, 1, 0.3);
+    transition: 0.2s ease-in-out;
+  }
 `;
 
 const Button = ({ value }) => {

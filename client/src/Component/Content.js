@@ -1,4 +1,7 @@
+import UserItem from '../Component/UserItem';
 import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -6,9 +9,9 @@ const ContentContainer = styled.div`
   margin-bottom: 10px;
   padding: 10px;
 
-  button {
-    border: none;
-    margin: 10px;
+  div {
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -17,22 +20,71 @@ const MiniContent = styled.div`
   padding: 10px;
 `;
 
-const Content = () => {
+const ButtonContainer = styled.div`
+  width: 200px;
+
+  button {
+    border: none;
+    margin: 10px;
+    height: 40px;
+    width: 100px;
+  }
+`;
+
+const Content = ({ data, handleDelete }) => {
+  console.log(data);
+  const navigate = useNavigate();
+
+  const handleDeleteAnswer = () => {
+    {
+      confirm('삭제하시겠습니까?') === true
+        ? axios
+            .delete(`/questions/${data.questionId}/answers/${data.answerId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              navigate(`/questions`);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        : '';
+    }
+  };
+
   return (
     <>
       <ContentContainer>
-        <MiniContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-          consectetur laoreet elit eu varius. Morbi luctus ex ac luctus
-          ultricies. Nullam tincidunt non erat vel gravida. Pellentesque
-          habitant morbi tristique senectus et netus et malesuada fames ac
-          turpis egestas. Nunc congue nisi eget ante consectetur, at porta massa
-          maximus. Ut consectetur nisi et eros aliquet efficitur sed in mauris.
-          Morbi lobortis tortor quis nibh dignissim, eu eleifend sem ultricies.
-          Aliquam bibendum a lectus a dignissim.
-        </MiniContent>
-        <button>edit</button>
-        <button>delete</button>
+        <MiniContent>{data.content}</MiniContent>
+        <div>
+          <ButtonContainer>
+            {data.answerId === undefined ? (
+              <Link to={`/questions/edit/${data.questionId}`}>
+                <button>edit</button>
+              </Link>
+            ) : (
+              <Link
+                to={`/questions/${data.questionId}/answers/edit/${data.answerId}`}
+              >
+                <button>edit</button>
+              </Link>
+            )}
+            {data.answerId === undefined ? (
+              <button onClick={handleDelete} type="button">
+                delete
+              </button>
+            ) : (
+              <button onClick={handleDeleteAnswer} type="button">
+                delete
+              </button>
+            )}
+          </ButtonContainer>
+          <UserItem memberId={data.memberId}></UserItem>
+        </div>
       </ContentContainer>
     </>
   );

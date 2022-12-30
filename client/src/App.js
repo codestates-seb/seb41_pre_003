@@ -1,5 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import PublicRoute from './util/PublicRoute';
+// import PrivateRoute from './util/PrivateRoute';
 import Home from './Pages/Home';
 import Users from './Pages/Users';
 import LogIn from './Pages/Login';
@@ -9,30 +11,63 @@ import DeleteProfile from './Pages/DeleteProfile';
 // eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import UserDetail from './Pages/UserDetail';
 import QuestionDetail from './Pages/QuestionDetail';
-import Question from './Pages/Question';
+import Question from './Pages/CreateQuestion';
 import Questions from './Pages/Questions';
+import EditQuestion from './Pages/EditQuestion';
+import EditAnswer from './Pages/EditAnswer';
+
+// const isLogin = true;
+
+const setToken = (AccessToken) => {
+  localStorage.setItem('token', AccessToken);
+};
+
+const getToken = () => {
+  localStorage.getItem('token');
+};
 
 function App() {
+  const token = getToken();
+
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />}></Route>
+          <Route
+            exact
+            path="/"
+            render={() => <LogIn setToken={setToken} />}
+            element={<Home />}
+          ></Route>
           <Route path="/questions" element={<Questions />}></Route>
           <Route path="/users" element={<Users />}></Route>
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/users/edit/1" element={<EditProfile />}></Route>
-          <Route path="/users/delete/1" element={<DeleteProfile />}></Route>
           <Route
-            path="/users/:member_id/:name"
-            element={<UserDetail />}
+            path="/users/edit/1"
+            element={token ? <EditProfile /> : <LogIn />}
           ></Route>
           <Route
-            path="/questions/:question_id"
+            path="/users/delete/1"
+            element={token ? <DeleteProfile /> : <LogIn />}
+          ></Route>
+          <Route path="/users/:memberId/:name" element={<UserDetail />}></Route>
+          <Route
+            path="/questions/:questionId"
             element={<QuestionDetail />}
           ></Route>
-          <Route path="/questions/ask" element={<Question />} />
+          <Route
+            path="/questions/ask"
+            element={token ? <Question /> : <LogIn />}
+          />
+          <Route
+            path="/questions/edit/:questionId"
+            element={token ? <EditQuestion /> : <LogIn />}
+          ></Route>
+          <Route
+            path="/questions/:questionId/answers/edit/:answerId"
+            element={token ? <EditAnswer /> : <LogIn />}
+          ></Route>
         </Routes>
       </Router>
     </div>

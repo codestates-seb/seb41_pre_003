@@ -42,7 +42,6 @@ const ProfileList = styled.div`
   border-radius: 30px;
   margin: 30px;
   margin-bottom: 100px;
-  /* margin: 30px 100px 20px 30px; */
   padding: 50px;
   box-shadow: 5px 5px 5px 5px gray;
   ul {
@@ -115,11 +114,11 @@ const Settings = styled.div`
 const UserDetail = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { member_id, name } = useParams();
+  const { memberId, name } = useParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/members/${member_id}`)
+      .get(`/members/${memberId}`)
       .then((res) => {
         const data = res.data;
         setData(data);
@@ -138,7 +137,7 @@ const UserDetail = () => {
         <SettingsContainer>
           <Settings>
             <HellowBox>Welcome!</HellowBox>
-            <UserHeader member_id={member_id} name={name} />
+            <UserHeader memberId={memberId} name={name} />
             {!loading ? (
               <MainContainer>
                 <ProfileList>
