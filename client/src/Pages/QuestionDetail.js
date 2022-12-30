@@ -3,11 +3,12 @@ import Nav from '../Component/Nav';
 import Footer from '../Component/Footer';
 import styled from 'styled-components';
 import Button from '../Component/Button';
+import ButtonLink from '../Component/ButtonLink';
 import ToastEditor from '../Component/ToastEditor';
 import Content from '../Component/Content';
 import Loading from '../Component/Loading';
 // import Vote from '../Component/Vote';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -54,6 +55,11 @@ const AnswerForm = styled.form`
   }
 `;
 
+// const SubmitButton = styled.button`
+//   width: 100px;
+//   heigth: 50px;
+// `;
+
 const QuestionDetail = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -61,26 +67,28 @@ const QuestionDetail = () => {
   const [isLoading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const { questionId, answerId } = useParams();
+  const { questionId } = useParams();
 
   useEffect(() => {
     axios
       .get(`/questions/${questionId}`)
       .then((res) => {
         setQuestion(res.data);
+        console.log('question: ', question);
 
         axios
           .get(`/questions/${questionId}/answers`)
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
+            console.log('answer: ', answer);
           })
           .catch((err) => {
-            console.log(err);
+            console.log('answer err: ', err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.log('question err:', err);
       });
   }, []);
 
@@ -109,26 +117,26 @@ const QuestionDetail = () => {
     }
   };
 
-  const handleDeleteAnswer = () => {
-    {
-      confirm('삭제하시겠습니까?') === true
-        ? axios
-            .delete(`/questions/${questionId}/answers/${answerId}`, {
-              headers: {
-                Authorization: `${localStorage.getItem('AccessToken')}`,
-                Refresh: `${localStorage.getItem('RefreshToken')}`,
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              navigate(`/questions`);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-        : '';
-    }
-  };
+  // const handleDeleteAnswer = () => {
+  //   {
+  //     confirm('삭제하시겠습니까?') === true
+  //       ? axios
+  //           .delete(`/questions/${questionId}/answers/${answerId}`, {
+  //             headers: {
+  //               Authorization: `${localStorage.getItem('AccessToken')}`,
+  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
+  //             },
+  //           })
+  //           .then((res) => {
+  //             console.log(res);
+  //             navigate(`/questions`);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           })
+  //       : '';
+  //   }
+  // };
 
   const handleCreateAnswer = (e) => {
     e.preventDefault();
@@ -156,6 +164,8 @@ const QuestionDetail = () => {
       });
   };
 
+  const token = localStorage.getItem('AccessToken');
+
   return (
     <>
       <Header></Header>
@@ -165,13 +175,10 @@ const QuestionDetail = () => {
           <QDContainer>
             <Title>
               <h1>{question.title}</h1>
-              <Link to="/questions/ask">
-                <Button value="Ask Question"></Button>
-              </Link>
+              <ButtonLink value="Ask Question" to="/questions/ask"></ButtonLink>
             </Title>
             <Info>
               <span>Asked {question.create_date}</span>
-              {/* <span>Modified {question.modifiedAt}</span> */}
               <span>View {question.viewCount}</span>
             </Info>
             {/* <Vote count={question.voteCount}></Vote> */}
@@ -185,13 +192,7 @@ const QuestionDetail = () => {
                 : `${answer.length} Answer`}
             </h2>
             {answer.map((el) => {
-              return (
-                <Content
-                  data={el}
-                  handleDelete={handleDeleteAnswer}
-                  key={el.answerId}
-                ></Content>
-              );
+              return <Content data={el} key={el.answerId}></Content>;
             })}
             <AnswerCreate>
               <p>
@@ -201,7 +202,12 @@ const QuestionDetail = () => {
               <h2>Your Answer</h2>
               <AnswerForm onSubmit={handleCreateAnswer}>
                 <ToastEditor setContent={setInputContent}></ToastEditor>
-                <Button type="submit" value="Submit your Answer"></Button>
+                <Button
+                  type="submit"
+                  value="Submit your Answer"
+                  disabled={token ? false : true}
+                  onClick={handleCreateAnswer}
+                ></Button>
               </AnswerForm>
             </AnswerCreate>
           </QDContainer>

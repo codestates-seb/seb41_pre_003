@@ -51,7 +51,7 @@ const UserName = styled(Link)`
 `;
 
 const UserItem = ({ memberId }) => {
-  const [data, setData] = useState(''); //null
+  const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {

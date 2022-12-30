@@ -68,7 +68,7 @@ const DeleteProfile = () => {
   const [checked, setchecked] = useState(false);
   const { pathname: path } = useLocation();
   // TODO: memberId부분은 이후에 로그인 api를 통해 받은 id를 이용할 것.
-  const memberId = 1;
+  const memberId = localStorage.getItem('memberId');
   const navigate = useNavigate();
 
   const deleteAccount = () => {
@@ -76,6 +76,9 @@ const DeleteProfile = () => {
       .delete(`/members/${memberId}`)
       .then(() => {
         // TODO: 성공하면 로그아웃
+        localStorage.removeItem('AccessToken');
+        localStorage.removeItem('RefreshToken');
+        localStorage.removeItem('memberId');
         // 홈페이지로 이동
         navigate('/');
       })

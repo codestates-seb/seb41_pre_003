@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import '@toast-ui/editor/dist/toastui-editor.css';
 // eslint-disable-next-line import/no-unresolved
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
@@ -10,14 +11,13 @@ export default function ToastEditor({ content, setContent }) {
 
   const onChange = () => {
     const data = editorRef.current.getInstance().getMarkdown(); //getMarkdown or getHTML
-    console.log(data);
     setContent(data);
   };
 
   return (
     <div>
       <Editor
-        initialValue={`${content}`}
+        initialValue={`${content || '내용을 입력해주세요'}`}
         onChange={onChange}
         ref={editorRef}
         previewStyle="vertical" // 미리보기 스타일 지정
