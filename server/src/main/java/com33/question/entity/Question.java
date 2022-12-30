@@ -41,6 +41,16 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionTag> questionTagList = new ArrayList<>();
+
+    public void addQuestionTag(QuestionTag questionTag) {
+        this.questionTagList.add(questionTag);
+        if(questionTag.getQuestion() != this){
+            questionTag.addQuestion(this);
+        }
+    }
+
     public void addAnswer(Answer answer){
         answers.add(answer);
         if(answer.getQuestion() != this){

@@ -5,11 +5,15 @@ import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
 import com33.question.entity.Question;
+import com33.question.entity.QuestionTag;
 import com33.question.repository.QuestionRepository;
+import com33.question.repository.QuestionTagRepository;
+import com33.tag.entity.Tag;
+import com33.tag.service.TagService;
+import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,19 +21,32 @@ import java.util.Optional;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
+    private final TagService tagService;
+    private final QuestionTagRepository questionTagRepository;;
 
-    public QuestionService(QuestionRepository questionRepository, MemberService memberService) {
+    public QuestionService(QuestionRepository questionRepository, MemberService memberService, TagService tagService, QuestionTagRepository questionTagRepository){
         this.questionRepository = questionRepository;
         this.memberService = memberService;
+        this.tagService = tagService;
+        this.questionTagRepository = questionTagRepository;
     }
 
     public Question createQuestion(Question question) {
-//        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
-        Member member = memberService.getLoginMember();
+        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+
+        for(int i = 0; i < question.getQuestionTagList().size(); i++){
+            QuestionTag questionTag = new QuestionTag();
+            questionTag.addTag(question.getQuestionTagList().get(i).getTag());
+            questionTag.addQuestion(question);
+            question.addQuestionTag(questionTag);
+            questionTagRepository.save(questionTag);
+        }
+       // Member member = memberService.getLoginMember();
         question.setMember(member);
         question.setViewCount(0);
         question.setVoteCount(0);
         member.addQuestion(question);
+
 
         return questionRepository.save(question);
     }
