@@ -1,6 +1,7 @@
 import UserItem from '../Component/UserItem';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -32,6 +33,29 @@ const ButtonContainer = styled.div`
 
 const Content = ({ data, handleDelete }) => {
   console.log(data);
+  const navigate = useNavigate();
+
+  const handleDeleteAnswer = () => {
+    {
+      confirm('삭제하시겠습니까?') === true
+        ? axios
+            .delete(`/questions/${data.questionId}/answers/${data.answerId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              navigate(`/questions`);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        : '';
+    }
+  };
+
   return (
     <>
       <ContentContainer>
@@ -49,7 +73,15 @@ const Content = ({ data, handleDelete }) => {
                 <button>edit</button>
               </Link>
             )}
-            <button onClick={handleDelete}>delete</button>
+            {data.answerId === undefined ? (
+              <button onClick={handleDelete} type="button">
+                delete
+              </button>
+            ) : (
+              <button onClick={handleDeleteAnswer} type="button">
+                delete
+              </button>
+            )}
           </ButtonContainer>
           <UserItem memberId={data.memberId}></UserItem>
         </div>

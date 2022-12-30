@@ -18,7 +18,7 @@ export default function ToastEditor({ content, setContent }) {
   return (
     <div>
       <Editor
-        initialValue={`${content}`}
+        initialValue={`${content || '내용을 입력해주세요'}`}
         onChange={onChange}
         ref={editorRef}
         previewStyle="vertical" // 미리보기 스타일 지정

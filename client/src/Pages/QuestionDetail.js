@@ -54,6 +54,11 @@ const AnswerForm = styled.form`
   }
 `;
 
+// const SubmitButton = styled.button`
+//   width: 100px;
+//   heigth: 50px;
+// `;
+
 const QuestionDetail = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -61,7 +66,7 @@ const QuestionDetail = () => {
   const [isLoading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const { questionId, answerId } = useParams();
+  const { questionId } = useParams();
 
   useEffect(() => {
     axios
@@ -90,50 +95,29 @@ const QuestionDetail = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // const handleDeleteQuestion = () => {
-  //   {
-  //     confirm('삭제하시겠습니까?') === true
-  //       ? axios
-  //           .delete(`/questions/${questionId}`, {
-  //             headers: {
-  //               Authorization: `${localStorage.getItem('AccessToken')}`,
-  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
-  //             },
-  //           })
-  //           .then((res) => {
-  //             console.log(res);
-  //             navigate(`/questions`);
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //           })
-  //       : '';
-  //   }
-  // };
-
-  // const handleDeleteAnswer = () => {
-  //   {
-  //     confirm('삭제하시겠습니까?') === true
-  //       ? axios
-  //           .delete(`/questions/${questionId}/answers/${answerId}`, {
-  //             headers: {
-  //               Authorization: `${localStorage.getItem('AccessToken')}`,
-  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
-  //             },
-  //           })
-  //           .then((res) => {
-  //             console.log(res);
-  //             navigate(`/questions`);
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //           })
-  //       : '';
-  //   }
-  // };
+  const handleDeleteQuestion = () => {
+    {
+      confirm('삭제하시겠습니까?') === true
+        ? axios
+            .delete(`/questions/${questionId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              navigate(`/questions`);
+            })
+            .catch((err) => {
+              console.log('err: ', err);
+            })
+        : '';
+    }
+  };
 
   const handleCreateAnswer = (e) => {
-    e.preventDefault();
+    e.preventDefault(e);
     axios
       .post(
         `/questions/${question.questionId}/answers`,
@@ -158,6 +142,8 @@ const QuestionDetail = () => {
       });
   };
 
+  const token = localStorage.getItem('AccessToken');
+
   return (
     <>
       <Header></Header>
@@ -173,7 +159,6 @@ const QuestionDetail = () => {
             </Title>
             <Info>
               <span>Asked {question.create_date}</span>
-              {/* <span>Modified {question.modifiedAt}</span> */}
               <span>View {question.viewCount}</span>
             </Info>
             {/* <Vote count={question.voteCount}></Vote> */}
@@ -187,13 +172,7 @@ const QuestionDetail = () => {
                 : `${answer.length} Answer`}
             </h2>
             {answer.map((el) => {
-              return (
-                <Content
-                  data={el}
-                  handleDelete={handleDeleteAnswer}
-                  key={el.answerId}
-                ></Content>
-              );
+              return <Content data={el} key={el.answerId}></Content>;
             })}
             <AnswerCreate>
               <p>
@@ -203,7 +182,11 @@ const QuestionDetail = () => {
               <h2>Your Answer</h2>
               <AnswerForm onSubmit={handleCreateAnswer}>
                 <ToastEditor setContent={setInputContent}></ToastEditor>
-                <Button type="submit" value="Submit your Answer"></Button>
+                <Button
+                  type="submit"
+                  value="Submit your Answer"
+                  disabled={token ? false : true}
+                ></Button>
               </AnswerForm>
             </AnswerCreate>
           </QDContainer>

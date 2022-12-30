@@ -42,7 +42,6 @@ const ProfileList = styled.div`
   border-radius: 30px;
   margin: 30px;
   margin-bottom: 100px;
-  /* margin: 30px 100px 20px 30px; */
   padding: 50px;
   box-shadow: 5px 5px 5px 5px gray;
   ul {
