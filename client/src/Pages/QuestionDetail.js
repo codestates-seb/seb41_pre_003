@@ -54,11 +54,6 @@ const AnswerForm = styled.form`
   }
 `;
 
-// const SubmitButton = styled.button`
-//   width: 100px;
-//   heigth: 50px;
-// `;
-
 const QuestionDetail = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');

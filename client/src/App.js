@@ -16,8 +16,6 @@ import Questions from './Pages/Questions';
 import EditQuestion from './Pages/EditQuestion';
 import EditAnswer from './Pages/EditAnswer';
 
-// const isLogin = true;
-
 const setToken = (AccessToken) => {
   localStorage.setItem('token', AccessToken);
 };
@@ -45,11 +43,11 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route
             path="/users/edit/1"
-            element={token ? <EditProfile /> : <LogIn />}
+            element={token !== undefined ? <EditProfile /> : <LogIn />}
           ></Route>
           <Route
             path="/users/delete/1"
-            element={token ? <DeleteProfile /> : <LogIn />}
+            element={token !== undefined ? <DeleteProfile /> : <LogIn />}
           ></Route>
           <Route path="/users/:memberId/:name" element={<UserDetail />}></Route>
           <Route
@@ -58,15 +56,15 @@ function App() {
           ></Route>
           <Route
             path="/questions/ask"
-            element={token ? <Question /> : <LogIn />}
+            element={token !== undefined ? <Question /> : <LogIn />}
           />
           <Route
             path="/questions/edit/:questionId"
-            element={token ? <EditQuestion /> : <LogIn />}
+            element={token !== undefined ? <EditQuestion /> : <LogIn />}
           ></Route>
           <Route
             path="/questions/:questionId/answers/edit/:answerId"
-            element={token ? <EditAnswer /> : <LogIn />}
+            element={token !== undefined ? <EditAnswer /> : <LogIn />}
           ></Route>
         </Routes>
       </Router>
