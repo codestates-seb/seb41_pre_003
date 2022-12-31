@@ -1,12 +1,17 @@
 package com33.question.dto;
 
+import com33.question.entity.Question;
+import com33.question.entity.QuestionTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Lazy;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class QuestionDto {
     @Getter
@@ -17,8 +22,12 @@ public class QuestionDto {
         private String title;
 
         private long memberId;
+
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
+
+        private List<QuestionTagDto> tagList;
+
 
     }
 
@@ -34,6 +43,20 @@ public class QuestionDto {
         }
     }
 
+    @Getter
+    public static class QuestionTagDto {
+        @Positive
+        private Long tagId;
+
+    }
+    @NoArgsConstructor
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    public static class TagResponse {
+        private List<Question> questions;
+    }
+
     @NoArgsConstructor
     @Setter
     @Getter
@@ -45,8 +68,10 @@ public class QuestionDto {
         private String content;
         private LocalDateTime create_date;
         private int viewCount;
+        private List<String> tagList;
         private int likeCount;
     }
+
     @Getter
     @Setter
     @AllArgsConstructor
@@ -54,6 +79,7 @@ public class QuestionDto {
         private long questionId;
         private long memberId;
     }
+
     @NoArgsConstructor
     @Setter
     @Getter

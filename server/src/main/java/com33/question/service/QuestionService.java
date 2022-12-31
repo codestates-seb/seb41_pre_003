@@ -1,14 +1,22 @@
 package com33.question.service;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
 import com33.member.service.MemberService;
+import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
+import com33.question.entity.QuestionTag;
 import com33.question.repository.QuestionRepository;
+import com33.question.repository.QuestionTagRepository;
+import com33.tag.entity.Tag;
+import com33.tag.repository.TagRepository;
+import com33.tag.service.TagService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,29 +24,71 @@ import java.util.Optional;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
+    private final QuestionTagRepository questionTagRepository;
+    private final TagRepository tagRepository;
 
-    public QuestionService(QuestionRepository questionRepository, MemberService memberService) {
+
+    public QuestionService(QuestionRepository questionRepository, MemberService memberService, TagService tagService, QuestionTagRepository questionTagRepository,
+                           TagRepository tagRepository) {
         this.questionRepository = questionRepository;
         this.memberService = memberService;
+        this.questionTagRepository = questionTagRepository;
+        this.tagRepository = tagRepository;
     }
 
-    public Question createQuestion(Question question) {
-//        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
-        Member member = memberService.getLoginMember();
+    public Question createQuestion(Question question, QuestionDto.Post questionDto) {
+        //Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+         Member member = memberService.getLoginMember();
+
+
         question.setMember(member);
-        question.setViewCount(0);
-        question.setLikeCount(0);
         member.addQuestion(question);
-
-        return questionRepository.save(question);
+        questionRepository.save(question);
+        List<Long> tagIdList = new ArrayList<>();
+        for (int i = 0; i < questionDto.getTagList().size(); i++) {
+            tagIdList.add(questionDto.getTagList().get(i).getTagId());
+        }
+        return questionRepository.save(updateQuestionTag(tagIdList));
     }
+
+    public Question updateQuestionTag(List<Long> tagList) {
+
+        //가장 최근에 저장된 질문 불러오기
+        Question findQuestion = questionRepository.getReferenceById(questionRepository.count());
+        for (int i = 0; i < tagList.size(); i++) {
+            //연관 매핑에 저장
+            QuestionTag questionTag = new QuestionTag();
+            questionTag.addTag(tagRepository.findByTagId(tagList.get(i)));
+            questionTag.addQuestion(findQuestion);
+            questionTagRepository.save(questionTag);
+            //태그가 사용될 때마다 사용횟수 증가
+            Tag tag = tagRepository.findByTagId(tagList.get(i));
+            tag.setTagCount(tag.getTagCount()+1);
+            tagRepository.save(tag);
+            findQuestion.addQuestionTag(questionTag);
+        }
+
+        return findQuestion;
+
+    }
+
 
     public Question findQuestion(long question_Id) {
         Question question = findVerifiedQuestionByQuery(question_Id);
-        question.setViewCount(question.getViewCount()+1);
+        question.setViewCount(question.getViewCount() + 1);
         questionRepository.save(question);
         return question;
     }
+    public List<Question> findQuestionsByTag(Long tagId){
+        List<QuestionTag> findQuestionTags;
+                findQuestionTags = questionTagRepository.findByTagTagId(tagId);
+        List<Question> findQuestions = new ArrayList<>();
+        for(int i = 0; i < findQuestionTags.size(); i++){
+            findQuestions.add(findQuestionTags.get(i).getQuestion());
+        }
+        return findQuestions;
+    }
+
 
     public Question updateQuestion(Question question) {
 
@@ -51,11 +101,6 @@ public class QuestionService {
         return questionRepository.save(findQuestion);
 
     }
-
-//    public Page<Question> findQuestions(int page, int size) {
-//        return questionRepository.findAll(PageRequest.of(page, size,
-//                Sort.by("question_Id").descending()));
-//    }
 
     public void deleteQuestion(long questionId) {
         Question question = findVerifiedQuestion(questionId);

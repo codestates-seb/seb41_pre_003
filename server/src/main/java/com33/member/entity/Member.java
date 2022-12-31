@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com33.answer.entity.Answer;
 import com33.question.entity.Like;
 import com33.question.entity.Question;
+import com33.tag.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class Member {
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 2, nullable = false)
+    @Column(length = 10, nullable = false)
     private String gender;
 
     private int age;
@@ -40,6 +41,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Tag> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();

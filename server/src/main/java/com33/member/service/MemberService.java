@@ -45,11 +45,17 @@ public class MemberService {
         return savedMember;
     }
     public Member updateMember(Member member){
+        String encryptedPassword = passwordEncoder.encode(member.getPw());
         Member findMember = findVerifiedMember(member.getMemberId());
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
         Optional.ofNullable(member.getAge())
                 .ifPresent(age -> findMember.setAge(age));
+        Optional.ofNullable(member.getPw())
+                .ifPresent(pw -> findMember.setPw(encryptedPassword));
+        Optional.ofNullable(member.getGender())
+                .ifPresent(gender -> findMember.setGender(gender));
+
 
         return memberRepository.save(findMember);
     }
@@ -66,7 +72,7 @@ public class MemberService {
     }
     public List<Member> findName(String name){
         Optional<List<Member>> optionalMembers =
-                memberRepository.findByName(name);
+                memberRepository.findByNameContaining(name);
         return optionalMembers.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }

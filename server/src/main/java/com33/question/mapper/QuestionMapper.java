@@ -5,13 +5,13 @@ import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
 import com33.question.entity.Like;
 import com33.question.entity.Question;
-
+import com33.question.entity.QuestionTag;
 import com33.question.service.QuestionService;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,6 +28,12 @@ public interface QuestionMapper {
         response.setContent(question.getContent());
         response.setViewCount(question.getViewCount());
         response.setLikeCount(question.getLikeCount());
+        List<String> tagList = new ArrayList<>();
+        for(int i = 0; i < question.getQuestionTagList().size(); i++){
+            tagList.add(question.getQuestionTagList().get(i).getTag().getTagName());
+        }
+        response.setTagList(tagList);
+
 
         return response;
     }
@@ -38,6 +44,11 @@ public interface QuestionMapper {
         response.setQuestionId(like.getQuestion().getQuestionId());
         response.setMemberId(like.getMember().getMemberId());
 
+        return response;
+    }
+    default QuestionDto.TagResponse questionTagToQuestionResponse(List<Question> questionList) {
+        QuestionDto.TagResponse response = new QuestionDto.TagResponse();
+        response.setQuestions(questionList);
         return response;
     }
 
@@ -58,14 +69,17 @@ public interface QuestionMapper {
         Question question = new Question();
         Member member = new Member();
         member.setMemberId(questionPostDto.getMemberId());
-
         question.setTitle(questionPostDto.getTitle());
         question.setContent(questionPostDto.getContent());
         question.setMember(memberService.findMember(member.getMemberId()));
+        question.setViewCount(0);
+        question.setLikeCount(0);
         question.setCreate_date(LocalDateTime.now());
 
         return question;
     }
+
+
 
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 
