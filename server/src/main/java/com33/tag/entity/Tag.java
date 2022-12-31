@@ -1,5 +1,6 @@
 package com33.tag.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com33.member.entity.Member;
 import com33.question.entity.QuestionTag;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class Tag {
     @ManyToOne(optional = false)
     @JoinColumn(name = "memberId")
     private Member member;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "tag")
     private List<QuestionTag> questionTagList = new ArrayList<>();
 

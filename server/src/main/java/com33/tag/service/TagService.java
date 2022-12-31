@@ -40,7 +40,6 @@ public class TagService {
     public Tag findTag(Long tag_Id) {
         Tag tag = tagRepository.findByTagId(tag_Id);
 
-        tagRepository.save(tag);
         return tag;
     }
 

@@ -6,13 +6,12 @@ import com33.question.dto.QuestionDto;
 import com33.question.entity.Like;
 import com33.question.entity.Question;
 import com33.question.entity.QuestionTag;
-import com33.tag.service.TagService;
-
 import com33.question.service.QuestionService;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +28,12 @@ public interface QuestionMapper {
         response.setContent(question.getContent());
         response.setViewCount(question.getViewCount());
         response.setLikeCount(question.getLikeCount());
+        List<String> tagList = new ArrayList<>();
+        for(int i = 0; i < question.getQuestionTagList().size(); i++){
+            tagList.add(question.getQuestionTagList().get(i).getTag().getTagName());
+        }
+        response.setTagList(tagList);
+
 
         return response;
     }
@@ -41,6 +46,11 @@ public interface QuestionMapper {
 
         return response;
     }
+    default QuestionDto.TagResponse questionTagToQuestionResponse(List<Question> questionList) {
+        QuestionDto.TagResponse response = new QuestionDto.TagResponse();
+        response.setQuestions(questionList);
+        return response;
+    }
 
     default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
         Question question = new Question();
@@ -51,8 +61,7 @@ public interface QuestionMapper {
         return question;
     }
 
-    default Question questionPostToQuestion(MemberService memberService, QuestionDto.Post questionPostDto,
-                                            TagService tagService) {
+    default Question questionPostToQuestion(MemberService memberService, QuestionDto.Post questionPostDto) {
         if (questionPostDto == null) {
             return null;
         }
@@ -63,37 +72,14 @@ public interface QuestionMapper {
         question.setTitle(questionPostDto.getTitle());
         question.setContent(questionPostDto.getContent());
         question.setMember(memberService.findMember(member.getMemberId()));
+        question.setViewCount(0);
+        question.setLikeCount(0);
         question.setCreate_date(LocalDateTime.now());
-        List<QuestionTag> questionTags = questionTagsDtosToQuestionTags(question,tagService);
-        question.setQuestionTagList(questionTags);
 
         return question;
     }
 
-    default List<QuestionTag> questionTagsDtosToQuestionTags(Question question,
-                                                             TagService tagService) {
 
-            QuestionTag questionTag = new QuestionTag();
-            for(int i = 0; i < question.getQuestionTagList().size(); i++){
-            questionTag.addTag(question.getQuestionTagList().get(i).getTag());
-            }
-
-            return questionTag.getQuestion().getQuestionTagList();
-
-    }
-
-    default List<QuestionDto.QuestionTagResponseDto> questionTagListToQuestionTagResponseDtoList(List<QuestionTag> list) {
-        if (list == null) {
-            return null;
-        }
-//        return list.stream()
-//                .map(questionTag -> QuestionDto.QuestionTagResponseDto
-//                        .builder()
-//                        .tagName(questionTag.getTag().getTagName())
-//                        .build())
-//                .collect(Collectors.toList());
-        return null;
-    }
 
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 

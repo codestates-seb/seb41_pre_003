@@ -2,6 +2,7 @@ package com33.question.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com33.tag.entity.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

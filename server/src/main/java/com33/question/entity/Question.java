@@ -40,6 +40,7 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionTag> questionTagList = new ArrayList<>();
 
