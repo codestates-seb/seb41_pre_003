@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +26,16 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
-    @Column(nullable = false)
+
+    @Column()
     private String pw;
 
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     private String gender;
-
+    @Column(length = 255)
     private int age;
 
     @Column(nullable = false, unique = true)

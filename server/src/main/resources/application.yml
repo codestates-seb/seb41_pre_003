@@ -1,7 +1,4 @@
 spring:
-#  jackson:
-#    serialization:
-#      fail-on-empty-beans: true
   jpa:
     properties:
       hibernate:
@@ -14,9 +11,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/pre?serverTimezone=Asia/Seoul
-    username: root
-    password: chl9584!??
+    url: jdbc:mysql://pre-database.cw5xe4m9mnym.ap-northeast-2.rds.amazonaws.com:3306/pre?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: kevin1234
 mail:
   address:
     admin: admin@gmail.com

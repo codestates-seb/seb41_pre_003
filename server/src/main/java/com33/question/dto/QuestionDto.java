@@ -68,6 +68,7 @@ public class QuestionDto {
     public static class Response {
         private Long questionId;
         private Long memberId;
+        private String name;
         private String title;
         private String content;
         private LocalDateTime create_date;
