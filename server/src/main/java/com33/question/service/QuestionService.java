@@ -37,8 +37,8 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
-        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
-        // Member member = memberService.getLoginMember();
+        //Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+         Member member = memberService.getLoginMember();
 
 
         question.setMember(member);
