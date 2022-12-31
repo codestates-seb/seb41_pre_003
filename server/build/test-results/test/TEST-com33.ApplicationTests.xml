@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com33.ApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-12-31T00:23:51" hostname="DESKTOP-OTUJTDR" time="0.055">
+<testsuite name="com33.ApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-12-31T00:35:32" hostname="DESKTOP-OTUJTDR" time="0.096">
   <properties/>
-  <testcase name="contextLoads()" classname="com33.ApplicationTests" time="0.055"/>
+  <testcase name="contextLoads()" classname="com33.ApplicationTests" time="0.096"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

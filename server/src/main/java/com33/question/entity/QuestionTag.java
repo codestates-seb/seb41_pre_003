@@ -17,11 +17,11 @@ public class QuestionTag {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionTagId;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TAG_ID")
     private Tag tag;

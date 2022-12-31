@@ -3,6 +3,7 @@ package com33.tag.service;
 
 import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
+import com33.member.entity.Member;
 import com33.member.service.MemberService;
 import com33.tag.entity.Tag;
 import com33.tag.repository.TagRepository;
@@ -28,8 +29,8 @@ public class TagService {
     }
 
     public Tag createTag(Tag tag) {
-//        Member member = memberService.getLoginMember();
-//        tag.setMember(member);
+        Member member = memberService.getLoginMember();
+        tag.setMember(member);
 
         return tagRepository.save(tag);
     }

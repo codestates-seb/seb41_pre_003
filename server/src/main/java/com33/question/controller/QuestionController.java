@@ -74,7 +74,7 @@ public class QuestionController {
 
 
     @DeleteMapping("/{question-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId) {
         questionService.deleteQuestion(questionId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -103,9 +103,9 @@ public class QuestionController {
         return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
     }
 
-    @GetMapping("/search/tags")
-    public ResponseEntity searchByTag(@RequestParam(value = "keyword") Long tagId) {
-        return ResponseEntity.ok(mapper.questionTagToQuestionResponse(questionService.findQuestionsByTag(tagId)));
+    @GetMapping("/search/tags/{tag-id}")
+    public ResponseEntity searchByTag(@PathVariable("tag-id") long tagId) {
+        return ResponseEntity.ok(mapper.questionTagToQuestionResponse(questionTagRepository.findAllByTagTagId(tagId)));
     }
 }
 

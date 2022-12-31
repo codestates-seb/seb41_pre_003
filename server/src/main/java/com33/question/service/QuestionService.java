@@ -1,9 +1,9 @@
 package com33.question.service;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
+import com33.member.repository.MemberRepository;
 import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
@@ -13,11 +13,13 @@ import com33.question.repository.QuestionTagRepository;
 import com33.tag.entity.Tag;
 import com33.tag.repository.TagRepository;
 import com33.tag.service.TagService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,19 +28,22 @@ public class QuestionService {
     private final MemberService memberService;
     private final QuestionTagRepository questionTagRepository;
     private final TagRepository tagRepository;
+    private final MemberRepository memberRepository;
 
 
     public QuestionService(QuestionRepository questionRepository, MemberService memberService, TagService tagService, QuestionTagRepository questionTagRepository,
-                           TagRepository tagRepository) {
+                           TagRepository tagRepository,
+                           MemberRepository memberRepository) {
         this.questionRepository = questionRepository;
         this.memberService = memberService;
         this.questionTagRepository = questionTagRepository;
         this.tagRepository = tagRepository;
+        this.memberRepository = memberRepository;
     }
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
         //Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
-         Member member = memberService.getLoginMember();
+        Member member = memberService.getLoginMember();
 
 
         question.setMember(member);
@@ -63,7 +68,8 @@ public class QuestionService {
             questionTagRepository.save(questionTag);
             //태그가 사용될 때마다 사용횟수 증가
             Tag tag = tagRepository.findByTagId(tagList.get(i));
-            tag.setTagCount(tag.getTagCount()+1);
+            tag.setTagCount(tag.getTagCount() + 1);
+            tag.addQuestionTag(questionTag);
             tagRepository.save(tag);
             findQuestion.addQuestionTag(questionTag);
         }
@@ -79,15 +85,12 @@ public class QuestionService {
         questionRepository.save(question);
         return question;
     }
-    public List<Question> findQuestionsByTag(Long tagId){
-        List<QuestionTag> findQuestionTags;
-                findQuestionTags = questionTagRepository.findByTagTagId(tagId);
-        List<Question> findQuestions = new ArrayList<>();
-        for(int i = 0; i < findQuestionTags.size(); i++){
-            findQuestions.add(findQuestionTags.get(i).getQuestion());
-        }
-        return findQuestions;
-    }
+//    public List<Question> findQuestion(List<QuestionTag> questionTagList) {
+//        List<Question> findQuestions = new ArrayList<>();
+//        for (QuestionTag questionTag : questionTagList)
+//            findQuestions.add(questionTagRepository.findByQuestionTagId(questionTag.getQuestionTagId()));
+//        return findQuestions;
+//    }
 
 
     public Question updateQuestion(Question question) {
@@ -102,7 +105,7 @@ public class QuestionService {
 
     }
 
-    public void deleteQuestion(long questionId) {
+    public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
         questionRepository.delete(question);
     }
