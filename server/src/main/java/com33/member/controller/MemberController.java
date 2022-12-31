@@ -19,7 +19,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/members")
 public class MemberController {
-    private final Map<Long, Map<String, Object>> members = new HashMap<>();
     private final MemberService memberService;
     private final MemberMapper mapper;
 
@@ -27,20 +26,6 @@ public class MemberController {
         this.memberService = memberService;
         this.mapper = mapper;
     }
-
-//    @PostConstruct
-//    public void init() { //더미 데이터
-//        Member member = new Member();
-//        long memberId = 1L;
-//        member.setMember_id(memberId);
-//        member.setPw("1234");
-//        member.setName("홍길동");
-//        member.setGender("m");
-//        member.setAge(27);
-//        member.setEmail("hgd@gmail.com");
-//
-//        memberService.createMember(member);
-//    }
 
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
@@ -59,6 +44,11 @@ public class MemberController {
     @GetMapping
     public ResponseEntity getMembers() {
         return ResponseEntity.ok(mapper.membersToMemberResponses(memberService.findMembers()));
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity getLogin(){
+        return ResponseEntity.ok(mapper.memberToMemberResponse(memberService.getLoginMember()));
     }
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(
