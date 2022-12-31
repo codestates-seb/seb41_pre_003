@@ -23,6 +23,7 @@ public interface QuestionMapper {
 
         response.setQuestionId(question.getQuestionId());
         response.setMemberId(question.getMember().getMemberId());
+        response.setName(question.getMember().getName());
         response.setTitle(question.getTitle());
         response.setCreate_date(question.getCreate_date());
         response.setContent(question.getContent());
