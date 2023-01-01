@@ -23,7 +23,7 @@ public class LikeService {
 
     public Like createLike(Like like){
         Question question = questionService.findVerifiedQuestion(like.getQuestion().getQuestionId());
-        //Member member = memberService.findVerifiedMember(like.getMember().getMemberId());
+//        Member member = memberService.findVerifiedMember(like.getMember().getMemberId());
         Member member = memberService.getLoginMember();
 
         verifyExistQuestionMember(question, member);

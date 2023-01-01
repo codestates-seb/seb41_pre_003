@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionMapper {
 
@@ -86,8 +85,6 @@ public interface QuestionMapper {
         return question;
     }
 
-
-
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 
     default Like questionLikeToQuestion(QuestionService questionService, MemberService memberService,
@@ -107,5 +104,4 @@ public interface QuestionMapper {
 
         return like;
     }
-
 }
