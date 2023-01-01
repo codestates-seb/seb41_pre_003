@@ -13,6 +13,7 @@ import com33.question.repository.QuestionTagRepository;
 import com33.tag.entity.Tag;
 import com33.tag.repository.TagRepository;
 import com33.tag.service.TagService;
+import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -39,15 +40,15 @@ public class QuestionService {
         this.questionTagRepository = questionTagRepository;
         this.tagRepository = tagRepository;
         this.memberRepository = memberRepository;
+
     }
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
-        //Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+
         Member member = memberService.getLoginMember();
 
-
         question.setMember(member);
-        member.addQuestion(question);
+        memberRepository.findMemberByMemberId(questionDto.getMemberId()).addQuestion(question);
         questionRepository.save(question);
         List<Long> tagIdList = new ArrayList<>();
         for (int i = 0; i < questionDto.getTagList().size(); i++) {
@@ -93,14 +94,29 @@ public class QuestionService {
 //    }
 
 
-    public Question updateQuestion(Question question) {
+    public Question updateQuestion(Question question, QuestionDto.Patch questionDto) {
 
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
         findQuestion.setModifiedAt(LocalDateTime.now());
         Optional.ofNullable(question.getTitle())
-                .ifPresent(title -> findQuestion.setTitle(title));
+                .ifPresent(findQuestion::setTitle);
         Optional.ofNullable(question.getContent())
-                .ifPresent(content -> findQuestion.setContent(content));
+                .ifPresent(findQuestion::setContent);
+        questionTagRepository.deleteAll(questionTagRepository.findAllByQuestionQuestionId(findQuestion.getQuestionId()));
+
+        for(int i = 0; i < questionDto.getTagList().size(); i++){
+            QuestionTag questionTag = new QuestionTag();
+            questionTag.addTag(tagRepository.findByTagId(questionDto.getTagList().get(i).getTagId()));
+            questionTag.addQuestion(findQuestion);
+            questionTagRepository.save(questionTag);
+            //태그가 사용될 때마다 사용횟수 증가
+            Tag tag = tagRepository.findByTagId(questionDto.getTagList().get(i).getTagId());
+            tag.setTagCount(tag.getTagCount() + 1);
+            tag.addQuestionTag(questionTag);
+            tagRepository.save(tag);
+            findQuestion.addQuestionTag(questionTag);
+        }
+
         return questionRepository.save(findQuestion);
 
     }

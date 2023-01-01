@@ -10,6 +10,9 @@ import java.util.List;
 public interface QuestionTagRepository extends JpaRepository<QuestionTag, Long> {
 
     List<QuestionTag> findAllByTagTagId(@Param("tagId") Long tagId);
+    List<QuestionTag> findAllByQuestionQuestionId(@Param("questionId") Long questionId);
+
+    QuestionTag findQuestionTagByQuestionTagId(Long questionTagId);
 
 
 }

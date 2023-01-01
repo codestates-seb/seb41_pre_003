@@ -31,13 +31,17 @@ public class TagService {
     public Tag createTag(Tag tag) {
         Member member = memberService.getLoginMember();
         tag.setMember(member);
-
-        return tagRepository.save(tag);
+        if (tagRepository.findByTagName(tag.getTagName()).isPresent())
+            return null;
+        else {
+            return tagRepository.save(tag);
+        }
     }
 
     public List<Tag> findTags() {
         return tagRepository.findAll();
     }
+
     public Tag findTag(Long tag_Id) {
         Tag tag = tagRepository.findByTagId(tag_Id);
 
@@ -56,9 +60,11 @@ public class TagService {
         Page<Tag> questionPage = new PageImpl<>(list.subList(start, end), pageRequest, list.size());
         return questionPage;
     }
+
     public void deleteTag(long tagId) {
         tagRepository.delete(tagRepository.findByTagId(tagId));
     }
+
     public List<Tag> searchTag(String keyword) {
         Optional<List<Tag>> optionalTags = tagRepository.findByTagNameContaining(keyword);
         List<Tag> findTags =

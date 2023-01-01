@@ -18,7 +18,7 @@ public interface TagMapper {
         }
 
         Tag tag = new Tag();
-        tag.setTagName(tagPostDto.getTagName());
+        tag.setTagName(tagPostDto.getTagName().toLowerCase());
         tag.setMember(memberService.findMember(tagPostDto.getMemberId()));
 
         return tag;
