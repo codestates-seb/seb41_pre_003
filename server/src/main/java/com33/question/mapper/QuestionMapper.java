@@ -60,8 +60,10 @@ public interface QuestionMapper {
     default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
         Question question = new Question();
 
+        question.setTitle(requestBody.getTitle());
         question.setQuestionId(requestBody.getQuestionId());
         question.setContent(requestBody.getContent());
+
 
         return question;
     }

@@ -39,8 +39,11 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Patch {
         private Long questionId;
+        private String title;
         @NotBlank
         private String content;
+
+        private List<QuestionTagDto> tagList;
 
         public void setQuestionId(Long questionId) {
             this.questionId = questionId;
