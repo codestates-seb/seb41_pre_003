@@ -53,7 +53,7 @@ public class QuestionController {
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
 
         Question question = questionService.createQuestion(mapper.questionPostToQuestion(memberService, questionDto), questionDto);
-
+        questionDto.setMemberId(memberService.getLoginMember().getMemberId());
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
     }
 

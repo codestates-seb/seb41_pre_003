@@ -44,12 +44,11 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
-        //Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
-        Member member = memberService.getLoginMember();
 
 
-        question.setMember(member);
-        member.addQuestion(question);
+
+        question.setMember(memberRepository.findMemberByMemberId(questionDto.getMemberId()));
+        memberRepository.findMemberByMemberId(questionDto.getMemberId()).addQuestion(question);
         questionRepository.save(question);
         List<Long> tagIdList = new ArrayList<>();
         for (int i = 0; i < questionDto.getTagList().size(); i++) {
