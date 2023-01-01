@@ -40,6 +40,8 @@ public class LikeService {
     public Like findLike(long questionId){
         Question question = questionService.findVerifiedQuestion(questionId);
         Member member = memberService.getLoginMember();
+        if(member == null)
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question, member);
         if(optionalLike.isPresent())
         return optionalLike.get();
