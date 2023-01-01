@@ -123,6 +123,7 @@ public class QuestionService {
 
     public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
+
         questionRepository.delete(question);
     }
 
