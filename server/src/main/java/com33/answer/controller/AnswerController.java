@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/questions")
 public class AnswerController {

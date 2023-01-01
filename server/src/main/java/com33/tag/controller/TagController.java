@@ -15,7 +15,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 
-@CrossOrigin
 @RestController
 @RequestMapping("/tags")
 public class TagController {

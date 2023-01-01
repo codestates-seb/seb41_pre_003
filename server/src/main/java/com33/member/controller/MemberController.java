@@ -15,7 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.util.HashMap;
 import java.util.Map;
-@CrossOrigin
+
 @RestController
 @RequestMapping("/members")
 public class MemberController {
