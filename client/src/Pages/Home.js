@@ -81,7 +81,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/questions`)
+      .get(`/questions`)
       .then((res) => {
         setData(res.data);
         setLoading(false);
@@ -132,11 +132,11 @@ const Home = () => {
                   <tbody>
                     {data
                       .slice()
-                      .sort((a, b) => b.voteCount - a.voteCount)
+                      .sort((a, b) => b.likeCount - a.likeCount)
                       .slice(0, 10)
                       .map((data) => (
                         <tr key={data.questionId}>
-                          <td>{data.voteCount}</td>
+                          <td>{data.likeCount}</td>
                           <td>
                             <Title to={`/questions/${data.questionId}`}>
                               {data.title}

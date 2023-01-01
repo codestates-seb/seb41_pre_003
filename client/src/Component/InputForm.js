@@ -6,6 +6,10 @@ const QuestionForm = styled.form`
   input {
     width: 100%;
   }
+
+  Button {
+    margin-left: 10px;
+  }
 `;
 
 const InputContainer = styled.div`

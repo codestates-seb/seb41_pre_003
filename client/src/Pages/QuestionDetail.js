@@ -7,8 +7,8 @@ import ButtonLink from '../Component/ButtonLink';
 import ToastEditor from '../Component/ToastEditor';
 import Content from '../Component/Content';
 import Loading from '../Component/Loading';
-// import Vote from '../Component/Vote';
-import { useNavigate, useParams } from 'react-router-dom';
+import timePassed from '../utils/timePassed';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -32,15 +32,21 @@ const Title = styled.div`
 `;
 
 const Info = styled.div`
-  border-bottom: 5px solid var(--light-gray);
+  border-bottom: 3px solid var(--gray);
   span {
     margin: 10px;
   }
 `;
 
+const LikeButton = styled.button`
+  border-radius: 10px;
+  width: 50px;
+  margin: 5px;
+`;
+
 const AnswerCreate = styled.div`
-  border-top: 5px solid var(--light-gray);
-  padding: 10px;
+  border-top: 3px solid var(--gray);
+  padding: 0 10px;
   p,
   h2 {
     margin: 10px 0;
@@ -55,35 +61,50 @@ const AnswerForm = styled.form`
   }
 `;
 
-// const SubmitButton = styled.button`
-//   width: 100px;
-//   heigth: 50px;
-// `;
+const LoginAlert = styled.div`
+  margin: 10px;
+  button {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0;
+    background-color: var(--orange);
+    color: white;
+    border: none;
+  }
+`;
 
 const QuestionDetail = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [inputContent, setInputContent] = useState('');
   const [isLoading, setLoading] = useState(true);
+  let token = localStorage.getItem('AccessToken');
 
   const navigate = useNavigate();
   const { questionId } = useParams();
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/questions/${questionId}`)
+      .get(`/questions/${questionId}`)
       .then((res) => {
         setQuestion(res.data);
         console.log('question: ', question);
 
         axios
-          .get(
-            `${process.env.REACT_APP_API_URL}/questions/${questionId}/answers`
-          )
+          .get(`/questions/${questionId}/answers`)
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
             console.log('answer: ', answer);
+
+            axios
+              .get(`questions/${questionId}/like`)
+              .then((res) => {
+                console.log('like:', res);
+              })
+              .catch((err) => {
+                console.log('err:', err);
+              });
           })
           .catch((err) => {
             console.log('answer err: ', err);
@@ -102,15 +123,12 @@ const QuestionDetail = () => {
     {
       confirm('삭제하시겠습니까?') === true
         ? axios
-            .delete(
-              `${process.env.REACT_APP_API_URL}/questions/${questionId}`,
-              {
-                headers: {
-                  Authorization: `${localStorage.getItem('AccessToken')}`,
-                  Refresh: `${localStorage.getItem('RefreshToken')}`,
-                },
-              }
-            )
+            .delete(`/questions/${questionId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
             .then((res) => {
               console.log(res);
               navigate(`/questions`);
@@ -122,32 +140,11 @@ const QuestionDetail = () => {
     }
   };
 
-  // const handleDeleteAnswer = () => {
-  //   {
-  //     confirm('삭제하시겠습니까?') === true
-  //       ? axios
-  //           .delete(`${process.env.REACT_APP_API_URL}/questions/${questionId}/answers/${answerId}`, {
-  //             headers: {
-  //               Authorization: `${localStorage.getItem('AccessToken')}`,
-  //               Refresh: `${localStorage.getItem('RefreshToken')}`,
-  //             },
-  //           })
-  //           .then((res) => {
-  //             console.log(res);
-  //             navigate(`/questions`);
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //           })
-  //       : '';
-  //   }
-  // };
-
   const handleCreateAnswer = (e) => {
     e.preventDefault();
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/questions/${question.questionId}/answers`,
+        `/questions/${question.questionId}/answers`,
         {
           content: inputContent,
           memberId: `${localStorage.getItem('memberId')}`,
@@ -169,7 +166,25 @@ const QuestionDetail = () => {
       });
   };
 
-  const token = localStorage.getItem('AccessToken');
+  const handleLikeClick = () => {
+    axios
+      .post(
+        `/questions/${question.questionId}/like`,
+        {},
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('AccessToken')}`,
+            Refresh: `${localStorage.getItem('RefreshToken')}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -183,10 +198,16 @@ const QuestionDetail = () => {
               <ButtonLink value="Ask Question" to="/questions/ask"></ButtonLink>
             </Title>
             <Info>
-              <span>Asked {question.create_date}</span>
-              <span>View {question.viewCount}</span>
+              <span>Asked {`${timePassed(question.create_date)} ago`}</span>
+              <span>Viewed {question.viewCount}</span>
+              <span>Liked {question.likeCount}</span>
+              {/* {? <LikeButton onClick={handleLikeClick}>
+                <i className="fa-regular fa-thumbs-up"></i>
+              </LikeButton> : ''} */}
+              <LikeButton onClick={handleLikeClick}>
+                <i className="fa-regular fa-thumbs-up"></i>
+              </LikeButton>
             </Info>
-            {/* <Vote count={question.voteCount}></Vote> */}
             <Content
               data={question}
               handleDelete={handleDeleteQuestion}
@@ -207,12 +228,20 @@ const QuestionDetail = () => {
               <h2>Your Answer</h2>
               <AnswerForm onSubmit={handleCreateAnswer}>
                 <ToastEditor setContent={setInputContent}></ToastEditor>
-                <Button
-                  type="submit"
-                  value="Submit your Answer"
-                  disabled={token ? false : true}
-                  onClick={handleCreateAnswer}
-                ></Button>
+                {!token ? (
+                  <LoginAlert>
+                    <p>Log in to add new answers</p>
+                    <Link to="/login">
+                      <button>Log in</button>
+                    </Link>
+                  </LoginAlert>
+                ) : (
+                  <Button
+                    type="submit"
+                    value="Submit your Answer"
+                    onClick={handleCreateAnswer}
+                  ></Button>
+                )}
               </AnswerForm>
             </AnswerCreate>
           </QDContainer>

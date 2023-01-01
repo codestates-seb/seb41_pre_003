@@ -24,7 +24,7 @@ const EditQuestion = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/questions/${questionId}`)
+      .get(`/questions/${questionId}`)
       .then((res) => {
         setTitle(res.data.title);
         setContent(res.data.content);
@@ -37,7 +37,7 @@ const EditQuestion = () => {
     e.preventDefault();
     axios
       .patch(
-        `${process.env.REACT_APP_API_URL}/questions/${questionId}`,
+        `/questions/${questionId}`,
         {
           title: title,
           content: content,

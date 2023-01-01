@@ -118,7 +118,7 @@ const UserDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
+      .get(`/members/${memberId}`)
       .then((res) => {
         const data = res.data;
         setData(data);
