@@ -45,9 +45,9 @@ public class QuestionService {
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
 
+        Member member = memberService.getLoginMember();
 
-
-        question.setMember(memberRepository.findMemberByMemberId(questionDto.getMemberId()));
+        question.setMember(member);
         memberRepository.findMemberByMemberId(questionDto.getMemberId()).addQuestion(question);
         questionRepository.save(question);
         List<Long> tagIdList = new ArrayList<>();

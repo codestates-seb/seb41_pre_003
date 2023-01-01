@@ -38,6 +38,7 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
+        private long memberId;
         private Long questionId;
         private String title;
         @NotBlank

@@ -29,8 +29,8 @@ public class TagService {
     }
 
     public Tag createTag(Tag tag) {
-        //Member member = memberService.getLoginMember();
-        //tag.setMember(member);
+        Member member = memberService.getLoginMember();
+        tag.setMember(member);
         if (tagRepository.findByTagName(tag.getTagName()).isPresent())
             return null;
         else {
