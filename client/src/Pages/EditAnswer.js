@@ -21,9 +21,7 @@ const EditAnswer = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/questions/${questionId}/answers/${answerId}`
-      )
+      .get(`/questions/${questionId}/answers/${answerId}`)
       .then((res) => {
         console.log('content:', res.data.content);
         setContent(res.data.content);
@@ -35,14 +33,11 @@ const EditAnswer = () => {
 
   const handlePatch = () => {
     axios
-      .patch(
-        `${process.env.REACT_APP_API_URL}/questions/${questionId}/answers/${answerId}`,
-        {
-          content: content,
-          memberId: `${localStorage.getItem('memberId')}`,
-          questionId: questionId,
-        }
-      )
+      .patch(`/questions/${questionId}/answers/${answerId}`, {
+        content: content,
+        memberId: `${localStorage.getItem('memberId')}`,
+        questionId: questionId,
+      })
       .then(() => {
         navigate(`/questions/${questionId}`);
       })

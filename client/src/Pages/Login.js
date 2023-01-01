@@ -9,6 +9,7 @@ const Main = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(auto-fill, 1fr));
   gap: 20px;
+  margin-top: 100px;
 `;
 
 const LogInContainer = styled.section`
@@ -20,36 +21,17 @@ const LogInContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  p {
+    margin: 10px;
+    padding: 10px;
+    font-weight: 600;
+    font-size: medium;
+  }
 `;
 
 const Logo = styled.img`
   width: 100px;
-`;
-
-const OAuth = styled.div`
-  width: 300px;
-  text-align: center;
-  margin: 10px 0px;
-`;
-
-const GoogleBtn = styled.button`
-  background-color: white;
-  color: black;
-  border-radius: 10px;
-  width: 100%;
-  padding: 5px;
-  border: 1px solid gray;
-  margin-bottom: 5px;
-`;
-
-const GithubBtn = styled(GoogleBtn)`
-  background-color: var(--black);
-  color: white;
-`;
-
-const FaceBookBtn = styled(GoogleBtn)`
-  background-color: var(--blue);
-  color: white;
 `;
 
 const LogInFormContainer = styled.form`
@@ -91,7 +73,7 @@ const LogInFormContainer = styled.form`
     border-radius: 12px;
     background-color: var(--blue);
     color: white;
-    margin-top: 40px;
+    margin-top: 20px;
     padding: 13px 20px;
     width: 95%;
     font-size: 15px;
@@ -132,7 +114,7 @@ const LogIn = () => {
   const handleButtonClick = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+      .post(`/auth/login`, {
         email: email,
         pw: password,
       })
@@ -156,11 +138,7 @@ const LogIn = () => {
       <Main>
         <LogInContainer>
           <Logo src={miniLogo} alt=""></Logo>
-          <OAuth>
-            <GoogleBtn>Log in with Google</GoogleBtn>
-            <GithubBtn>Log in with Github</GithubBtn>
-            <FaceBookBtn>Log in with FaceBook</FaceBookBtn>
-          </OAuth>
+          <p>Log in to use more features</p>
           <LogInFormContainer onSubmit={handleButtonClick}>
             <label htmlFor="email">Email</label>
             <input

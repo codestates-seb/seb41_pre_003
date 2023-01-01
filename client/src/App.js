@@ -14,57 +14,45 @@ import Question from './Pages/CreateQuestion';
 import Questions from './Pages/Questions';
 import EditQuestion from './Pages/EditQuestion';
 import EditAnswer from './Pages/EditAnswer';
-import Search from './Pages/Search';
-
-const setToken = (AccessToken) => {
-  localStorage.setItem('token', AccessToken);
-};
-
-const getToken = () => {
-  localStorage.getItem('token');
-};
+// import Search from './Pages/Search';
 
 function App() {
-  const token = getToken();
+  let token = localStorage.getItem('AccessToken');
 
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route
-            exact
-            path="/"
-            render={() => <LogIn setToken={setToken} />}
-            element={<Home />}
-          ></Route>
+          <Route exact path="/" element={<Home />}></Route>
           <Route path="/questions" element={<Questions />}></Route>
           <Route path="/users" element={<Users />}></Route>
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route
             path="/users/edit/1"
-            element={token !== undefined ? <EditProfile /> : <LogIn />}
+            element={!token ? <LogIn /> : <EditProfile />}
           ></Route>
           <Route
             path="/users/delete/1"
-            element={token !== undefined ? <DeleteProfile /> : <LogIn />}
+            element={!token ? <LogIn /> : <DeleteProfile />}
           ></Route>
           <Route path="/users/:memberId/:name" element={<UserDetail />}></Route>
           <Route
             path="/questions/:questionId"
             element={<QuestionDetail />}
+            token={token}
           ></Route>
           <Route
             path="/questions/ask"
-            element={token !== undefined ? <Question /> : <LogIn />}
+            element={!token ? <LogIn /> : <Question />}
           />
           <Route
             path="/questions/edit/:questionId"
-            element={token !== undefined ? <EditQuestion /> : <LogIn />}
+            element={!token ? <LogIn /> : <EditQuestion />}
           ></Route>
           <Route
             path="/questions/:questionId/answers/edit/:answerId"
-            element={token !== undefined ? <EditAnswer /> : <LogIn />}
+            element={!token ? <LogIn /> : <EditAnswer />}
           ></Route>
         </Routes>
       </Router>

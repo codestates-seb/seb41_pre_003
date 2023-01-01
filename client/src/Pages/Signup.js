@@ -24,35 +24,16 @@ const SignUpContainer = styled.section`
 const SignUpSec = styled.section`
   width: 300px;
   margin: 40px 0px;
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const Logo = styled.img`
   width: 30%;
   height: 35%;
-`;
-
-const OAuth = styled.div`
-  text-align: center;
-`;
-
-const GoogleBtn = styled.button`
-  background-color: white;
-  color: black;
-  border-radius: 10px;
-  width: 100%;
-  padding: 5px;
-  border: 1px solid gray;
-  margin-bottom: 5px;
-`;
-
-const GithubBtn = styled(GoogleBtn)`
-  background-color: var(--black);
-  color: white;
-`;
-
-const FaceBookBtn = styled(GoogleBtn)`
-  background-color: var(--blue);
-  color: white;
 `;
 
 const SignUpForm = styled.form`
@@ -193,7 +174,7 @@ const SignUp = () => {
     validCheck(password);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/members`, {
+      .post(`/members`, {
         name: name,
         email: email,
         pw: password,
@@ -215,12 +196,9 @@ const SignUp = () => {
       <SignUpContainer>
         <p>Join the Stack Overflow Community</p>
         <SignUpSec>
-          <OAuth>
+          <div>
             <Logo src={miniLogo} alt=""></Logo>
-            <GoogleBtn>Sign up with Google</GoogleBtn>
-            <GithubBtn>Sign up with Github</GithubBtn>
-            <FaceBookBtn>Sign up with FaceBook</FaceBookBtn>
-          </OAuth>
+          </div>
           <SignUpForm onSubmit={handleButtonClick}>
             <label htmlFor="name">Display name</label>
             <input

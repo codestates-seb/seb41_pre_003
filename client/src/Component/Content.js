@@ -17,7 +17,11 @@ const ContentContainer = styled.div`
 
 const MiniContent = styled.div`
   width: 100%;
-  padding: 10px;
+  padding: 15px;
+  height: auto;
+  min-height: 200px;
+  border-radius: 10px;
+  background-color: var(--light-gray);
 `;
 
 const ButtonContainer = styled.div`
@@ -26,28 +30,35 @@ const ButtonContainer = styled.div`
   button {
     border: none;
     margin: 10px;
+    padding: 10px;
     height: 40px;
-    width: 100px;
+    width: 80px;
+    border-radius: 10px;
   }
 `;
 
+const UserItemContainer = styled.div`
+  margin-left: auto;
+`;
+
 const Content = ({ data, handleDelete }) => {
-  console.log(data);
+  let token = localStorage.getItem('AccessToken');
+  let memberId = localStorage.getItem('memberId');
+  console.log('data.memberId: ', data.memberId);
+  console.log('type of memberId: ', typeof memberId);
+  console.log('type of data.memberId: ', typeof data.memberId);
   const navigate = useNavigate();
 
   const handleDeleteAnswer = () => {
     {
       confirm('삭제하시겠습니까?') === true
         ? axios
-            .delete(
-              `${process.env.REACT_APP_API_URL}/questions/${data.questionId}/answers/${data.answerId}`,
-              {
-                headers: {
-                  Authorization: `${localStorage.getItem('AccessToken')}`,
-                  Refresh: `${localStorage.getItem('RefreshToken')}`,
-                },
-              }
-            )
+            .delete(`/questions/${data.questionId}/answers/${data.answerId}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('AccessToken')}`,
+                Refresh: `${localStorage.getItem('RefreshToken')}`,
+              },
+            })
             .then((res) => {
               console.log(res);
               navigate(`/questions`);
@@ -64,29 +75,35 @@ const Content = ({ data, handleDelete }) => {
       <ContentContainer>
         <MiniContent>{data.content}</MiniContent>
         <div>
-          <ButtonContainer>
-            {data.answerId === undefined ? (
-              <Link to={`/questions/edit/${data.questionId}`}>
-                <button>edit</button>
-              </Link>
-            ) : (
-              <Link
-                to={`/questions/${data.questionId}/answers/edit/${data.answerId}`}
-              >
-                <button>edit</button>
-              </Link>
-            )}
-            {data.answerId === undefined ? (
-              <button onClick={handleDelete} type="button">
-                delete
-              </button>
-            ) : (
-              <button onClick={handleDeleteAnswer} type="button">
-                delete
-              </button>
-            )}
-          </ButtonContainer>
-          <UserItem memberId={data.memberId}></UserItem>
+          {token && Number(memberId) === data.memberId ? (
+            <ButtonContainer>
+              {data.answerId === undefined ? (
+                <Link to={`/questions/edit/${data.questionId}`}>
+                  <button>edit</button>
+                </Link>
+              ) : (
+                <Link
+                  to={`/questions/${data.questionId}/answers/edit/${data.answerId}`}
+                >
+                  <button>edit</button>
+                </Link>
+              )}
+              {data.answerId === undefined ? (
+                <button onClick={handleDelete} type="button">
+                  delete
+                </button>
+              ) : (
+                <button onClick={handleDeleteAnswer} type="button">
+                  delete
+                </button>
+              )}
+            </ButtonContainer>
+          ) : (
+            ''
+          )}
+          <UserItemContainer>
+            <UserItem memberId={data.memberId}></UserItem>
+          </UserItemContainer>
         </div>
       </ContentContainer>
     </>

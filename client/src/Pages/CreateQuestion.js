@@ -44,7 +44,7 @@ const CreateQuestion = () => {
     e.preventDefault();
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/questions/`,
+        `/questions/`,
         {
           title: title,
           content: content,
@@ -97,7 +97,7 @@ const CreateQuestion = () => {
           title={title}
           handleChangeTitle={handleChangeTitle}
           inputContent={'What are the details of your problem?'}
-          content={content} //
+          content={content}
           setContent={setContent}
           handleButtonClick={handleButtonClick}
           buttonContent={'Submit your Question'}
