@@ -96,6 +96,7 @@ public class QuestionController {
     @PostMapping("/{question-id}/like")
     public ResponseEntity postLike(@PathVariable("question-id") long questionId,
                                    @Valid @RequestBody QuestionDto.Like questionDto) {
+        questionDto.setMemberId(memberService.getLoginMember().getMemberId());
         questionDto.setQuestionId(questionId);
 
         Like like = likeService.createLike(mapper.questionLikeToQuestion(questionService, memberService, questionDto));
