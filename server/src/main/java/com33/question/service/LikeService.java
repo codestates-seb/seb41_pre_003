@@ -37,6 +37,13 @@ public class LikeService {
 
         return likeRepository.save(like);
     }
+    public Like findLike(long questionId){
+        Question question = questionService.findVerifiedQuestion(questionId);
+        Member member = memberService.getLoginMember();
+        Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question, member);
+
+        return optionalLike.get();
+    }
     public void verifyExistQuestionMember(Question question,Member member) {
         Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question,member);
         if (optionalLike.isPresent())

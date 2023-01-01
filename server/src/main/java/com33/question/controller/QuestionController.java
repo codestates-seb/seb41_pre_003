@@ -102,6 +102,11 @@ public class QuestionController {
 
         return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
     }
+    @GetMapping("/{question-id}/like")
+    public ResponseEntity getLike(@PathVariable("question-id") long questionId) {
+        Like like = likeService.findLike(questionId);
+        return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
+    }
 
     @GetMapping("/search/tags/{tag-id}")
     public ResponseEntity searchByTag(@PathVariable("tag-id") long tagId) {

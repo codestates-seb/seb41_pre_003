@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface LikeRepository extends JpaRepository<Like, Long> {
     @Query(value = "SELECT l FROM Like l WHERE l.question = :question and l.member = :member")
     Optional<Like> findLikeByQuestionAndMember(Question question, Member member);
+
 }
