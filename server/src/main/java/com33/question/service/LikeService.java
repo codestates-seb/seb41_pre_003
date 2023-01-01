@@ -41,8 +41,9 @@ public class LikeService {
         Question question = questionService.findVerifiedQuestion(questionId);
         Member member = memberService.getLoginMember();
         Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question, member);
-
+        if(optionalLike.isPresent())
         return optionalLike.get();
+        else throw new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND);
     }
     public void verifyExistQuestionMember(Question question,Member member) {
         Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question,member);

@@ -8,7 +8,8 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(404, "Question not found"),
     ANSWER_NOT_FOUND(404, "Answer not found"),
     LIKE_EXITS(409, "Like exists"),
-    TAG_NOT_FOUND(404, "Tag not found");
+    TAG_NOT_FOUND(404, "Tag not found"),
+    LIKE_NOT_FOUND(410,"login, please");
 
     @Getter
     private int status;
