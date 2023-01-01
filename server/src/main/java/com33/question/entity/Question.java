@@ -41,7 +41,7 @@ public class Question {
     private List<Answer> answers = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question")
     private List<QuestionTag> questionTagList = new ArrayList<>();
 
     public void addQuestionTag(QuestionTag questionTag) {

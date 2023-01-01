@@ -27,8 +27,12 @@ public class QuestionDto {
         private String content;
 
         private List<QuestionTagDto> tagList;
-
-
+    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class SearchByTag {
+        private List<QuestionTagDto> tagList;
     }
 
     @Getter
@@ -54,7 +58,7 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class TagResponse {
-        private List<Question> questions;
+        private List<Long> questionId;
     }
 
     @NoArgsConstructor

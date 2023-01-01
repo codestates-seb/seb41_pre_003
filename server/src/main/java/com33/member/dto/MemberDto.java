@@ -32,7 +32,7 @@ public class MemberDto {
     public static class Patch{
 
         private Long memberId;
-        @NotBlank
+
         private String pw;
 
         private String name;

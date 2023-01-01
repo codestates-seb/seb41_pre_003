@@ -24,7 +24,7 @@ public class Tag {
     private String tagName;
     @Column(nullable = false)
     private int tagCount;
-
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "memberId")
     private Member member;

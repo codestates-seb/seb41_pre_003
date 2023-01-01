@@ -47,10 +47,14 @@ public interface QuestionMapper {
 
         return response;
     }
-    default QuestionDto.TagResponse questionTagToQuestionResponse(List<Question> questionList) {
-        QuestionDto.TagResponse response = new QuestionDto.TagResponse();
-        response.setQuestions(questionList);
-        return response;
+    default QuestionDto.TagResponse questionTagToQuestionResponse(List<QuestionTag> questions) {
+      QuestionDto.TagResponse tagResponse = new QuestionDto.TagResponse();
+      List<Long> list = new ArrayList<>();
+      for(int i = 0; i < questions.size(); i++){
+          list.add(questions.get(i).getQuestion().getQuestionId());
+      }
+       tagResponse.setQuestionId(list);
+      return tagResponse;
     }
 
     default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
