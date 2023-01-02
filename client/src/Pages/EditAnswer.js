@@ -40,6 +40,7 @@ const EditAnswer = () => {
       })
       .then(() => {
         navigate(`/questions/${questionId}`);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

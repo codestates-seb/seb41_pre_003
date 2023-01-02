@@ -59,11 +59,12 @@ const CreateQuestion = () => {
       )
       .then((res) => {
         console.log(res);
-        navigate('/');
+        navigate('/questions');
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        navigate('/login');
+        // navigate('/login');
       });
   };
 
