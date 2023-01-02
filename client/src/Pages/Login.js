@@ -125,6 +125,7 @@ const LogIn = () => {
         localStorage.setItem('RefreshToken', RefreshToken);
         localStorage.setItem('memberId', res.data.memberId);
         navigate(`/`);
+        window.location.reload();
       })
       .catch((err) => {
         setAlert(true);

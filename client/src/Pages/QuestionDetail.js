@@ -78,7 +78,9 @@ const QuestionDetail = () => {
   const [answer, setAnswer] = useState('');
   const [inputContent, setInputContent] = useState('');
   const [isLoading, setLoading] = useState(true);
+  const [like, setLike] = useState('');
   let token = localStorage.getItem('AccessToken');
+  let memberId = localStorage.getItem('memberId');
 
   const navigate = useNavigate();
   const { questionId } = useParams();
@@ -98,12 +100,18 @@ const QuestionDetail = () => {
             console.log('answer: ', answer);
 
             axios
-              .get(`questions/${questionId}/like`)
+              .get(`/questions/${questionId}/like`, {
+                headers: {
+                  Authorization: `${localStorage.getItem('AccessToken')}`,
+                  Refresh: `${localStorage.getItem('RefreshToken')}`,
+                },
+              })
               .then((res) => {
-                console.log('like:', res);
+                console.log('like: ', res);
+                setLike(res.data);
               })
               .catch((err) => {
-                console.log('err:', err);
+                console.log('like err: ', err);
               });
           })
           .catch((err) => {
@@ -132,6 +140,7 @@ const QuestionDetail = () => {
             .then((res) => {
               console.log(res);
               navigate(`/questions`);
+              window.location.reload();
             })
             .catch((err) => {
               console.log(err);
@@ -160,6 +169,7 @@ const QuestionDetail = () => {
       .then((res) => {
         console.log(res);
         navigate(`/questions/${question.questionId}`);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -201,12 +211,13 @@ const QuestionDetail = () => {
               <span>Asked {`${timePassed(question.create_date)} ago`}</span>
               <span>Viewed {question.viewCount}</span>
               <span>Liked {question.likeCount}</span>
-              {/* {? <LikeButton onClick={handleLikeClick}>
-                <i className="fa-regular fa-thumbs-up"></i>
-              </LikeButton> : ''} */}
-              <LikeButton onClick={handleLikeClick}>
-                <i className="fa-regular fa-thumbs-up"></i>
-              </LikeButton>
+              {!like.memberId && memberId ? (
+                <LikeButton onClick={handleLikeClick}>
+                  <i className="fa-regular fa-thumbs-up"></i>
+                </LikeButton>
+              ) : (
+                ''
+              )}
             </Info>
             <Content
               data={question}

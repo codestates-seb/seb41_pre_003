@@ -44,9 +44,6 @@ const UserItemContainer = styled.div`
 const Content = ({ data, handleDelete }) => {
   let token = localStorage.getItem('AccessToken');
   let memberId = localStorage.getItem('memberId');
-  console.log('data.memberId: ', data.memberId);
-  console.log('type of memberId: ', typeof memberId);
-  console.log('type of data.memberId: ', typeof data.memberId);
   const navigate = useNavigate();
 
   const handleDeleteAnswer = () => {
@@ -61,7 +58,8 @@ const Content = ({ data, handleDelete }) => {
             })
             .then((res) => {
               console.log(res);
-              navigate(`/questions`);
+              navigate(`/questions/${data.questionId}`);
+              window.location.reload();
             })
             .catch((err) => {
               console.log(err);
