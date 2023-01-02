@@ -107,13 +107,13 @@
               <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059413960866136145/image.png" alt='log in' width="300px" heigth="100px"/>
               <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414580280967188/image.png" alt='question detail' width="300px" heigth="100px"/>
 </td>
-              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='signup' width="300px" heigth="100px"/>
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='question edit' width="300px" heigth="100px"/>
 </td>
-              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415115277008916/image.png" alt='signup' width="300px" heigth="100px"/>
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415115277008916/image.png" alt='answer edit' width="300px" heigth="100px"/>
 </td>
-              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415227575324692/image.png" alt='signup' width="300px" heigth="100px"/>
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415227575324692/image.png" alt='tag list' width="300px" heigth="100px"/>
 </td>
-              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415290489868349/image.png" alt='signup' width="300px" heigth="100px"/>
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415290489868349/image.png" alt='taged question list' width="300px" heigth="100px"/>
 </td>
         </tr>
     <tbody>
