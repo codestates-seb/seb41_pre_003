@@ -11,6 +11,7 @@ const UserItemContainer = styled.li`
   align-items: center;
   padding: 20px;
   border-radius: 10px;
+  background-color: var(--light-gray);
   &:hover {
     background-color: var(--light-gray);
     box-shadow: inset 0 0 20px #b7b7b7;

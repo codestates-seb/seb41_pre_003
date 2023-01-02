@@ -6,17 +6,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Main = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(3, minmax(auto-fill, 1fr));
-  gap: 20px;
-  margin-top: 100px;
+  gap: 20px; */
+  width: 100%;
+  height: 100vh;
 `;
 
 const LogInContainer = styled.section`
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 20px;
-  margin-top: var(--top-bar-allocated-space);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,7 +99,7 @@ const Alert = styled.div`
   color: var(--orange);
   font-weight: bold;
   position: absolute;
-  bottom: 80px;
+  bottom: 70px;
   left: 20px;
   font-size: 14px;
   display: ${(props) => (props.alert ? '' : 'none')};

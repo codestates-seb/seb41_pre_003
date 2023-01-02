@@ -80,6 +80,7 @@ const AnswerForm = styled.form`
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin: 10px 0px 30px 0px;
   }
 `;
 
@@ -202,6 +203,7 @@ const QuestionDetail = () => {
       )
       .then((res) => {
         console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

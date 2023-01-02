@@ -3,7 +3,6 @@ import Button from './Button';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const MainContainer = styled.div`
   form {
@@ -113,7 +112,6 @@ const InputForm = ({
 }) => {
   const [tagList, setTagList] = useState([]);
   const [newTag, setNewTag] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -156,7 +154,6 @@ const InputForm = ({
       })
       .catch((err) => {
         console.log(err);
-        navigate('/login');
       });
   };
 

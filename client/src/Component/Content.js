@@ -25,7 +25,6 @@ const MiniContent = styled.div`
   min-height: 200px;
   border-radius: 10px;
   background-color: var(--light-gray);
-  margin-bottom: 10px;
 `;
 
 const ButtonContainer = styled.div`
@@ -53,7 +52,10 @@ const UserItemContainer = styled.div`
 `;
 
 const TagsContainer = styled.div`
-  button {
+  width: 100%;
+  height: auto;
+  margin: 20px 0px;
+  a {
     margin-right: 10px;
   }
 `;
@@ -121,15 +123,17 @@ const Content = ({ data, handleDelete }) => {
     <>
       <ContentContainer>
         <MiniContent>{data.content}</MiniContent>
-        <TagsContainer>
-          {data.tagList !== undefined
-            ? data.tagList.map((t, i) => (
-                <Tag key={`tag${i + 1}`} to={`/tags/${tagList[t]}/${t}`}>
-                  {`#${t}`}
-                </Tag>
-              ))
-            : ''}
-        </TagsContainer>
+        {data.tagList !== undefined && data.tagList.length > 0 ? (
+          <TagsContainer>
+            {data.tagList.map((t, i) => (
+              <Tag key={`tag${i + 1}`} to={`/tags/${tagList[t]}/${t}`}>
+                {`#${t}`}
+              </Tag>
+            ))}
+          </TagsContainer>
+        ) : (
+          ''
+        )}
         <div>
           {token && Number(memberId) === data.memberId ? (
             <ButtonContainer>
