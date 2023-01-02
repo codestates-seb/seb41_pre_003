@@ -57,6 +57,9 @@ const LikeButton = styled.button`
 
 const AnswerCreate = styled.div`
   padding: 0 10px;
+  > h2 {
+    margin-top: 30px;
+  }
   > h2:first-child {
     width: 100%;
     border-bottom: 2px solid var(--gray);
@@ -246,10 +249,10 @@ const QuestionDetail = () => {
               {answer.map((el) => {
                 return <Content data={el} key={el.answerId}></Content>;
               })}
-              <p>
+              {/* <p>
                 Know someone who can answer? Share a link to this question via
                 email, Twitter, or Facebook.
-              </p>
+              </p> */}
               <h2>Your Answer</h2>
               <AnswerForm onSubmit={handleCreateAnswer}>
                 <ToastEditor setContent={setInputContent}></ToastEditor>

@@ -1,6 +1,5 @@
 import logo from '../img/logo.png';
 import styled from 'styled-components';
-import Button from './Button';
 import ButtonLink from './ButtonLink';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -33,10 +32,11 @@ const HeaderContainer = styled.header`
 
   div {
     display: flex;
-    &:last-child {
-      a {
-        margin-left: 10px;
-      }
+    button {
+      margin-left: 10px;
+    }
+    a {
+      margin-left: 10px;
     }
   }
 `;
@@ -71,6 +71,26 @@ const Search = styled.form`
     &:focus {
       outline: none;
     }
+  }
+`;
+
+const LogoutBtn = styled.button`
+  text-decoration: none;
+  border-radius: 12px;
+  background-color: var(--orange);
+  color: white;
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #c3661c;
+    cursor: pointer;
+    box-shadow: inset 0 0 10px #00457a;
+    transition: 0.2s ease-in-out;
   }
 `;
 
@@ -141,7 +161,11 @@ const Header = () => {
         </div>
       ) : (
         <div>
-          <Button value="Logout" onClick={LogOut} />
+          <ButtonLink
+            value="Edit profile"
+            to={`/users/edit/${localStorage.getItem('memberId')}`}
+          />
+          <LogoutBtn onClick={LogOut}>Logout</LogoutBtn>
         </div>
       )}
     </HeaderContainer>

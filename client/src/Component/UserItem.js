@@ -11,10 +11,10 @@ const UserItemContainer = styled.li`
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  background-color: var(--light-gray);
+  background-color: rgba(11, 150, 255, 0.1);
   &:hover {
-    background-color: var(--light-gray);
-    box-shadow: inset 0 0 20px #b7b7b7;
+    // background-color: var(--light-gray);
+    box-shadow: inset 0 0 20px rgba(11, 150, 255, 0.3);
     transition: 0.2s ease-in-out;
     cursor: default;
   }
@@ -35,6 +35,9 @@ const UserInfo = styled.div`
   justify-content: space-between;
   height: 100%;
   font-size: 15px;
+  > div {
+    margin-top: 5px;
+  }
 
   .fa-person {
     color: #3f51b5;
