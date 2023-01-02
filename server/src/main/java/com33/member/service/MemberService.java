@@ -33,7 +33,7 @@ public class MemberService {
     public Member createMember(Member member){
         verifyExistsEmail(member.getEmail());
 
-        String encryptedPassword = passwordEncoder.encode(member.getPw());
+        String encryptedPassword = passwordEncoder.encode(member.getPw());  //패스워드 인코딩
         member.setPw(encryptedPassword);
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
@@ -76,8 +76,10 @@ public class MemberService {
         return optionalMembers.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
+
+    //로그인한 회원정보 가져오기
     public Member getLoginMember(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //SecurityContextHolder에서 회원정보 가져오기
         Optional<Member> optionalMember = memberRepository.findByEmail(principal.toString());
         if (optionalMember.isPresent()) return optionalMember.get();
         else return null;

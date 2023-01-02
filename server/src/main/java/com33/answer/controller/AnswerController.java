@@ -29,6 +29,7 @@ public class AnswerController {
         this.mapper = mapper;
     }
 
+    //답글 달기
     @PostMapping("/{question-id}/answers")
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive Long questionId,
                                      @Valid @RequestBody AnswerDto.Post answerDto) {
@@ -40,6 +41,7 @@ public class AnswerController {
 
     }
 
+    //답글 수정
     @PatchMapping("/{question-id}/answers/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("question-id") @Positive long questionId,
                                       @PathVariable("answer-id") @Positive long answerId,
@@ -51,6 +53,7 @@ public class AnswerController {
         return ResponseEntity.ok(mapper.answerToAnswerResponse(answer));
     }
 
+    //답글 조회
     @GetMapping("/{question-id}/answers/{answer-id}")
     public ResponseEntity getAnswer(@PathVariable("question-id") @Positive long questionId,
                                     @PathVariable("answer-id") @Positive long answerId) {
@@ -58,6 +61,7 @@ public class AnswerController {
         return ResponseEntity.ok(mapper.answerToAnswerResponse(answerService.findAnswer(answerId)));
     }
 
+    //답글 삭제
     @DeleteMapping("/{question-id}/answers/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("question-id") @Positive long questionId,
                                        @PathVariable("answer-id") long answerId) {
@@ -66,6 +70,7 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //답글 전체 조회
     @GetMapping("/{question-id}/answers")
     public ResponseEntity getAnswers(@PathVariable("question-id") @Positive long questionId) {
 

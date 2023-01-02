@@ -10,6 +10,7 @@ import com33.member.service.MemberService;
 import com33.question.entity.Question;
 import com33.question.repository.QuestionRepository;
 import com33.question.service.QuestionService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,23 +23,19 @@ public class AnswerService {
     private final QuestionRepository questionRepository;
     private final QuestionService questionService;
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, QuestionService questionService, MemberService memberService,
-                         MemberRepository memberRepository) {
+    public AnswerService(AnswerRepository answerRepository, QuestionRepository questionRepository, QuestionService questionService, MemberService memberService) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.questionService = questionService;
         this.memberService = memberService;
-        this.memberRepository = memberRepository;
     }
 
     public Answer creatAnswer(Answer answer) {
         Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
-//      Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
-        Member member = memberService.getLoginMember();
+        Member member = memberService.getLoginMember(); //로그인된 회원 멤버 가져오기
         if (member == null) {
-            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+            throw new BusinessLogicException(ExceptionCode.NOT_LOGIN); // 로그인이 되지 않으면 NOT_LOGIN 발생
         } else {
 
             answer.setQuestion(question);
@@ -46,7 +43,6 @@ public class AnswerService {
 
             question.addAnswer(answer);
             member.addAnswer(answer);
-
 
             return answerRepository.save(answer);
         }
@@ -61,14 +57,7 @@ public class AnswerService {
         Optional.ofNullable(answer.getContent())
                 .ifPresent(content -> findAnswer.setContent(content));
         return answerRepository.save(findAnswer);
-
-
     }
-
-//    public Page<Answer> findAnswers(int page, int size) {
-//        return answerRepository.findAll(PageRequest.of(page, size,
-//                Sort.by("answer_Id").descending()));
-//    }
 
     public void deleteAnswer(long answerId) {
         Answer answer = findVerifiedAnswer(answerId);
@@ -82,12 +71,6 @@ public class AnswerService {
                         new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         return findAnswer;
-    }
-
-
-    public void verifyExistsQuestionIdAndUserId(Answer answer) {
-        questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
-        memberService.findVerifiedMember(answer.getMember().getMemberId());
     }
 
     public List<Answer> findAnswers(Long questionId){
