@@ -37,12 +37,12 @@ public class Question {
     private Member member;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private List<QuestionTag> questionTagList = new ArrayList<>();
 
     public void addQuestionTag(QuestionTag questionTag) {
@@ -53,7 +53,7 @@ public class Question {
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private List<Like> likes = new ArrayList<>();
 
     public void addAnswer(Answer answer) {

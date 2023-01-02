@@ -138,13 +138,7 @@ public class QuestionService {
 
     public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
-        //질문태그 테이블 삭제
-        questionTagRepository.deleteAll(questionTagRepository.findAllByQuestionQuestionId(questionId));
-        //질문에 대한 답변 삭제
-        answerRepository.deleteAll(answerRepository.findAllByQuestion(question));
-        //질문에 대한 좋아요 삭제
-        likeRepository.deleteAll(likeRepository.findAllByQuestionQuestionId(questionId));
-        //질문 삭제
+
         questionRepository.delete(question);
     }
 

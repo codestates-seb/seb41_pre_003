@@ -36,8 +36,6 @@ public class TagService {
             if (tagRepository.findByTagName(tag.getTagName()).isPresent())
                 throw new BusinessLogicException(ExceptionCode.TAG_EXITS);
             else {
-                tag.setMember(member);
-                member.addTag(tag);
                 return tagRepository.save(tag);
             }
         }
