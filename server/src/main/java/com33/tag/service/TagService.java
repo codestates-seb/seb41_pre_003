@@ -33,10 +33,11 @@ public class TagService {
         if (member == null) {
             throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
         } else {
-            tag.setMember(member);
             if (tagRepository.findByTagName(tag.getTagName()).isPresent())
                 throw new BusinessLogicException(ExceptionCode.TAG_EXITS);
             else {
+                tag.setMember(member);
+                member.addTag(tag);
                 return tagRepository.save(tag);
             }
         }

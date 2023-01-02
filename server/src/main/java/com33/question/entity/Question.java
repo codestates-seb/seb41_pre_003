@@ -40,13 +40,14 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "question")
     private List<QuestionTag> questionTagList = new ArrayList<>();
 
     public void addQuestionTag(QuestionTag questionTag) {
         this.questionTagList.add(questionTag);
-        if(questionTag.getQuestion() != this){
+        if (questionTag.getQuestion() != this) {
             questionTag.addQuestion(this);
         }
     }
@@ -55,16 +56,19 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Like> likes = new ArrayList<>();
 
-    public void addAnswer(Answer answer){
+    public void addAnswer(Answer answer) {
         answers.add(answer);
-        if(answer.getQuestion() != this){
+        if (answer.getQuestion() != this) {
             answer.setQuestion(this);
         }
     }
-    public void addLike(Like like){
+
+    public void addLike(Like like) {
         likes.add(like);
-        if(like.getQuestion() != this){
+        if (like.getQuestion() != this) {
             like.setQuestion(this);
         }
     }
+
 }
+
