@@ -69,7 +69,7 @@
        <li>etc</li>
  </ol>
       
-      
+##구현 
 <table>
     <thead>
         <tr>
