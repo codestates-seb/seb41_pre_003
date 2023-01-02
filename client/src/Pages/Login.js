@@ -114,7 +114,7 @@ const LogIn = () => {
   const handleButtonClick = (e) => {
     e.preventDefault();
     axios
-      .post(`/auth/login`, {
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         email: email,
         pw: password,
       })

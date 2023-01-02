@@ -7,9 +7,9 @@ import ButtonLink from '../Component/ButtonLink';
 import Loading from '../Component/Loading';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import timePassed from '../utils/timePassed';
 import Pagination from '../Component/Pagination';
+import QuestionList from '../Component/QuestionList';
+import TagRank from '../Component/TagRank';
 
 const MainContainer = styled.section`
   width: 100%;
@@ -17,49 +17,31 @@ const MainContainer = styled.section`
   padding: 20px;
   margin-top: var(--top-bar-allocated-space);
 
-  > div:first-child {
+  > div:nth-child(1) {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
   }
-`;
 
-const TableContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  table {
-    th,
-    td {
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px 20px;
-      text-align: center;
-      white-space: nowrap;
+  > div:nth-child(2) {
+    display: flex;
+    justify-content: space-evenly;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
     }
-    th:nth-child(2) {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      width: 100%;
-    }
-    tbody {
-      tr:hover {
-        transform: scale(1.03, 1.03);
-        transition: 0.3s ease-in-out;
-      }
-      tr:nth-child(odd) {
-        background-color: rgba(188, 187, 187, 0.5);
-      }
+    aside {
+      width: 200px;
+      margin-left: 20px;
+      position: relative;
     }
   }
-`;
-
-const Title = styled(Link)`
-  text-decoration: none;
-  color: var(--blue);
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Questions = () => {
@@ -69,17 +51,27 @@ const Questions = () => {
   // TODO: 한 페이지 표시 개수
   const limit = 10;
   const [pageCount, setPageCount] = useState();
+  const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/questions`)
+      .get(`${process.env.REACT_APP_API_URL}/questions`)
       .then((res) => {
         // TODO: 최신등록순으로 정렬합니다.
         setData(res.data.sort((a, b) => b.questionId - a.questionId));
-        setLoading(false);
         setPage(1);
         setPageCount(Math.ceil(res.data.length / limit));
-        setLoading(false);
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/tags`)
+          .then((res) => {
+            const obj = res.data.reduce((result, element) => {
+              result[element.tagName] = element.tagId;
+              return result;
+            }, {});
+            setTagList(obj);
+            setLoading(false);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => {
         console.log(err);
@@ -100,45 +92,31 @@ const Questions = () => {
             <MidTitle title="All Questions" />
             <ButtonLink value="Ask Question" to="/questions/ask" />
           </div>
-          {!isLoading ? (
-            <>
-              <TableContainer>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data
-                      .slice((page - 1) * limit, page * limit)
-                      .map((data) => (
-                        <tr key={data.questionId}>
-                          <td>{data.questionId}</td>
-                          <td>
-                            <Title to={`/questions/${data.questionId}`}>
-                              {data.title}
-                            </Title>
-                          </td>
-                          <td>{data.memberId}</td>
-                          <td>{`${timePassed(data.create_date)} ago`}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-                <Pagination
-                  pageCount={pageCount}
-                  active_page={page}
-                  setPage={setPage}
-                />
-              </TableContainer>
-            </>
-          ) : (
-            <Loading />
-          )}
+          <div>
+            <ul>
+              {!isLoading ? (
+                data
+                  .slice((page - 1) * limit, page * limit)
+                  .map((data) => (
+                    <QuestionList
+                      key={data.quesionId}
+                      data={data}
+                      tagList={tagList}
+                    />
+                  ))
+              ) : (
+                <Loading />
+              )}
+              <Pagination
+                pageCount={pageCount}
+                active_page={page}
+                setPage={setPage}
+              />
+            </ul>
+            <aside>
+              <TagRank />
+            </aside>
+          </div>
         </MainContainer>
       </main>
       <Footer />

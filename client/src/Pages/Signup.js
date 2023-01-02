@@ -174,7 +174,7 @@ const SignUp = () => {
     validCheck(password);
 
     axios
-      .post(`/members`, {
+      .post(`${process.env.REACT_APP_API_URL}/members`, {
         name: name,
         email: email,
         pw: password,

@@ -118,6 +118,7 @@ const CancelButton = styled.button`
 
 const EditProfile = () => {
   const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
   const [email, setEmail] = useState(null);
   const [pw, setPW] = useState();
   const [validPW, setValidPW] = useState();
@@ -132,9 +133,10 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`/members/${memberId}`)
+      .get(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then((res) => {
         const data = res.data;
+        setData(data);
         setEmail(data.email);
         setName(data.name);
         setGender(data.gender);
@@ -152,10 +154,8 @@ const EditProfile = () => {
 
   const updateAccount = (e) => {
     e.preventDefault();
-    console.log(typeof pw, typeof name, typeof gender, typeof age);
-    console.log(pw, name, gender, age);
     axios
-      .patch(`/members/${memberId}`, {
+      .patch(`${process.env.REACT_APP_API_URL}/members/${memberId}`, {
         pw,
         name,
         gender,
@@ -183,111 +183,113 @@ const EditProfile = () => {
           <SettingsNav path={path} memberId={memberId} />
           <Settings>
             <SettingsTitle title="Edit your profile" />
-            <UserHeader memberId={memberId} name={name} />
             {!isLoading ? (
-              <EditTable onSubmit={updateAccount}>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>이메일</td>
-                      <td>{email}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label htmlFor="password">패스워드</label>
-                      </td>
-                      <td>
-                        <EditItem
-                          required
-                          id="password"
-                          type="password"
-                          value={pw}
-                          onChange={(e) => setPW(e.target.value)}
-                        />
-                      </td>
-                      <td>
-                        <AlertMsg
-                          isValid={validCheck(pw) === '사용하실 수 있습니다!'}
-                        >
-                          {validCheck(pw)}
-                        </AlertMsg>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label htmlFor="confirm-pw">패스워드 확인</label>
-                      </td>
-                      <td>
-                        <EditItem
-                          required
-                          id="confirm-pw"
-                          type="password"
-                          onChange={handleValidPW}
-                        />
-                      </td>
-                      <td>
-                        <AlertMsg isValid={validPW}>
-                          {validPW
-                            ? `일치합니다!`
-                            : `패스워드가 일치하지 않습니다`}
-                        </AlertMsg>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label htmlFor="name">이름</label>
-                      </td>
-                      <td>
-                        <EditItem
-                          value={name}
-                          id="name"
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label htmlFor="gender">성별</label>
-                      </td>
-                      <td>
-                        <EditGender
-                          id="gender"
-                          onChange={(e) => setGender(e.target.value)}
-                          value={gender}
-                        >
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="No Comment">
-                            Do not want to mention
-                          </option>
-                        </EditGender>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label htmlFor="age">나이</label>
-                      </td>
-                      <td>
-                        <EditItem
-                          type="number"
-                          id="age"
-                          value={age}
-                          onChange={(e) => setAge(e.target.value)}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <UpdateButton
-                  type="submit"
-                  disabled={
-                    !(validCheck(pw) === '사용하실 수 있습니다!' && validPW)
-                  }
-                >
-                  Save profile
-                </UpdateButton>
-                <CancelButton onClick={cancelUpdate}>Cancel</CancelButton>
-              </EditTable>
+              <>
+                <UserHeader data={data} />
+                <EditTable onSubmit={updateAccount}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>이메일</td>
+                        <td>{email}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label htmlFor="password">패스워드</label>
+                        </td>
+                        <td>
+                          <EditItem
+                            required
+                            id="password"
+                            type="password"
+                            value={pw}
+                            onChange={(e) => setPW(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          <AlertMsg
+                            isValid={validCheck(pw) === '사용하실 수 있습니다!'}
+                          >
+                            {validCheck(pw)}
+                          </AlertMsg>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label htmlFor="confirm-pw">패스워드 확인</label>
+                        </td>
+                        <td>
+                          <EditItem
+                            required
+                            id="confirm-pw"
+                            type="password"
+                            onChange={handleValidPW}
+                          />
+                        </td>
+                        <td>
+                          <AlertMsg isValid={validPW}>
+                            {validPW
+                              ? `일치합니다!`
+                              : `패스워드가 일치하지 않습니다`}
+                          </AlertMsg>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label htmlFor="name">이름</label>
+                        </td>
+                        <td>
+                          <EditItem
+                            value={name}
+                            id="name"
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label htmlFor="gender">성별</label>
+                        </td>
+                        <td>
+                          <EditGender
+                            id="gender"
+                            onChange={(e) => setGender(e.target.value)}
+                            value={gender}
+                          >
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="No Comment">
+                              Do not want to mention
+                            </option>
+                          </EditGender>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label htmlFor="age">나이</label>
+                        </td>
+                        <td>
+                          <EditItem
+                            type="number"
+                            id="age"
+                            value={age}
+                            onChange={(e) => setAge(e.target.value)}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <UpdateButton
+                    type="submit"
+                    disabled={
+                      !(validCheck(pw) === '사용하실 수 있습니다!' && validPW)
+                    }
+                  >
+                    Save profile
+                  </UpdateButton>
+                  <CancelButton onClick={cancelUpdate}>Cancel</CancelButton>
+                </EditTable>
+              </>
             ) : (
               <Loading />
             )}

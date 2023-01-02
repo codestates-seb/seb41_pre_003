@@ -1,86 +1,100 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import logo from '../img/logo.png';
+import { Link, useLocation } from 'react-router-dom';
 
 const MainContainer = styled.div`
   width: 100%;
   height: auto;
-  padding: 30px;
-  section {
-    div {
-      width: 200px;
-      height: 60px;
-    }
-    font-size: 50px;
+  margin-bottom: 30px;
+`;
+
+const ImgContainer = styled.div`
+  width: 100%;
+  height: 350px;
+  border-radius: 20px;
+  background-size: cover; /*<-- background size */
+  background-position: center; /*<-- background position */
+  background-image: ${(props) =>
+    `url("https://picsum.photos/seed/${props.memberId}/400/400.webp")`};
+  > div {
     width: 100%;
+    height: 100%;
+    padding: 20px 40px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    border-radius: 20px;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    img:first-child {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-position: center;
-      object-fit: cover;
-      div {
-        width: 100%;
-        height: 100%;
-      }
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    div {
+      margin-top: 4px;
+    }
+    > div:first-child {
+      color: var(--blue);
+      font-weight: bold;
+      font-size: 33px;
     }
   }
 `;
 
-const FlexBox = styled.div`
+const NavTabContainer = styled.div`
   display: flex;
-  margin-top: 50px;
+  margin-top: 20px;
 `;
 
 const NavTab = styled(Link)`
   text-decoration: none;
   width: 150px;
-  height: 50px;
-  background-color: var(--orange);
-  border: 1px solid #ffb951;
-  border-radius: 25px;
-  font-size: 25px;
-  display: ${(props) => (props.activate ? 'flex' : 'none')};
+  height: 40px;
+  background-color: ${(props) =>
+    decodeURI(props.path) === decodeURI(props.to) ? 'var(--orange)' : 'white'};
+  color: ${(props) =>
+    decodeURI(props.path) === decodeURI(props.to) ? 'white' : 'black'};
+  border-radius: 20px;
+  display: ${(props) => (props.isLogin ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
-  color: white;
-  box-shadow: 5px 5px 5px 5px gray;
-  margin-right: 40px;
+  margin-right: 20px;
+  transition: 0.2s ease-in-out;
   &:hover {
     filter: brightness(85%);
     transition: 0.2s ease-in-out;
   }
 `;
 
-const LogoImg = styled.img`
-  width: 300px;
-`;
-
-const UserHeader = ({ memberId, name }) => {
+const UserHeader = ({ data }) => {
   // TODO: 로그인된 멤버아이디와 회원정보페이지의 멤버아이디가 같아야만 Setting 탭이 활성화.
-  const loginId = localStorage.getItem('memberId');
+  const loginId = Number(localStorage.getItem('memberId'));
+  const { memberId, name, email, gender, age } = data;
+  const { pathname: path } = useLocation();
 
   return (
     <MainContainer>
-      <section>
-        <img
-          src={`https://picsum.photos/seed/${memberId}/200/200`}
-          alt={`avatar of ${name}`}
-        ></img>
-        <div>{name}</div>
-        <LogoImg src={logo}></LogoImg>
-      </section>
-      <FlexBox>
-        <NavTab to={`/users/${memberId}/${name}`} activate={true}>
+      <ImgContainer memberId={memberId}>
+        <div>
+          <div>{name}</div>
+          <div>Contact: {email}</div>
+          <div>{gender}</div>
+          <div>{age} years old</div>
+        </div>
+      </ImgContainer>
+      <NavTabContainer>
+        <NavTab to={`/users/${memberId}/${name}`} isLogin={true} path={path}>
           Profile
         </NavTab>
-        <NavTab to={`/users/edit/${memberId}`} activate={memberId === loginId}>
+        <NavTab
+          to={`/users/edit/${memberId}`}
+          isLogin={memberId === loginId}
+          path={path}
+        >
           Setting
         </NavTab>
-      </FlexBox>
+      </NavTabContainer>
     </MainContainer>
   );
 };

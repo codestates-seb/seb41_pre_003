@@ -73,7 +73,7 @@ const DeleteProfile = () => {
 
   const deleteAccount = () => {
     axios
-      .delete(`/members/${memberId}`)
+      .delete(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then(() => {
         // TODO: 성공하면 로그아웃
         localStorage.removeItem('AccessToken');
@@ -82,7 +82,26 @@ const DeleteProfile = () => {
         // 홈페이지로 이동
         navigate('/');
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        // TODO: 만약에 썼던 게시글이나 답글이 있으면 에러가 나므로 `user${memberId}`로 patch
+        axios
+          .patch(`${process.env.REACT_APP_API_URL}/members/${memberId}`, {
+            pw: ``,
+            name: `user${memberId}`,
+            gender: `Deleted User`,
+            age: 999,
+          })
+          .then(() => {
+            // TODO: 성공하면 로그아웃
+            localStorage.removeItem('AccessToken');
+            localStorage.removeItem('RefreshToken');
+            localStorage.removeItem('memberId');
+            navigate(`/`);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
   };
 
   return (

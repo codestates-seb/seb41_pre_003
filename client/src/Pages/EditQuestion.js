@@ -18,17 +18,30 @@ const EditContainer = styled.div`
 const EditQuestion = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [tags, setTags] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const { questionId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`/questions/${questionId}`)
+      .get(`${process.env.REACT_APP_API_URL}/questions/${questionId}`)
       .then((res) => {
-        setTitle(res.data.title);
-        setContent(res.data.content);
-        setLoading(false);
+        const data = res.data;
+        setTitle(data.title);
+        setContent(data.content);
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/tags`)
+          .then((res) => {
+            // {tagName: {tagId, tagName, tagCount}} 이렇게 변환
+            const tagsList = res.data.reduce((result, element) => {
+              result[element.tagName] = element;
+              return result;
+            }, {});
+            setTags(data.tagList.map((e) => tagsList[e]));
+            setLoading(false);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   }, []);
@@ -37,11 +50,15 @@ const EditQuestion = () => {
     e.preventDefault();
     axios
       .patch(
-        `/questions/${questionId}`,
+        `${process.env.REACT_APP_API_URL}/questions/${questionId}`,
         {
           title: title,
           content: content,
           memberId: `${localStorage.getItem('memberId')}`,
+          tagList: tags.reduce((r, e) => {
+            r.push({ tagId: e.tagId });
+            return r;
+          }, []),
         },
         {
           headers: {
@@ -50,7 +67,8 @@ const EditQuestion = () => {
           },
         }
       )
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         navigate(`/questions/${questionId}`);
       })
       .catch((err) => console.log(err));
@@ -69,6 +87,8 @@ const EditQuestion = () => {
               inputContent={'질문을 수정하세요.'}
               content={content}
               setContent={setContent}
+              tags={tags}
+              setTags={setTags}
               handleButtonClick={handlePatch}
               buttonContent={'Submit your Question'}
             ></InputForm>

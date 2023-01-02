@@ -2,56 +2,39 @@ import Header from '../Component/Header';
 import Footer from '../Component/Footer';
 import Nav from '../Component/Nav';
 import styled from 'styled-components';
+import UserHeader from '../Component/UserHeader';
+import Loading from '../Component/Loading';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Loading from '../Component/Loading';
-import UserHeader from '../Component/UserHeader';
+import QuestionList from '../Component/QuestionList';
+import Pagination from '../Component/Pagination';
 
 const MainContainer = styled.section`
   width: 100%;
   height: auto;
+  padding: 20px;
   margin-top: var(--top-bar-allocated-space);
-  position: relative;
-  display: grid;
-  img:first-child {
-    width: 200px;
-    height: 200px;
-  }
-  section {
-    margin-left: 100px;
-    margin-top: 0px;
-    font-size: 50px;
+  > div:last-child {
     width: 100%;
     display: flex;
-    div {
-      margin-left: 70px;
-      padding-top: 100px;
-    }
-    img {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-`;
-
-const ProfileList = styled.div`
-  font-size: 40px;
-  border: 5px solid var(--orange);
-  border-radius: 30px;
-  margin: 30px;
-  margin-bottom: 100px;
-  padding: 50px;
-  box-shadow: 5px 5px 5px 5px gray;
-  ul {
-    li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 20px;
+    h3 {
+      width: 100%;
+      border-bottom: 1px solid var(--gray);
+      padding-bottom: 10px;
       margin-bottom: 10px;
     }
+    ul {
+      margin: 0;
+      padding: 0;
+    }
   }
 `;
 
-const HellowBox = styled.div`
+const HelloBox = styled.div`
   margin-top: 20px;
   width: 200px;
   height: 100px;
@@ -67,7 +50,7 @@ const HellowBox = styled.div`
   color: white;
   font-size: 25px;
   left: -500px;
-  box-shadow: 5px 5px 5px 5px gray;
+  box-shadow: 5px 5px 5px 5px var(--gray);
   :after {
     content: '';
     position: absolute;
@@ -98,62 +81,87 @@ const HellowBox = styled.div`
   }
 `;
 
-const SettingsContainer = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 20px;
-  margin-top: var(--top-bar-allocated-space);
-  display: flex;
-`;
-
-const Settings = styled.div`
-  width: 100%;
-  margin-left: 20px;
-`;
-
 const UserDetail = () => {
+  const [userData, setUserData] = useState(null);
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { memberId, name } = useParams();
+  const [isLoading, setLoading] = useState(true);
+  const { memberId } = useParams();
+  const [page, setPage] = useState(1);
+  // TODO: 한 페이지 표시 개수
+  const limit = 10;
+  const [pageCount, setPageCount] = useState();
+  const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/members/${memberId}`)
+      .get(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then((res) => {
         const data = res.data;
-        setData(data);
-        setLoading(false);
+        setUserData(data);
+        axios
+          .get(
+            `${process.env.REACT_APP_API_URL}/questions/search?type=3&keyword=${data.name}`
+          )
+          .then((res) => {
+            // TODO: 최신등록순으로 정렬합니다.
+            setData(res.data.sort((a, b) => b.questionId - a.questionId));
+            setPage(1);
+            setPageCount(Math.ceil(res.data.length / limit));
+            axios
+              .get(`${process.env.REACT_APP_API_URL}/tags`)
+              .then((res) => {
+                const obj = res.data.reduce((result, element) => {
+                  result[element.tagName] = element.tagId;
+                  return result;
+                }, {});
+                setTagList(obj);
+                setLoading(false);
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
   return (
     <>
       <Header />
       <main>
         <Nav />
-        <SettingsContainer>
-          <Settings>
-            <HellowBox>Welcome!</HellowBox>
-            <UserHeader memberId={memberId} name={name} />
-            {!loading ? (
-              <MainContainer>
-                <ProfileList>
-                  <ul>
-                    <li>이름 : {data.name}</li>
-                    <li>성별 : {data.gender}</li>
-                    <li>나이 : {data.age}</li>
-                    <li>이메일 : {data.email}</li>
-                  </ul>
-                </ProfileList>
-              </MainContainer>
-            ) : (
-              <Loading />
-            )}
-          </Settings>
-        </SettingsContainer>
+        {!isLoading ? (
+          <MainContainer>
+            <HelloBox>Welcome!</HelloBox>
+            <UserHeader data={userData} />
+            <div>
+              <h3>{userData.name}님이 질문하신 내역입니다</h3>
+              <ul>
+                {data.slice((page - 1) * limit, page * limit).map((data) => (
+                  <QuestionList
+                    key={data.quesionId}
+                    data={data}
+                    tagList={tagList}
+                  />
+                ))}
+                <Pagination
+                  pageCount={pageCount}
+                  active_page={page}
+                  setPage={setPage}
+                />
+              </ul>
+            </div>
+          </MainContainer>
+        ) : (
+          <Loading />
+        )}
       </main>
       <Footer />
     </>

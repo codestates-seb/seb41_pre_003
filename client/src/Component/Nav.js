@@ -41,11 +41,15 @@ const NavList = styled(Link)`
   }
 
   background-color: ${(props) =>
-    props.to === props.path ? '#f1f2f4' : 'white'};
-  color: ${(props) => (props.to === props.path ? 'black' : 'gray')};
-  font-weight: ${(props) => (props.to === props.path ? 'bold' : '')};
+    decodeURI(props.path) === decodeURI(props.to) ? '#f1f2f4' : 'white'};
+  color: ${(props) =>
+    decodeURI(props.path) === decodeURI(props.to) ? 'black' : 'gray'};
+  font-weight: ${(props) =>
+    decodeURI(props.path) === decodeURI(props.to) ? 'bold' : ''};
   border-right: ${(props) =>
-    props.to === props.path ? '5px solid var(--orange)' : ''};
+    decodeURI(props.path) === decodeURI(props.to)
+      ? '5px solid var(--orange)'
+      : ''};
 `;
 
 const Nav = () => {
@@ -60,6 +64,10 @@ const Nav = () => {
         <NavList to="/questions" path={path}>
           <i className="fa-solid fa-comments"></i>
           Questions
+        </NavList>
+        <NavList to="/tags" path={path}>
+          <i className="fa-solid fa-tags"></i>
+          Tags
         </NavList>
         <NavList to="/users" path={path}>
           <i className="fa-solid fa-user-group"></i>

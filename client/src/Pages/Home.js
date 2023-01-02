@@ -6,9 +6,8 @@ import MidTitle from '../Component/MidTitle';
 import ButtonLink from '../Component/ButtonLink';
 import Loading from '../Component/Loading';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import timePassed from '../utils/timePassed';
+import QuestionList from '../Component/QuestionList';
 
 const MainContainer = styled.section`
   width: 100%;
@@ -21,90 +20,83 @@ const MainContainer = styled.section`
     justify-content: space-between;
     margin-bottom: 40px;
   }
-`;
 
-const TableContainer = styled.div`
-  display: flex;
-  > div {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    justify-content: center;
     align-items: center;
-  }
-  table {
-    margin-top: 10px;
-    width: 80%;
-    th,
-    td {
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px 20px;
-      text-align: center;
-      white-space: nowrap;
-    }
-    th:nth-child(2) {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      width: 100%;
-    }
-    tbody {
-      tr:hover {
-        transform: scale(1.03, 1.03);
-        transition: 0.3s ease-in-out;
-      }
-      tr:nth-child(1) {
-        background-color: rgba(254, 215, 0, 0.5);
-      }
-      tr:nth-child(2) {
-        background-color: rgba(192, 192, 192, 0.5);
-      }
-      tr:nth-child(3) {
-        background-color: rgba(205, 128, 50, 0.5);
-      }
-    }
+    margin-bottom: 40px;
   }
 `;
 
-const Title = styled(Link)`
-  text-decoration: none;
-  color: var(--blue);
-  font-weight: bold;
+const TabContainer = styled.nav`
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: 60px;
+`;
+
+const Tab = styled.button`
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 10px 20px;
+  border: none;
+  color: ${(props) =>
+    props['data-tab'] === props['data-value'] ? 'black' : 'var(--gray)'};
+  border-bottom: ${(props) =>
+    props['data-tab'] === props['data-value'] ? '5px solid var(--orange)' : ''};
+  margin-right: 10px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    color: black;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  i {
+    margin-right: 10px;
+  }
 `;
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const [tab, setTab] = useState('추천수 TOP10');
+  const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/questions`)
+      .get(`${process.env.REACT_APP_API_URL}/questions`)
       .then((res) => {
         setData(res.data);
-        setLoading(false);
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/tags`)
+          .then((res) => {
+            const obj = res.data.reduce((result, element) => {
+              result[element.tagName] = element.tagId;
+              return result;
+            }, {});
+            setTagList(obj);
+            setLoading(false);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // const getName = async (memberId) => {
-  //   const memo = {};
-  //   const aux = async (memberId) => {
-  //     if (memo[memberId] === undefined) {
-  //       await axios
-  //         .get(`/members/${memberId}`)
-  //         .then((res) => (memo[memberId] = res.data.name))
-  //         .catch((err) => console.log(err));
-  //     }
-  //     return memo[memberId];
-  //   };
-  //   console.log(memo);
-  //   return aux(memberId);
-  // };
+  const handleButtonClick = (e) => {
+    setTab(e.target.textContent);
+    if (e.target.textContent === '추천수 TOP10')
+      setData(data.sort((a, b) => b.likeCount - a.likeCount));
+    if (e.target.textContent === '조회수 TOP10')
+      setData(data.sort((a, b) => b.viewCount - a.viewCount));
+  };
 
   return (
     <>
@@ -116,78 +108,42 @@ const Home = () => {
             <MidTitle title="Top Questions" />
             <ButtonLink value="Ask Question" to="/questions/ask" />
           </div>
-          <TableContainer>
-            <div>
-              <span>※추천 수가 많은 질문부터 순서대로 10개가 표시됩니다※</span>
-              {!isLoading ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>추천수</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data
-                      .slice()
-                      .sort((a, b) => b.likeCount - a.likeCount)
-                      .slice(0, 10)
-                      .map((data) => (
-                        <tr key={data.questionId}>
-                          <td>{data.likeCount}</td>
-                          <td>
-                            <Title to={`/questions/${data.questionId}`}>
-                              {data.title}
-                            </Title>
-                          </td>
-                          <td>{data.memberId}</td>
-                          <td>{`${timePassed(data.create_date)} ago`}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              ) : (
-                <Loading />
-              )}
-            </div>
-            <div>
-              <span>※조회 수가 많은 질문부터 순서대로 10개가 표시됩니다※</span>
-              {!isLoading ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>조회수</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data
-                      .slice()
-                      .sort((a, b) => b.viewCount - a.viewCount)
-                      .slice(0, 10)
-                      .map((data) => (
-                        <tr key={data.questionId}>
-                          <td>{data.viewCount}</td>
-                          <td>
-                            <Title to={`/questions/${data.questionId}`}>
-                              {data.title}
-                            </Title>
-                          </td>
-                          <td>{data.memberId}</td>
-                          <td>{`${timePassed(data.create_date)} ago`}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              ) : (
-                <Loading />
-              )}
-            </div>
-          </TableContainer>
+          <TabContainer>
+            <Tab
+              onClick={handleButtonClick}
+              data-tab={tab}
+              data-value="추천수 TOP10"
+            >
+              <h2>
+                <i className="fa-regular fa-thumbs-up"></i>추천수 TOP10
+              </h2>
+            </Tab>
+            <Tab
+              onClick={handleButtonClick}
+              data-tab={tab}
+              data-value="조회수 TOP10"
+            >
+              <h2>
+                <i className="fa-solid fa-eye"></i>조회수 TOP10
+              </h2>
+            </Tab>
+          </TabContainer>
+          <ul>
+            {!isLoading ? (
+              data
+                // 처음 로딩했을때 기본값이 추천수라서 추천수로 sorting
+                .slice(0, 10)
+                .map((data) => (
+                  <QuestionList
+                    key={data.quesionId}
+                    data={data}
+                    tagList={tagList}
+                  />
+                ))
+            ) : (
+              <Loading />
+            )}
+          </ul>
         </MainContainer>
       </main>
       <Footer />

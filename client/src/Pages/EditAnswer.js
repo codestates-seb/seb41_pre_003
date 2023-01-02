@@ -21,9 +21,10 @@ const EditAnswer = () => {
 
   useEffect(() => {
     axios
-      .get(`/questions/${questionId}/answers/${answerId}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/questions/${questionId}/answers/${answerId}`
+      )
       .then((res) => {
-        console.log('content:', res.data.content);
         setContent(res.data.content);
       })
       .catch((err) => {
@@ -33,12 +34,16 @@ const EditAnswer = () => {
 
   const handlePatch = () => {
     axios
-      .patch(`/questions/${questionId}/answers/${answerId}`, {
-        content: content,
-        memberId: `${localStorage.getItem('memberId')}`,
-        questionId: questionId,
-      })
-      .then(() => {
+      .patch(
+        `${process.env.REACT_APP_API_URL}/questions/${questionId}/answers/${answerId}`,
+        {
+          content: content,
+          memberId: `${localStorage.getItem('memberId')}`,
+          questionId: questionId,
+        }
+      )
+      .then((res) => {
+        console.log(res);
         navigate(`/questions/${questionId}`);
         window.location.reload();
       })
@@ -58,6 +63,8 @@ const EditAnswer = () => {
               inputContent={'답변을 수정하세요'}
               content={content}
               setContent={setContent}
+              tags={false}
+              setTags={false}
               handleButtonClick={handlePatch}
               buttonContent={'Submit your Answer'}
             ></InputForm>

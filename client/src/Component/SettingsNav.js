@@ -9,6 +9,9 @@ const SettingNaviBar = styled.div`
   position: relative;
   nav {
     position: sticky;
+    top: calc(var(--top-bar-allocated-space) + 10px);
+    padding: 0;
+    margin: 0;
     h3 {
       padding: 10px;
       width: 100%;

@@ -4,7 +4,7 @@ import Button from './Button';
 import ButtonLink from './ButtonLink';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -57,11 +57,16 @@ const Search = styled.form`
   width: 400px;
   background-color: white;
   i {
-    padding-right: 5px;
+    margin-right: 10px;
+  }
+  select {
+    margin-right: 5px;
+    border: none;
+    font-size: 16px;
   }
   input {
     width: 100%;
-    font-size: 15px;
+    font-size: 16px;
     border: none;
     &:focus {
       outline: none;
@@ -70,16 +75,39 @@ const Search = styled.form`
 `;
 
 const Header = () => {
-  // TODO: 로그아웃버튼 누르면 localstorage에 있는 token 없애기 후 home 페이지로 리다이렉션
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('AccessToken'));
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('AccessToken');
-    if (token) setToken(token);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/members/login`, {
+        headers: {
+          Authorization: `${localStorage.getItem('AccessToken')}`,
+          Refresh: `${localStorage.getItem('RefreshToken')}`,
+        },
+      })
+      .then((res) => {
+        const AccessToken = res.headers.get('Authorization');
+        const RefreshToken = res.headers.get('Refresh');
+        console.log(AccessToken, RefreshToken);
+        // localStorage.setItem('AccessToken', AccessToken);
+        // localStorage.setItem('RefreshToken', RefreshToken);
+        // localStorage.setItem('memberId', res.data.memberId);
+        // setToken(AccessToken);
+        console.log(res);
+      })
+      .catch((err) => {
+        // 로그인 토큰이 만료되면 로컬스토리지에서 정보를 지우고 로그아웃 상태로 돌아감
+        localStorage.removeItem('AccessToken');
+        localStorage.removeItem('RefreshToken');
+        localStorage.removeItem('memberId');
+        setToken(null);
+        console.log(err);
+      });
   }, []);
 
   const LogOut = () => {
+    // TODO: 로그아웃버튼 누르면 localstorage에 있는 token 없애기 후 home 페이지로 리다이렉션
     localStorage.removeItem('AccessToken');
     localStorage.removeItem('RefreshToken');
     localStorage.removeItem('memberId');
@@ -93,9 +121,19 @@ const Header = () => {
         <Logo to="/">
           <img src={logo} alt="logo" />
         </Logo>
-        <Search action="/questions/search" method="GET">
+        <Search action="/search" method="GET">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input placeholder="Search..." name="keyword" type="text" />
+          <select name="type" id="type" required>
+            <option value="1">제목</option>
+            <option value="2">내용</option>
+            <option value="3">유저</option>
+          </select>
+          <input
+            placeholder="Search..."
+            name="keyword"
+            id="keyword"
+            type="text"
+          />
         </Search>
       </div>
       {!token ? (

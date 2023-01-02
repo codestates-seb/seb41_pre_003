@@ -14,7 +14,9 @@ import Question from './Pages/CreateQuestion';
 import Questions from './Pages/Questions';
 import EditQuestion from './Pages/EditQuestion';
 import EditAnswer from './Pages/EditAnswer';
-// import Search from './Pages/Search';
+import Search from './Pages/Search';
+import Tags from './Pages/Tags';
+import TaggedQuestion from './Pages/TaggedQuestion';
 
 function App() {
   let token = localStorage.getItem('AccessToken');
@@ -54,6 +56,9 @@ function App() {
             path="/questions/:questionId/answers/edit/:answerId"
             element={!token ? <LogIn /> : <EditAnswer />}
           ></Route>
+          <Route path="/search" element={<Search />} />
+          <Route path="/tags" element={<Tags />} />
+          <Route path="/tags/:id/:name" element={<TaggedQuestion />} />
         </Routes>
       </Router>
     </div>

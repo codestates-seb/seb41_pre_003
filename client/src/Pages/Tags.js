@@ -9,11 +9,16 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const UsersContainer = styled.section`
+const TagsContainer = styled.section`
   width: 100%;
   height: 100%;
   padding: 20px;
   margin-top: var(--top-bar-allocated-space);
+
+  p {
+    margin: 30px 0px;
+    color: #474747;
+  }
 
   ul {
     padding: 0;
@@ -49,55 +54,37 @@ const Filter = styled.form`
   }
 `;
 
-const UserItem = styled.li`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border-radius: 10px;
-  transition: 0.2s ease-in-out;
-  &:hover {
-    background-color: var(--light-gray);
-    box-shadow: inset 0 0 20px #b7b7b7;
-    transition: 0.2s ease-in-out;
-  }
-
-  img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    margin-right: 10px;
-  }
-`;
-
-const UserInfo = styled.div`
+const TagContainer = styled.li`
+  height: 150px;
   display: flex;
   flex-direction: column;
+  padding: 20px;
   justify-content: space-between;
-  height: 100%;
-  font-size: 15px;
-
-  .fa-person {
-    color: #3f51b5;
-  }
-
-  .fa-person-dress {
-    color: #ef6191;
+  align-items: flex-start;
+  border-radius: 10px;
+  border: 1px solid var(--gray);
+  &:hover {
+    cursor: default;
   }
 `;
 
-const UserName = styled(Link)`
+const TagButton = styled(Link)`
   text-decoration: none;
-  color: var(--blue);
-  font-weight: bold;
-  font-size: 23px;
+  background-color: #e2ecf5;
+  color: #487698;
+  border-radius: 5px;
+  padding: 7px;
+  border: none;
+  margin-right: 10px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    background-color: #d0e3f1;
+    transition: 0.2s ease-in-out;
+  }
 `;
 
-const Users = () => {
-  const [users, setUsers] = useState(null);
+const Tags = () => {
+  const [tags, setTags] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   // TODO: 한 페이지 표시 개수
@@ -106,10 +93,27 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/members`)
+      .get(`${process.env.REACT_APP_API_URL}/tags`)
       .then((res) => {
         const data = res.data;
-        setUsers(data);
+        //   [
+        //     {
+        //         "tagId": 1,
+        //         "tagName": "JAVA",
+        //         "tagCount": 2
+        //     },
+        //     {
+        //         "tagId": 2,
+        //         "tagName": "3부상조",
+        //         "tagCount": 3
+        //     },
+        //     {
+        //         "tagId": 3,
+        //         "tagName": "아루",
+        //         "tagCount": 4
+        //     }
+        // ]
+        setTags(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
         setLoading(false);
@@ -123,14 +127,14 @@ const Users = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [page]);
 
-  const handleFilterName = (e) => {
+  const handleFilterTag = (e) => {
     e.preventDefault();
     setLoading(true);
     const name = e.target['keyword'].value;
     axios
-      .get(`${process.env.REACT_APP_API_URL}/members/search?keyword=${name}`)
+      .get(`${process.env.REACT_APP_API_URL}/tags/search?keyword=${name}`)
       .then((res) => {
-        setUsers(res.data);
+        setTags(res.data);
         setPage(1);
         setPageCount(Math.ceil(res.data.length / limit));
         setLoading(false);
@@ -145,31 +149,31 @@ const Users = () => {
       <Header />
       <main>
         <Nav />
-        <UsersContainer>
+        <TagsContainer>
           <div>
-            <MidTitle title="Users" />
+            <MidTitle title="Tags" />
+            <p>
+              A tag is a keyword or label that categorizes your question with
+              other, similar questions. Using the right tags makes it easier for
+              others to find and answer your question.
+            </p>
           </div>
-          <Filter onSubmit={handleFilterName}>
+          <Filter onSubmit={handleFilterTag}>
             <i className="fa-solid fa-magnifying-glass"></i>
-            <input placeholder="Filter by user" name="keyword" />
+            <input placeholder="Filter by tag name" name="keyword" />
           </Filter>
           {!isLoading ? (
             <>
               <ul>
-                {users.slice((page - 1) * limit, page * limit).map((data) => (
-                  <UserItem key={data.memberId}>
-                    <img
-                      src={`https://picsum.photos/seed/${data.memberId}/100/100.webp`}
-                      alt={`avatar of ${data.name}`}
-                    />
-                    <UserInfo>
-                      <UserName to={`/users/${data.memberId}/${data.name}`}>
-                        {data.name}
-                      </UserName>
-                      <div>{data.email}</div>
-                      <div>{data.gender}</div>
-                    </UserInfo>
-                  </UserItem>
+                {tags.slice((page - 1) * limit, page * limit).map((data) => (
+                  <TagContainer key={data.tagId}>
+                    <TagButton to={`/tags/${data.tagId}/${data.tagName}`}>
+                      {data.tagName}
+                    </TagButton>
+                    {data.tagCount > 1
+                      ? `${data.tagCount} questions`
+                      : `${data.tagCount} question`}
+                  </TagContainer>
                 ))}
               </ul>
               <Pagination
@@ -181,11 +185,11 @@ const Users = () => {
           ) : (
             <Loading />
           )}
-        </UsersContainer>
+        </TagsContainer>
       </main>
       <Footer />
     </>
   );
 };
 
-export default Users;
+export default Tags;

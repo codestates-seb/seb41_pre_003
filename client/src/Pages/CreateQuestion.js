@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const QuestionContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 20px 50px;
   margin-top: var(--top-bar-allocated-space);
 
   h1 {
@@ -21,6 +21,7 @@ const TipDiv = styled.div`
   border: 1px solid rgb(175, 208, 234);
   padding: 30px;
   margin: 10px;
+  border-radius: 10px;
   ul {
     margin: 10px 0;
   }
@@ -29,6 +30,7 @@ const TipDiv = styled.div`
 const CreateQuestion = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [tags, setTags] = useState([]);
   const navigate = useNavigate();
 
   const handleChangeTitle = (event) => {
@@ -44,11 +46,19 @@ const CreateQuestion = () => {
     e.preventDefault();
     axios
       .post(
-        `/questions/`,
+        `${process.env.REACT_APP_API_URL}/questions/`,
+        //   {
+        //     "title": "제제제제목",
+        //     "content": "내내내내내용",
+        //     "tagList": [{"tagId": 1}, {"tagId": 2}]
+        // }
         {
           title: title,
           content: content,
-          memberId: `${localStorage.getItem('memberId')}`,
+          tagList: tags.reduce((r, e) => {
+            r.push({ tagId: e.tagId });
+            return r;
+          }, []),
         },
         {
           headers: {
@@ -59,19 +69,19 @@ const CreateQuestion = () => {
       )
       .then((res) => {
         console.log(res);
-        navigate('/questions');
-        window.location.reload();
+        // navigate('/questions');
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        // navigate('/login');
+        navigate('/login');
       });
   };
 
   return (
     <>
       <QuestionContainer>
-        <Header></Header>
+        <Header />
         <h1>Ask a public question</h1>
         <TipDiv>
           <p>Writing a good question</p>
@@ -100,6 +110,8 @@ const CreateQuestion = () => {
           inputContent={'What are the details of your problem?'}
           content={content}
           setContent={setContent}
+          tags={tags}
+          setTags={setTags}
           handleButtonClick={handleButtonClick}
           buttonContent={'Submit your Question'}
         ></InputForm>

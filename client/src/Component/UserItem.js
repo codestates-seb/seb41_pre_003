@@ -56,7 +56,7 @@ const UserItem = ({ memberId }) => {
 
   useEffect(() => {
     axios
-      .get(`/members/${memberId}`)
+      .get(`${process.env.REACT_APP_API_URL}/members/${memberId}`)
       .then((res) => {
         setData(res.data);
         setLoading(false);
@@ -71,7 +71,7 @@ const UserItem = ({ memberId }) => {
       {!isLoading ? (
         <>
           <img
-            src={`https://picsum.photos/seed/${data.memberId}/200/200`}
+            src={`https://picsum.photos/seed/${data.memberId}/100/100.webp`}
             alt={`avatar of ${data.name}`}
           />
           <UserInfo>
