@@ -69,7 +69,8 @@
        <li>etc</li>
  </ol>
       
-##구현 
+### 구현 화면
+      
 <table>
     <thead>
         <tr>
