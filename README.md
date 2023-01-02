@@ -5,10 +5,13 @@
 <hr>
 
 # About us
-
+<pre>
 최지현 (팀장/BE)     민인애 (FE)
+
 김병수 (BE)         우하늘 (FE)
+
 김다은 (BE)         김응찬 (FE)
+</pre>
 
 # Communication Tool
 
