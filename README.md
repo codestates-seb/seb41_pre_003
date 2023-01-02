@@ -69,9 +69,3 @@
        <li>etc</li>
  </ol>
       
-# Contributions
-      
-![mazandi profile](http://mazandi.herokuapp.com/api?handle={handle}&theme=dark)
-     
-
-     
