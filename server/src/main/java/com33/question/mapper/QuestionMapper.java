@@ -7,6 +7,7 @@ import com33.question.entity.Like;
 import com33.question.entity.Question;
 import com33.question.entity.QuestionTag;
 import com33.question.service.QuestionService;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -76,9 +77,9 @@ public interface QuestionMapper {
         Question question = new Question();
         question.setTitle(questionPostDto.getTitle());
         question.setContent(questionPostDto.getContent());
-        question.setMember(memberService.getLoginMember());
         question.setViewCount(0);
         question.setLikeCount(0);
+        question.setMember(memberService.getLoginMember());
         question.setCreate_date(LocalDateTime.now());
 
         return question;

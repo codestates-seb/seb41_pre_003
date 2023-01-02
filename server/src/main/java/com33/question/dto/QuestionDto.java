@@ -1,12 +1,9 @@
 package com33.question.dto;
 
-import com33.question.entity.Question;
-import com33.question.entity.QuestionTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Lazy;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -20,8 +17,6 @@ public class QuestionDto {
     public static class Post {
         @NotBlank(message = "제목을 반드시 입력해주세요.")
         private String title;
-
-
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
 
