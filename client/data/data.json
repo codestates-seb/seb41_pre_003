@@ -1,0 +1,154 @@
+{
+  "members": [
+    {
+      "pw": "1234",
+      "gender": "f",
+      "name": "김길동",
+      "email": "hgd@gmail.com",
+      "age": "12",
+      "member_id": 1
+    },
+    {
+      "pw": "1234",
+      "gender": "Female",
+      "name": "김영희",
+      "email": "kyh@gmail.com",
+      "age": 27,
+      "member_id": 2
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 3
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 4
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 5
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 6
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 7
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 8
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 9
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 10
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 11
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 12
+    },
+    {
+      "pw": "1234",
+      "gender": "Male",
+      "name": "홍길동",
+      "email": "hgd@gmail.com",
+      "age": 27,
+      "member_id": 13
+    }
+  ],
+  "questions": [
+    {
+      "question_id": 1,
+      "title": "질문1의 title",
+      "member_id": "작성자의 아이디",
+      "content": "질문의 내용1",
+      "create_date": "2022-12-22"
+    },
+    {
+      "question_id": 2,
+      "title": "질문2의 title",
+      "member_id": "작성자의 아이디",
+      "content": "질문의 내용2",
+      "create_date": "2022-12-22"
+    },
+    {
+      "question_id": 3,
+      "title": "질문3의 title",
+      "member_id": "작성자의 아이디",
+      "content": "질문의 내용3",
+      "create_date": "2022-12-22"
+    },
+    {
+      "question_id": 4,
+      "title": "질문4의 title",
+      "member_id": "작성자의 아이디",
+      "content": "질문의 내용4",
+      "create_date": "2022-12-22"
+    }
+  ],
+  "answers": [
+    {
+      "answer_id": 1,
+      "member_id": 3,
+      "question_id": 1,
+      "create_date": "2022-12-22",
+      "content": "가나다라마"
+    },
+    {
+      "answer_id": 2,
+      "member_id": 2,
+      "question_id": 1,
+      "create_date": "2022-12-22",
+      "content": "아자차카타"
+    }
+  ]
+}
