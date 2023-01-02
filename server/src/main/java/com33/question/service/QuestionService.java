@@ -46,15 +46,18 @@ public class QuestionService {
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
 
         Member member = memberService.getLoginMember();
+        if (member == null) {
+            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+        } else {
 
-        question.setMember(member);
-        memberRepository.findMemberByMemberId(questionDto.getMemberId()).addQuestion(question);
-        questionRepository.save(question);
-        List<Long> tagIdList = new ArrayList<>();
-        for (int i = 0; i < questionDto.getTagList().size(); i++) {
-            tagIdList.add(questionDto.getTagList().get(i).getTagId());
+            question.setMember(member);
+            questionRepository.save(question);
+            List<Long> tagIdList = new ArrayList<>();
+            for (int i = 0; i < questionDto.getTagList().size(); i++) {
+                tagIdList.add(questionDto.getTagList().get(i).getTagId());
+            }
+            return questionRepository.save(updateQuestionTag(tagIdList));
         }
-        return questionRepository.save(updateQuestionTag(tagIdList));
     }
 
     public Question updateQuestionTag(List<Long> tagList) {

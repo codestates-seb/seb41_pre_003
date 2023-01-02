@@ -83,6 +83,12 @@ public class Member {
             like.setMember(this);
         }
     }
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        if (tag.getMember() != this) {
+            tag.setMember(this);
+        }
+    }
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

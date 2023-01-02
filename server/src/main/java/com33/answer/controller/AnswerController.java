@@ -33,7 +33,6 @@ public class AnswerController {
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive Long questionId,
                                      @Valid @RequestBody AnswerDto.Post answerDto) {
         answerDto.setQuestionId(questionId);
-        answerDto.setMemberId(memberService.getLoginMember().getMemberId());
 
         Answer answer = answerService.creatAnswer(mapper.answerPostToAnswer(questionService, memberService, answerDto));
 

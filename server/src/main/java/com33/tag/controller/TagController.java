@@ -31,9 +31,8 @@ public class TagController {
 
     @PostMapping
     public ResponseEntity postTag(@Valid @RequestBody TagDto.Post tagDto) {
-        tagDto.setMemberId(memberService.getLoginMember().getMemberId());
 
-        Tag tag = tagService.createTag(mapper.tagPostToTag(memberService,tagDto));
+        Tag tag = tagService.createTag(mapper.tagPostToTag(tagDto, memberService));
 
         return ResponseEntity.ok(mapper.tagToTagResponseDto(tag));
     }
@@ -60,8 +59,7 @@ public class TagController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping("/search")
-    public ResponseEntity search(@RequestParam(value = "keyword") String keyword
-    ) {
+    public ResponseEntity search(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok(mapper.tagToTagResponsesDto(tagService.searchTag(keyword)));
     }
 

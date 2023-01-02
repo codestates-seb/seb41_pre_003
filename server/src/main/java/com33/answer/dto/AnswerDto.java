@@ -17,7 +17,6 @@ public class AnswerDto {
     @AllArgsConstructor
     public static class Post {
         private long questionId;
-        private long memberId;
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
 

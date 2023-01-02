@@ -50,7 +50,6 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
-        questionDto.setMemberId(memberService.getLoginMember().getMemberId());
         Question question = questionService.createQuestion(mapper.questionPostToQuestion(memberService, questionDto), questionDto);
 
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
@@ -95,7 +94,6 @@ public class QuestionController {
     @PostMapping("/{question-id}/like")
     public ResponseEntity postLike(@PathVariable("question-id") long questionId,
                                    @Valid @RequestBody QuestionDto.Like questionDto) {
-        questionDto.setMemberId(memberService.getLoginMember().getMemberId());
         questionDto.setQuestionId(questionId);
 
         Like like = likeService.createLike(mapper.questionLikeToQuestion(questionService, memberService, questionDto));
@@ -103,6 +101,7 @@ public class QuestionController {
 
         return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
     }
+
     @GetMapping("/{question-id}/like")
     public ResponseEntity getLike(@PathVariable("question-id") long questionId) {
         Like like = likeService.findLike(questionId);

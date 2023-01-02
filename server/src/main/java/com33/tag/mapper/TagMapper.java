@@ -12,17 +12,22 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface TagMapper {
-    default Tag tagPostToTag(MemberService memberService,TagDto.Post tagPostDto) {
-        if (tagPostDto == null) {
-            return null;
-        }
+    default Tag tagPostToTag(TagDto.Post tagPostDto, MemberService memberService) {
 
         Tag tag = new Tag();
         tag.setTagName(tagPostDto.getTagName().toLowerCase());
-        tag.setMember(memberService.findMember(tagPostDto.getMemberId()));
-
+        tag.setMember(memberService.getLoginMember());
+        tag.setTagCount(0);
         return tag;
     }
     List<TagDto.Response> tagToTagResponsesDto(List<Tag> tags);
-    TagDto.Response tagToTagResponseDto(Tag tags);
+    default TagDto.Response tagToTagResponseDto(Tag tag){
+        TagDto.Response response = new TagDto.Response();
+        response.setTagCount(tag.getTagCount());
+        response.setTagId(tag.getTagId());
+        response.setTagName(tag.getTagName());
+        response.setMemberId(tag.getMember().getMemberId());
+
+        return response;
+    }
 }

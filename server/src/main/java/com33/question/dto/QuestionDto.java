@@ -21,7 +21,6 @@ public class QuestionDto {
         @NotBlank(message = "제목을 반드시 입력해주세요.")
         private String title;
 
-        private long memberId;
 
         @NotBlank(message = "내용을 입력해주세요.")
         private String content;
@@ -38,7 +37,6 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
-        private long memberId;
         private Long questionId;
         private String title;
         @NotBlank
@@ -86,7 +84,6 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Like {
         private long questionId;
-        private long memberId;
     }
 
     @NoArgsConstructor

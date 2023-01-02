@@ -21,14 +21,13 @@ public interface AnswerMapper {
             return null;
         }
         Answer answer = new Answer();
-        Member member = new Member();
+
         Question question = new Question();
 
-        member.setMemberId(requestBody.getMemberId());
         question.setQuestionId(requestBody.getQuestionId());
 
         answer.setContent(requestBody.getContent());
-        answer.setMember(memberService.findMember(member.getMemberId()));
+        answer.setMember(memberService.getLoginMember());
         answer.setQuestion(questionService.findQuestion(question.getQuestionId()));
         answer.setCreate_date(LocalDateTime.now());
 
