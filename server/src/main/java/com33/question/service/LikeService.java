@@ -23,32 +23,28 @@ public class LikeService {
 
     public Like createLike(Like like) {
         Question question = questionService.findVerifiedQuestion(like.getQuestion().getQuestionId());
-//        Member member = memberService.findVerifiedMember(like.getMember().getMemberId());
         Member member = memberService.getLoginMember();
         if (member == null) {
             throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
         } else {
-            verifyExistQuestionMember(question, member);
-            like.setQuestion(question);
-            like.setMember(member);
-            question.setLikeCount(question.getLikeCount() + 1);
-            questionRepository.save(question);
+            Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question, member);
+            if(optionalLike.isPresent()){
+                throw new BusinessLogicException(ExceptionCode.LIKE_EXITS);
+            }
+            else {
+                verifyExistQuestionMember(question, member);
+                like.setQuestion(question);
+                like.setMember(member);
+                like.setStatus(true);
+                question.setLikeCount(question.getLikeCount() + 1);
+                questionRepository.save(question);
 
-            question.addLike(like);
-            member.addLike(like);
+                question.addLike(like);
+                member.addLike(like);
 
-            return likeRepository.save(like);
+                return likeRepository.save(like);
+            }
         }
-    }
-    public Like findLike(long questionId){
-        Question question = questionService.findVerifiedQuestion(questionId);
-        Member member = memberService.getLoginMember();
-        if(member == null)
-            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-        Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question, member);
-        if(optionalLike.isPresent())
-        return optionalLike.get();
-        else throw new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND);
     }
     public void verifyExistQuestionMember(Question question,Member member) {
         Optional<Like> optionalLike = likeRepository.findLikeByQuestionAndMember(question,member);

@@ -27,4 +27,7 @@ public class    Like {
     @ManyToOne(optional = false)
     @JoinColumn(name = "questionId")
     private Question question;
+
+    @Column(nullable = false)
+    private boolean status;
 }

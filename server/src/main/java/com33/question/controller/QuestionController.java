@@ -92,19 +92,10 @@ public class QuestionController {
     }
 
     @PostMapping("/{question-id}/like")
-    public ResponseEntity postLike(@PathVariable("question-id") long questionId,
-                                   @Valid @RequestBody QuestionDto.Like questionDto) {
-        questionDto.setQuestionId(questionId);
+    public ResponseEntity postLike(@PathVariable("question-id") long questionId) {
 
-        Like like = likeService.createLike(mapper.questionLikeToQuestion(questionService, memberService, questionDto));
+        Like like = likeService.createLike(mapper.questionLikeToQuestion(questionService, memberService, questionId));
 
-
-        return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
-    }
-
-    @GetMapping("/{question-id}/like")
-    public ResponseEntity getLike(@PathVariable("question-id") long questionId) {
-        Like like = likeService.findLike(questionId);
         return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
     }
 

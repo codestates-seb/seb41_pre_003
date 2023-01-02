@@ -89,6 +89,7 @@ public class QuestionDto {
         private Long likeId;
         private Long questionId;
         private Long memberId;
+        private boolean status;
 
     }
 }

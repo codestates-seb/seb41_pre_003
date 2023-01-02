@@ -44,6 +44,7 @@ public interface QuestionMapper {
         response.setLikeId(like.getLikeId());
         response.setQuestionId(like.getQuestion().getQuestionId());
         response.setMemberId(like.getMember().getMemberId());
+        response.setStatus(like.isStatus());
 
         return response;
     }
@@ -87,17 +88,16 @@ public interface QuestionMapper {
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
 
     default Like questionLikeToQuestion(QuestionService questionService, MemberService memberService,
-                                            QuestionDto.Like questionLikeDto) {
-        if (questionLikeDto == null) {
-            return null;
-        }
+                                            long questionId) {
+
         Like like = new Like();
         Question question = new Question();
 
-        question.setQuestionId(questionLikeDto.getQuestionId());
+        question.setQuestionId(questionId);
 
         like.setQuestion(questionService.findQuestion(question.getQuestionId()));
         like.setMember(memberService.getLoginMember());
+        like.setStatus(true);
 
         return like;
     }
