@@ -89,7 +89,6 @@ const Header = () => {
       .then((res) => {
         const AccessToken = res.headers.get('Authorization');
         const RefreshToken = res.headers.get('Refresh');
-        console.log(AccessToken, RefreshToken);
         // localStorage.setItem('AccessToken', AccessToken);
         // localStorage.setItem('RefreshToken', RefreshToken);
         // localStorage.setItem('memberId', res.data.memberId);
