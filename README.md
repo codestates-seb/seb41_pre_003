@@ -1,6 +1,6 @@
 # Stack Overflow Clone
 
-### 개발기간 : 2022.12.15 ~ 2022.01.02
+### 개발기간 : 2022.12.15 ~ 2023.01.02
 
 ### 배포주소 : http://pre-project-client-server-s3.s3-website.ap-northeast-2.amazonaws.com
 
