@@ -31,4 +31,5 @@
 
 # Communication Tool
 
-Discord 
+### Discord 
+<img src="https://w.namu.la/s/eafc347f795dbe8353b51eaaa97a973bd64d8fc771fb54af02e9401bed982ce6d631df194980bee7567e1f2d70610b2a75cf41ca0d33483d847a17c84632265ff19f8161e38b19a129d7141ddd6c82357099a0a5d68737a9934c237167c16f78" alt="디스코드" width="300" height="300">
