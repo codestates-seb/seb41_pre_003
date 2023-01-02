@@ -1,7 +1,8 @@
 # Stack Overflow Clone
 
-### 개발기간 : 2022.12.15 ~ 2022.01.02 
-### 배포주소 :  http://pre-project-client-server-s3.s3-website.ap-northeast-2.amazonaws.com
+### 개발기간 : 2022.12.15 ~ 2022.01.02
+
+### 배포주소 : http://pre-project-client-server-s3.s3-website.ap-northeast-2.amazonaws.com
 
 # About us
 
@@ -31,8 +32,8 @@
       
 # Communication Tool
 
-### Discord 
-      
+### Discord
+
 <img src="https://w.namu.la/s/eafc347f795dbe8353b51eaaa97a973bd64d8fc771fb54af02e9401bed982ce6d631df194980bee7567e1f2d70610b2a75cf41ca0d33483d847a17c84632265ff19f8161e38b19a129d7141ddd6c82357099a0a5d68737a9934c237167c16f78" alt="디스코드" width="300" height="100">
       
 ### 상주 시간 : 13:00 ~ 18:00
@@ -82,7 +83,9 @@
     </thead>
   <tbody>
       <tr>
-              <td>![signup](https://user-images.githubusercontent.com/111411887/210218501-d9c42ae0-b151-464c-8a8a-6a9e4b3ce4f0.png)
+              <td>
+              <img src="https://user-images.githubusercontent.com/111411887/210218501-d9c42ae0-b151-464c-8a8a-6a9e4b3ce4f0.png" alt='signup' width="300px" heigth="100px"/>
+              ![signup](https://user-images.githubusercontent.com/111411887/210218501-d9c42ae0-b151-464c-8a8a-6a9e4b3ce4f0.png)
 </td>
               <td>![질문조회1](https://user-images.githubusercontent.com/111411887/210219924-5e3a61e8-c1e3-4407-95cb-aab25298d418.png)
 </td>
