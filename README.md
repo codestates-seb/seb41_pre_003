@@ -44,7 +44,7 @@
 <ol>
        <li>주요기능
    <ol>
-     <li>회원가입</li>
+       <li>회원가입</li>
      <li>회원 정보 수정</li>
      <li>회원 정보 조회</li>
      <li>회원 정보 삭제</li>
@@ -82,17 +82,17 @@
     </thead>
   <tbody>
       <tr>
-              <td>![signup](https://user-images.githubusercontent.com/111411887/210218501-d9c42ae0-b151-464c-8a8a-6a9e4b3ce4f0.png)
+              <td><img src="https://user-images.githubusercontent.com/111411887/210218501-d9c42ae0-b151-464c-8a8a-6a9e4b3ce4f0.png" alt='signup' width="300px" heigth="100px"/>
 </td>
-              <td>![질문조회1](https://user-images.githubusercontent.com/111411887/210219924-5e3a61e8-c1e3-4407-95cb-aab25298d418.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414137534414961/image.png" alt='main' width="300px" heigth="100px"/>
 </td>
-              <td>![질문조회2](https://user-images.githubusercontent.com/111411887/210219959-3f42e1ab-e741-4ad8-92b7-d2dedb4cf801.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414137534414961/image.png" alt='main' width="300px" heigth="100px"/>
 </td>
-              <td>![회원정보조회](https://user-images.githubusercontent.com/111411887/210220061-ffa0208b-442d-46d1-bab1-36b3007abf39.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415464524132462/image.png" alt='members' width="300px" heigth="100px"/>
 </td>
-              <td>![회원정보수정](https://user-images.githubusercontent.com/111411887/210218775-7b3d3a03-e558-4808-95a3-96232e00660b.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415596300779520/image.png" alt='member info edit' width="300px" heigth="100px"/>
 </td>
-              <td>![회원정보삭제](https://user-images.githubusercontent.com/111411887/210218847-bdf37d69-51bc-4427-ac8a-d85ba8c718ab.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415678299414528/image.png" alt='delete member' width="300px" heigth="100px"/>
 </td>
         </tr>
         <tr>
@@ -104,17 +104,16 @@
             <td>태그된 질문 리스트</td>
         </tr>
         <tr>
-              <td>![login](https://user-images.githubusercontent.com/111411887/210218550-ddbb2676-2baa-424d-a268-d02f652ddb28.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059413960866136145/image.png" alt='log in' width="300px" heigth="100px"/>
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414580280967188/image.png" alt='question detail' width="300px" heigth="100px"/>
 </td>
-              <td>![질문등록](https://user-images.githubusercontent.com/111411887/210219137-419f684d-19bd-4382-85ad-651b2e332450.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='signup' width="300px" heigth="100px"/>
 </td>
-              <td>![질문수정](https://user-images.githubusercontent.com/111411887/210219273-e260f5f9-6368-4fa2-b404-4b981aee5f26.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415115277008916/image.png" alt='signup' width="300px" heigth="100px"/>
 </td>
-              <td>![답변수정](https://user-images.githubusercontent.com/111411887/210219688-d83c063a-8dbf-422f-98fc-89dba7083ead.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415227575324692/image.png" alt='signup' width="300px" heigth="100px"/>
 </td>
-              <td>![태그리스트](https://user-images.githubusercontent.com/111411887/210220418-fcdca9ab-d808-4842-a733-523e7eb4a19c.png)
-</td>
-              <td>![태그](https://user-images.githubusercontent.com/111411887/210220514-edb86aec-d34f-47b5-abb8-1efff81d15d7.png)
+              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415290489868349/image.png" alt='signup' width="300px" heigth="100px"/>
 </td>
         </tr>
     <tbody>
