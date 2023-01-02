@@ -15,4 +15,6 @@ public interface QuestionTagRepository extends JpaRepository<QuestionTag, Long> 
     QuestionTag findQuestionTagByQuestionTagId(Long questionTagId);
 
 
+
+
 }

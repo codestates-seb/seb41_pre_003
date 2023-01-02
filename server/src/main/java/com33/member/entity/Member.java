@@ -41,17 +41,14 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
-    private List<Tag> tags = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private List<Like> likes = new ArrayList<>();
 
 
@@ -83,12 +80,7 @@ public class Member {
             like.setMember(this);
         }
     }
-    public void addTag(Tag tag) {
-        tags.add(tag);
-        if (tag.getMember() != this) {
-            tag.setMember(this);
-        }
-    }
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

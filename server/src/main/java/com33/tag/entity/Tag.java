@@ -25,11 +25,7 @@ public class Tag {
     @Column(nullable = false)
     private int tagCount;
     @JsonIgnore
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "memberId")
-    private Member member;
-    @JsonIgnore
-    @OneToMany(mappedBy = "tag")
+    @OneToMany(mappedBy = "tag",cascade = CascadeType.ALL)
     private List<QuestionTag> questionTagList = new ArrayList<>();
 
     // 연관 관계 메서드

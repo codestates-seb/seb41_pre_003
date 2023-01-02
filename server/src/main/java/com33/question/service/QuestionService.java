@@ -1,5 +1,6 @@
 package com33.question.service;
 
+import com33.answer.repository.AnswerRepository;
 import com33.exception.BusinessLogicException;
 import com33.exception.ExceptionCode;
 import com33.member.entity.Member;
@@ -8,6 +9,7 @@ import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
 import com33.question.entity.Question;
 import com33.question.entity.QuestionTag;
+import com33.question.repository.LikeRepository;
 import com33.question.repository.QuestionRepository;
 import com33.question.repository.QuestionTagRepository;
 import com33.tag.entity.Tag;
@@ -30,17 +32,23 @@ public class QuestionService {
     private final QuestionTagRepository questionTagRepository;
     private final TagRepository tagRepository;
     private final MemberRepository memberRepository;
+    private final AnswerRepository answerRepository;
+    private final LikeRepository likeRepository;
 
 
     public QuestionService(QuestionRepository questionRepository, MemberService memberService, TagService tagService, QuestionTagRepository questionTagRepository,
                            TagRepository tagRepository,
-                           MemberRepository memberRepository) {
+                           MemberRepository memberRepository,
+                           AnswerRepository answerRepository,
+                           LikeRepository likeRepository) {
         this.questionRepository = questionRepository;
         this.memberService = memberService;
         this.questionTagRepository = questionTagRepository;
         this.tagRepository = tagRepository;
         this.memberRepository = memberRepository;
 
+        this.answerRepository = answerRepository;
+        this.likeRepository = likeRepository;
     }
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
@@ -51,19 +59,23 @@ public class QuestionService {
         } else {
 
             question.setMember(member);
-            questionRepository.save(question);
+
+            Question savedQuestion = questionRepository.save(question);
             List<Long> tagIdList = new ArrayList<>();
             for (int i = 0; i < questionDto.getTagList().size(); i++) {
                 tagIdList.add(questionDto.getTagList().get(i).getTagId());
             }
-            return questionRepository.save(updateQuestionTag(tagIdList));
+            Question returnQuestion = new Question();
+            returnQuestion = updateQuestionTag(tagIdList , savedQuestion);
+            member.addQuestion(returnQuestion);
+            return questionRepository.save(returnQuestion);
         }
     }
 
-    public Question updateQuestionTag(List<Long> tagList) {
+    public Question updateQuestionTag(List<Long> tagList, Question savedQuestion) {
 
         //가장 최근에 저장된 질문 불러오기
-        Question findQuestion = questionRepository.getReferenceById(questionRepository.count());
+        Question findQuestion = questionRepository.findById(savedQuestion.getQuestionId()).get();
         for (int i = 0; i < tagList.size(); i++) {
             //연관 매핑에 저장
             QuestionTag questionTag = new QuestionTag();
@@ -129,6 +141,7 @@ public class QuestionService {
 
         questionRepository.delete(question);
     }
+
 
     public Question findVerifiedQuestion(long questionId) {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);

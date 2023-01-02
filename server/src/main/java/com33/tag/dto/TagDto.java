@@ -20,6 +20,5 @@ public class TagDto {
         private Long tagId;
         private String tagName;
         private int tagCount;
-        private Long memberId;
     }
 }
