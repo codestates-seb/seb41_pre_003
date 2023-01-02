@@ -74,11 +74,9 @@ public interface QuestionMapper {
         }
 
         Question question = new Question();
-        Member member = new Member();
-        member.setMemberId(questionPostDto.getMemberId());
         question.setTitle(questionPostDto.getTitle());
         question.setContent(questionPostDto.getContent());
-        question.setMember(memberService.findMember(member.getMemberId()));
+        question.setMember(memberService.getLoginMember());
         question.setViewCount(0);
         question.setLikeCount(0);
         question.setCreate_date(LocalDateTime.now());
@@ -97,13 +95,11 @@ public interface QuestionMapper {
         }
         Like like = new Like();
         Question question = new Question();
-        Member member = new Member();
 
-        member.setMemberId(questionLikeDto.getMemberId());
         question.setQuestionId(questionLikeDto.getQuestionId());
 
         like.setQuestion(questionService.findQuestion(question.getQuestionId()));
-        like.setMember(memberService.findMember(member.getMemberId()));
+        like.setMember(memberService.getLoginMember());
 
         return like;
     }

@@ -33,21 +33,23 @@ public class AnswerService {
         this.memberRepository = memberRepository;
     }
 
-    public Answer creatAnswer(Answer answer){
-       Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
-//       Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
+    public Answer creatAnswer(Answer answer) {
+        Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
+//      Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
         Member member = memberService.getLoginMember();
+        if (member == null) {
+            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+        } else {
 
-        answer.setQuestion(question);
-        answer.setMember(member);
+            answer.setQuestion(question);
+            answer.setMember(member);
 
-        question.addAnswer(answer);
-        member.addAnswer(answer);
-
-
+            question.addAnswer(answer);
+            member.addAnswer(answer);
 
 
-        return answerRepository.save(answer);
+            return answerRepository.save(answer);
+        }
     }
     public Answer findAnswer(long answer_Id) {
         return findVerifiedAnswer(answer_Id);

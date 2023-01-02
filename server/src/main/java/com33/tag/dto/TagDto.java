@@ -13,7 +13,6 @@ public class TagDto {
     public static class Post {
         @NotBlank(message = "태그 이름을 입력해주세요.")
         private String tagName;
-        private Long memberId;
     }
 
     @Getter
@@ -22,5 +21,6 @@ public class TagDto {
         private Long tagId;
         private String tagName;
         private int tagCount;
+        private Long memberId;
     }
 }

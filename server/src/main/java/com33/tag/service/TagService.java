@@ -30,11 +30,15 @@ public class TagService {
 
     public Tag createTag(Tag tag) {
         Member member = memberService.getLoginMember();
-        tag.setMember(member);
-        if (tagRepository.findByTagName(tag.getTagName()).isPresent())
-            return null;
-        else {
-            return tagRepository.save(tag);
+        if (member == null) {
+            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+        } else {
+            tag.setMember(member);
+            if (tagRepository.findByTagName(tag.getTagName()).isPresent())
+                throw new BusinessLogicException(ExceptionCode.TAG_EXITS);
+            else {
+                return tagRepository.save(tag);
+            }
         }
     }
 
@@ -44,7 +48,6 @@ public class TagService {
 
     public Tag findTag(Long tag_Id) {
         Tag tag = tagRepository.findByTagId(tag_Id);
-
         return tag;
     }
 
