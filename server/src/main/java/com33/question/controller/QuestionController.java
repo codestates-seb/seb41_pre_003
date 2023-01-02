@@ -47,7 +47,7 @@ public class QuestionController {
         this.tagRepository = tagRepository;
     }
 
-
+    //질문 게시
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionDto) {
         Question question = questionService.createQuestion(mapper.questionPostToQuestion(memberService, questionDto), questionDto);
@@ -55,6 +55,7 @@ public class QuestionController {
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
     }
 
+    //질문 수정
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                         @Valid @RequestBody QuestionDto.Patch questionDto) {
@@ -64,33 +65,33 @@ public class QuestionController {
 
         return ResponseEntity.ok(mapper.questionToQuestionResponse(question));
     }
-
+    //해당 게시물 조회
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
         return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
-
+    //해당 게시물 삭제
     @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId) {
         questionService.deleteQuestion(questionId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    //게시물 전체 조회
     @GetMapping
     public ResponseEntity getQuestions() {
         return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.findQuestions()));
     }
-
+    //게시글 검색
     @GetMapping("/search")
     public ResponseEntity search(@RequestParam(value = "type") String type,
                                  @RequestParam(value = "keyword") String keyword
     ) {
         return ResponseEntity.ok(mapper.questionsToQuestionResponses(questionService.searchQuestion(type, keyword)));
     }
-
+    //게시글 추천하기
     @PostMapping("/{question-id}/like")
     public ResponseEntity postLike(@PathVariable("question-id") long questionId) {
 
@@ -98,7 +99,7 @@ public class QuestionController {
 
         return ResponseEntity.ok(mapper.questionLikeToQuestionResponse(like));
     }
-
+    //태그로 게시물 검색
     @GetMapping("/search/tags/{tag-id}")
     public ResponseEntity searchByTag(@PathVariable("tag-id") long tagId) {
         return ResponseEntity.ok(mapper.questionTagToQuestionResponse(questionTagRepository.findAllByTagTagId(tagId)));

@@ -35,10 +35,9 @@ public class AnswerService {
 
     public Answer creatAnswer(Answer answer) {
         Question question = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
-//      Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
         Member member = memberService.getLoginMember();
         if (member == null) {
-            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+            throw new BusinessLogicException(ExceptionCode.NOT_LOGIN);
         } else {
 
             answer.setQuestion(question);

@@ -29,11 +29,11 @@ public class TagService {
     }
 
     public Tag createTag(Tag tag) {
-        Member member = memberService.getLoginMember();
+        Member member = memberService.getLoginMember();//로그인을 안했을 시 에러메시지 출력
         if (member == null) {
-            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+            throw new BusinessLogicException(ExceptionCode.NOT_LOGIN);
         } else {
-            if (tagRepository.findByTagName(tag.getTagName()).isPresent())
+            if (tagRepository.findByTagName(tag.getTagName()).isPresent())//이미 존재하는 태그라면 에러메시지 출력
                 throw new BusinessLogicException(ExceptionCode.TAG_EXITS);
             else {
                 return tagRepository.save(tag);
@@ -43,11 +43,6 @@ public class TagService {
 
     public List<Tag> findTags() {
         return tagRepository.findAll();
-    }
-
-    public Tag findTag(Long tag_Id) {
-        Tag tag = tagRepository.findByTagId(tag_Id);
-        return tag;
     }
 
 
@@ -66,7 +61,7 @@ public class TagService {
     public void deleteTag(long tagId) {
         tagRepository.delete(tagRepository.findByTagId(tagId));
     }
-
+    //태그목록에서 태그이름으로 검색, 자동완성 가능하게 containing 사용
     public List<Tag> searchTag(String keyword) {
         Optional<List<Tag>> optionalTags = tagRepository.findByTagNameContaining(keyword);
         List<Tag> findTags =

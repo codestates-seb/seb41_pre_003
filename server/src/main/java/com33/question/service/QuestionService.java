@@ -53,9 +53,9 @@ public class QuestionService {
 
     public Question createQuestion(Question question, QuestionDto.Post questionDto) {
 
-        Member member = memberService.getLoginMember();
+        Member member = memberService.getLoginMember(); //로그인 한 상태가 아닐 시 에러 메시지 출력
         if (member == null) {
-            throw new BusinessLogicException(ExceptionCode.NOT_LONGIN);
+            throw new BusinessLogicException(ExceptionCode.NOT_LOGIN);
         } else {
 
             question.setMember(member);
@@ -65,8 +65,8 @@ public class QuestionService {
             for (int i = 0; i < questionDto.getTagList().size(); i++) {
                 tagIdList.add(questionDto.getTagList().get(i).getTagId());
             }
-            Question returnQuestion = new Question();
-            returnQuestion = updateQuestionTag(tagIdList , savedQuestion);
+            Question returnQuestion;
+            returnQuestion = updateQuestionTag(tagIdList, savedQuestion);
             member.addQuestion(returnQuestion);
             return questionRepository.save(returnQuestion);
         }
@@ -101,12 +101,6 @@ public class QuestionService {
         questionRepository.save(question);
         return question;
     }
-//    public List<Question> findQuestion(List<QuestionTag> questionTagList) {
-//        List<Question> findQuestions = new ArrayList<>();
-//        for (QuestionTag questionTag : questionTagList)
-//            findQuestions.add(questionTagRepository.findByQuestionTagId(questionTag.getQuestionTagId()));
-//        return findQuestions;
-//    }
 
 
     public Question updateQuestion(Question question, QuestionDto.Patch questionDto) {
@@ -119,7 +113,7 @@ public class QuestionService {
                 .ifPresent(findQuestion::setContent);
         questionTagRepository.deleteAll(questionTagRepository.findAllByQuestionQuestionId(findQuestion.getQuestionId()));
 
-        for(int i = 0; i < questionDto.getTagList().size(); i++){
+        for (int i = 0; i < questionDto.getTagList().size(); i++) {
             QuestionTag questionTag = new QuestionTag();
             questionTag.addTag(tagRepository.findByTagId(questionDto.getTagList().get(i).getTagId()));
             questionTag.addQuestion(findQuestion);
@@ -167,6 +161,7 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
+    //타입으로 나눠서 질문 검색 기능 구현 1 : 제목, 2 : 내용, 3 : 작성자 이름
     public List<Question> searchQuestion(String type, String keyword) {
         switch (type) {
             case "1": {

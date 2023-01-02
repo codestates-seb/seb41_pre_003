@@ -1,13 +1,11 @@
 package com33.question.mapper;
 
-import com33.member.entity.Member;
 import com33.member.service.MemberService;
 import com33.question.dto.QuestionDto;
 import com33.question.entity.Like;
 import com33.question.entity.Question;
 import com33.question.entity.QuestionTag;
 import com33.question.service.QuestionService;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

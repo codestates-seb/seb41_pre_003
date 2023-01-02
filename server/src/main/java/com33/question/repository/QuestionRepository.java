@@ -16,8 +16,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Optional<List<Question>> findByContentContaining(String keyword);
     Optional<List<Question>> findByMemberMemberId(@Param(value = "memberId") Long memberId);
 
-    List<Question> findAllByMemberMemberId(Long memberId);
-
-
 
 }
