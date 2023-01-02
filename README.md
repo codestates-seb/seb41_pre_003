@@ -92,12 +92,13 @@
             <th>메인 페이지 - 최신순</th>
         </tr>
     </thead>
-  <tbody>
-      <tr>
-              <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414137534414961/image.png" alt='main' width=100% height=100%/></td>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414238793322496/image.png" alt='main' width=100% height=100%/>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414366379843614/image.png" alt='main' width=100% height=100%/>
-        </tr>
+    <tbody>
+        <tr>
+                <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414137534414961/image.png" alt='main' width=100% height=100%/></td>
+                <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414238793322496/image.png" alt='main' width=100% height=100%/></td>
+                <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414366379843614/image.png" alt='main' width=100% height=100%/></td>
+            </tr>
+            </tbody>
   <table>
 
 <table>
@@ -109,9 +110,10 @@
     </thead>
   <tbody>
       <tr>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='create question' width=100% height=100%/>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='create question' width=100% height=100%/></td>
             <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414660744486932/image.png" alt='question detail' width=100% height=100%/></td>
         </tr>
+        </tbody>
   <table>
 
   <table>
@@ -123,9 +125,10 @@
     </thead>
   <tbody>
       <tr>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='edit question' width=100% height=100%/>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415115277008916/image.png" alt='edit answer' width=100% height=100%/>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059414840613015612/image.png" alt='edit question' width=100% height=100%/></td>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415115277008916/image.png" alt='edit answer' width=100% height=100%/></td>
         </tr>
+        </tbody>
   <table>
 
   <table>
@@ -138,8 +141,9 @@
   <tbody>
       <tr>
               <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415464524132462/image.png" alt='user list' width=100% height=100%/></td>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415540067741716/image.png" alt='user detail' width=100% height=100%/>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415540067741716/image.png" alt='user detail' width=100% height=100%/></td>
         </tr>
+        </tbody>
   <table>
 
    <table>
@@ -151,8 +155,10 @@
     </thead>
   <tbody>
       <tr>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415596300779520/image.png" alt='edit user info' width=100% height=100%/>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415678299414528/image.png" alt='delete user info' width=100% height=100%/>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415596300779520/image.png" alt='edit user info' width=100% height=100%/></td>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415678299414528/image.png" alt='delete user info' width=100% height=100%/></td>
+            </tr>
+            </tbody>
   <table>
 
   <table>
@@ -165,5 +171,7 @@
   <tbody>
       <tr>
               <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415227575324692/image.png" alt='tags list' width=100% height=100%/></td>
-            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415290489868349/image.png" alt='log in' width=100% height=100%/>
+            <td><img src="https://cdn.discordapp.com/attachments/1053096391234306048/1059415290489868349/image.png" alt='log in' width=100% height=100%/></td>
+            </tr>
+            </tbody>
   <table>
