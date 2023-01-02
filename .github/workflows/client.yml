@@ -1,4 +1,3 @@
-# .github/workflows/client.yml
 name: client
 on:
   push:
@@ -33,6 +32,6 @@ jobs:
         run: |
           aws s3 sync \
             --region ap-northeast-2 \
-            build s3://pre003 \
+            build s3://pre-project-client-server-s3 \
             --delete
         working-directory: ./client
