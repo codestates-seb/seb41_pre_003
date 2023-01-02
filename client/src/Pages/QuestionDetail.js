@@ -22,19 +22,27 @@ const QDContainer = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
+  margin-left: 10px;
   h1 {
-    margin-bottom: 10px;
-  }
-  Link {
     width: 100%;
-    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  a {
+    width: 150px;
+    height: 50px;
+    white-space: nowrap;
+    margin-left: 20px;
   }
 `;
 
 const Info = styled.div`
-  border-bottom: 3px solid var(--gray);
+  border-bottom: 2px solid var(--gray);
+  margin: 0px 10px 5px 10px;
+  padding-bottom: 5px;
   span {
-    margin: 10px;
+    margin-right: 10px;
   }
 `;
 
@@ -42,13 +50,20 @@ const LikeButton = styled.button`
   border-radius: 10px;
   width: 50px;
   margin: 5px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const AnswerCreate = styled.div`
-  border-top: 3px solid var(--gray);
   padding: 0 10px;
-  p,
-  h2 {
+  > h2:first-child {
+    width: 100%;
+    border-bottom: 2px solid var(--gray);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+  }
+  p {
     margin: 10px 0;
   }
 `;
@@ -56,13 +71,23 @@ const AnswerCreate = styled.div`
 const AnswerForm = styled.form`
   width: 100%;
   overflow: hidden;
+  margin-top: 10px;
   Button {
     margin-top: 10px;
+  }
+
+  > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
 `;
 
 const LoginAlert = styled.div`
   margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   button {
     border-radius: 10px;
     padding: 10px;
@@ -78,7 +103,6 @@ const QuestionDetail = () => {
   const [answer, setAnswer] = useState('');
   const [inputContent, setInputContent] = useState('');
   const [isLoading, setLoading] = useState(true);
-  const [like, setLike] = useState('');
   let token = localStorage.getItem('AccessToken');
   let memberId = localStorage.getItem('memberId');
 
@@ -90,7 +114,6 @@ const QuestionDetail = () => {
       .get(`${process.env.REACT_APP_API_URL}/questions/${questionId}`)
       .then((res) => {
         setQuestion(res.data);
-        console.log('question: ', question);
 
         axios
           .get(
@@ -99,25 +122,6 @@ const QuestionDetail = () => {
           .then((res) => {
             setAnswer(res.data);
             setLoading(false);
-            console.log('answer: ', answer);
-
-            axios
-              .get(
-                `${process.env.REACT_APP_API_URL}/questions/${questionId}/like`,
-                {
-                  headers: {
-                    Authorization: `${localStorage.getItem('AccessToken')}`,
-                    Refresh: `${localStorage.getItem('RefreshToken')}`,
-                  },
-                }
-              )
-              .then((res) => {
-                console.log('like: ', res);
-                setLike(res.data);
-              })
-              .catch((err) => {
-                console.log('like err: ', err);
-              });
           })
           .catch((err) => {
             console.log('answer err: ', err);
@@ -219,7 +223,7 @@ const QuestionDetail = () => {
               <span>Asked {`${timePassed(question.create_date)} ago`}</span>
               <span>Viewed {question.viewCount}</span>
               <span>Liked {question.likeCount}</span>
-              {!like.memberId && memberId ? (
+              {memberId ? (
                 <LikeButton onClick={handleLikeClick}>
                   <i className="fa-regular fa-thumbs-up"></i>
                 </LikeButton>
@@ -231,15 +235,15 @@ const QuestionDetail = () => {
               data={question}
               handleDelete={handleDeleteQuestion}
             ></Content>
-            <h2>
-              {answer.length > 1
-                ? `${answer.length} Answers`
-                : `${answer.length} Answer`}
-            </h2>
-            {answer.map((el) => {
-              return <Content data={el} key={el.answerId}></Content>;
-            })}
             <AnswerCreate>
+              <h2>
+                {answer.length > 1
+                  ? `${answer.length} Answers`
+                  : `${answer.length} Answer`}
+              </h2>
+              {answer.map((el) => {
+                return <Content data={el} key={el.answerId}></Content>;
+              })}
               <p>
                 Know someone who can answer? Share a link to this question via
                 email, Twitter, or Facebook.
@@ -247,20 +251,22 @@ const QuestionDetail = () => {
               <h2>Your Answer</h2>
               <AnswerForm onSubmit={handleCreateAnswer}>
                 <ToastEditor setContent={setInputContent}></ToastEditor>
-                {!token ? (
-                  <LoginAlert>
-                    <p>Log in to add new answers</p>
-                    <Link to="/login">
-                      <button>Log in</button>
-                    </Link>
-                  </LoginAlert>
-                ) : (
-                  <Button
-                    type="submit"
-                    value="Submit your Answer"
-                    onClick={handleCreateAnswer}
-                  ></Button>
-                )}
+                <div>
+                  {!token ? (
+                    <LoginAlert>
+                      <p>Log in to add new answers</p>
+                      <Link to="/login">
+                        <button>Log in</button>
+                      </Link>
+                    </LoginAlert>
+                  ) : (
+                    <Button
+                      type="submit"
+                      value="Submit your Answer"
+                      onClick={handleCreateAnswer}
+                    ></Button>
+                  )}
+                </div>
               </AnswerForm>
             </AnswerCreate>
           </QDContainer>

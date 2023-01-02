@@ -1,7 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import PublicRoute from './utils/PublicRoute';
-// import PrivateRoute from './utils/PrivateRoute';
 import Home from './Pages/Home';
 import Users from './Pages/Users';
 import LogIn from './Pages/Login';
@@ -31,11 +29,11 @@ function App() {
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route
-            path="/users/edit/1"
+            path="/users/edit/:memberId"
             element={!token ? <LogIn /> : <EditProfile />}
           ></Route>
           <Route
-            path="/users/delete/1"
+            path="/users/delete/:memberId"
             element={!token ? <LogIn /> : <DeleteProfile />}
           ></Route>
           <Route path="/users/:memberId/:name" element={<UserDetail />}></Route>

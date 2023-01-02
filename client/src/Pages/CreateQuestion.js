@@ -47,11 +47,6 @@ const CreateQuestion = () => {
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/questions/`,
-        //   {
-        //     "title": "제제제제목",
-        //     "content": "내내내내내용",
-        //     "tagList": [{"tagId": 1}, {"tagId": 2}]
-        // }
         {
           title: title,
           content: content,
@@ -69,8 +64,7 @@ const CreateQuestion = () => {
       )
       .then((res) => {
         console.log(res);
-        // navigate('/questions');
-        // window.location.reload();
+        navigate('/questions');
       })
       .catch((err) => {
         console.log(err);

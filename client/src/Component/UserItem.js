@@ -15,6 +15,7 @@ const UserItemContainer = styled.li`
     background-color: var(--light-gray);
     box-shadow: inset 0 0 20px #b7b7b7;
     transition: 0.2s ease-in-out;
+    cursor: default;
   }
 
   img {

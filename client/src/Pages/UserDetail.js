@@ -19,7 +19,7 @@ const MainContainer = styled.section`
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 0px 20px;
     h3 {
       width: 100%;

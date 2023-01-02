@@ -45,6 +45,7 @@ const ImgContainer = styled.div`
 const NavTabContainer = styled.div`
   display: flex;
   margin-top: 20px;
+  margin-left: 20px;
 `;
 
 const NavTab = styled(Link)`
@@ -56,7 +57,7 @@ const NavTab = styled(Link)`
   color: ${(props) =>
     decodeURI(props.path) === decodeURI(props.to) ? 'white' : 'black'};
   border-radius: 20px;
-  display: ${(props) => (props.isLogin ? 'flex' : 'none')};
+  display: ${(props) => (props.islogin ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   margin-right: 20px;
@@ -80,16 +81,16 @@ const UserHeader = ({ data }) => {
           <div>{name}</div>
           <div>Contact: {email}</div>
           <div>{gender}</div>
-          <div>{age} years old</div>
+          <div>{age > 1 ? `${age} years old` : `${age} year old`}</div>
         </div>
       </ImgContainer>
       <NavTabContainer>
-        <NavTab to={`/users/${memberId}/${name}`} isLogin={true} path={path}>
+        <NavTab to={`/users/${memberId}/${name}`} islogin={true} path={path}>
           Profile
         </NavTab>
         <NavTab
           to={`/users/edit/${memberId}`}
-          isLogin={memberId === loginId}
+          islogin={memberId === loginId}
           path={path}
         >
           Setting

@@ -54,6 +54,7 @@ const NavList = styled(Link)`
 
 const Nav = () => {
   const { pathname: path } = useLocation();
+
   return (
     <NavigationBar>
       <ul>

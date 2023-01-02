@@ -37,12 +37,8 @@ const MainContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     button {
-      margin: 30px 50px;
+      margin: 10px 10px 30px 10px;
     }
-  }
-
-  Button {
-    margin-left: 10px;
   }
 `;
 
@@ -64,8 +60,8 @@ const TagContainer = styled.div`
 
 const Tag = styled.button`
   text-decoration: none;
-  background-color: #e2ecf5;
   background-color: ${(props) => (props.isAdded ? '#bbccd8' : '#e2ecf5')};
+  box-shadow: ${(props) => (props.isAdded ? 'inset 0 0 10px #929292' : '')};
   color: #487698;
   border-radius: 5px;
   padding: 10px;
@@ -170,7 +166,12 @@ const InputForm = ({
         {title !== undefined ? (
           <div>
             <div>Title</div>
-            <input type="text" value={title} onChange={handleChangeTitle} />
+            <input
+              type="text"
+              value={title}
+              onChange={handleChangeTitle}
+              maxLength="50"
+            />
           </div>
         ) : (
           ''

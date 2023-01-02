@@ -130,16 +130,15 @@ const Home = () => {
           </TabContainer>
           <ul>
             {!isLoading ? (
-              data
-                // 처음 로딩했을때 기본값이 추천수라서 추천수로 sorting
-                .slice(0, 10)
-                .map((data) => (
+              data.slice(0, 10).map((data) => {
+                return (
                   <QuestionList
                     key={data.quesionId}
                     data={data}
                     tagList={tagList}
                   />
-                ))
+                );
+              })
             ) : (
               <Loading />
             )}

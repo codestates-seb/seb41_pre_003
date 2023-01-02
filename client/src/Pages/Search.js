@@ -67,7 +67,6 @@ const Search = () => {
   const params = new URLSearchParams(search);
   const type = params.get('type');
   const keyword = params.get('keyword');
-  console.log(type, keyword);
 
   useEffect(() => {
     axios

@@ -94,7 +94,6 @@ const Header = () => {
         // localStorage.setItem('RefreshToken', RefreshToken);
         // localStorage.setItem('memberId', res.data.memberId);
         // setToken(AccessToken);
-        console.log(res);
       })
       .catch((err) => {
         // 로그인 토큰이 만료되면 로컬스토리지에서 정보를 지우고 로그아웃 상태로 돌아감
