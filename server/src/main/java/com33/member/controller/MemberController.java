@@ -27,12 +27,15 @@ public class MemberController {
         this.mapper = mapper;
     }
 
+    //회원가입
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
         Member member = memberService.createMember(mapper.memberPostToMember(requestBody));
 
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
+
+    //회원정보 수정
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
                                       @Valid @RequestBody MemberDto.Patch requestBody){
@@ -41,6 +44,8 @@ public class MemberController {
 
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
+
+    //등록된 회원 전체 가져오기
     @GetMapping
     public ResponseEntity getMembers() {
         return ResponseEntity.ok(mapper.membersToMemberResponses(memberService.findMembers()));
@@ -50,11 +55,15 @@ public class MemberController {
     public ResponseEntity getLogin(){
         return ResponseEntity.ok(mapper.memberToMemberResponse(memberService.getLoginMember()));
     }
+
+    //회원정보 가져오기
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(
             @PathVariable("member-id") @Positive long memberId) {
         return ResponseEntity.ok(mapper.memberToMemberResponse(memberService.findMember(memberId)));
     }
+
+    //회원탈퇴
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(
             @PathVariable("member-id") @Positive long memberId){
@@ -62,6 +71,7 @@ public class MemberController {
 
         return ResponseEntity.ok().build();
     }
+    //키워드로 회원 검색
     @GetMapping("/search")
     public ResponseEntity search(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok(mapper.membersToMemberResponses(memberService.findName(keyword)));
