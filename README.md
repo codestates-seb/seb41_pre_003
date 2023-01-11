@@ -204,8 +204,8 @@
 #### 2023.01.11 디자인 수정 및 자동완성기능 추가
 1. 메인페이지 정렬기준별 아이콘 색상 변화
 <p float="left">
- <img src="https://user-images.githubusercontent.com/97337038/211713511-06186761-be79-40d8-b7c4-14b11b36a7c0.png" width="500"/>
- <img src="https://user-images.githubusercontent.com/97337038/211713616-884989b9-6119-4379-a386-4913ae940465.png" width="500"/>
+ <img src="https://user-images.githubusercontent.com/97337038/211713511-06186761-be79-40d8-b7c4-14b11b36a7c0.png" width="300"/>
+ <img src="https://user-images.githubusercontent.com/97337038/211713616-884989b9-6119-4379-a386-4913ae940465.png" width="300"/>
 </p>
 
 2. 검색페이지에 검색 정보 표시 추가
