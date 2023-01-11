@@ -21,7 +21,15 @@ const MainContainer = styled.section`
   > div:nth-child(1) {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 40px;
+    > div:first-child {
+      span {
+        display: block;
+        margin-top: 20px;
+        font-size: 20px;
+      }
+    }
   }
 
   > div:nth-child(2) {
@@ -67,6 +75,7 @@ const Search = () => {
   const params = new URLSearchParams(search);
   const type = params.get('type');
   const keyword = params.get('keyword');
+  const condition = type === '1' ? '제목' : type === '2' ? '내용' : '유저';
 
   useEffect(() => {
     axios
@@ -106,7 +115,13 @@ const Search = () => {
         <Nav />
         <MainContainer>
           <div>
-            <MidTitle title="Search Results" />
+            <div>
+              <MidTitle title="Search Results" />
+              <span>
+                {condition}기준으로 전체질문글에서 <strong>{keyword}</strong>에
+                대해 검색한 결과입니다
+              </span>
+            </div>
             <ButtonLink value="Ask Question" to="/questions/ask" />
           </div>
           <div>

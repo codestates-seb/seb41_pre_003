@@ -17,7 +17,7 @@ import Tags from './Pages/Tags';
 import TaggedQuestion from './Pages/TaggedQuestion';
 
 function App() {
-  let token = localStorage.getItem('AccessToken');
+  const token = localStorage.getItem('AccessToken');
 
   return (
     <div className="App">

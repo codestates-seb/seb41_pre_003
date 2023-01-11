@@ -26,8 +26,12 @@ const ButtonContainer = styled.button`
   }
 `;
 
-const Button = ({ value, onClick }) => {
-  return <ButtonContainer onClick={onClick}>{value}</ButtonContainer>;
+const Button = ({ value, onClick, className }) => {
+  return (
+    <ButtonContainer className={className} onClick={onClick}>
+      {value}
+    </ButtonContainer>
+  );
 };
 
 export default Button;

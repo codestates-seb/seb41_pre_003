@@ -6,7 +6,8 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import { Editor } from '@toast-ui/react-editor';
 import { useRef } from 'react';
-export default function ToastEditor({ content, setContent }) {
+
+const ToastEditor = ({ content, setContent }) => {
   const editorRef = useRef();
 
   const onChange = () => {
@@ -37,4 +38,6 @@ export default function ToastEditor({ content, setContent }) {
       ></Editor>
     </div>
   );
-}
+};
+
+export default ToastEditor;
