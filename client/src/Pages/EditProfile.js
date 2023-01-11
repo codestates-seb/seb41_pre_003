@@ -65,10 +65,6 @@ const EditTable = styled.form`
   }
 `;
 
-const EditItem = styled.input``;
-
-const EditGender = styled.select``;
-
 const AlertMsg = styled.span`
   color: ${(props) => (props.isValid ? 'var(--green)' : 'var(--orange)')};
   font-weight: bold;
@@ -148,10 +144,6 @@ const EditProfile = () => {
       });
   }, []);
 
-  const handleValidPW = (e) => {
-    pw === e.target.value ? setValidPW(true) : setValidPW(false);
-  };
-
   const updateAccount = (e) => {
     e.preventDefault();
     axios
@@ -198,7 +190,7 @@ const EditProfile = () => {
                           <label htmlFor="password">패스워드</label>
                         </td>
                         <td>
-                          <EditItem
+                          <input
                             required
                             id="password"
                             type="password"
@@ -219,16 +211,16 @@ const EditProfile = () => {
                           <label htmlFor="confirm-pw">패스워드 확인</label>
                         </td>
                         <td>
-                          <EditItem
+                          <input
                             required
                             id="confirm-pw"
                             type="password"
-                            onChange={handleValidPW}
+                            onChange={(e) => setValidPW(e.target.value)}
                           />
                         </td>
                         <td>
-                          <AlertMsg isValid={validPW}>
-                            {validPW
+                          <AlertMsg isValid={pw === validPW}>
+                            {pw === validPW
                               ? `일치합니다!`
                               : `패스워드가 일치하지 않습니다`}
                           </AlertMsg>
@@ -239,7 +231,7 @@ const EditProfile = () => {
                           <label htmlFor="name">이름</label>
                         </td>
                         <td>
-                          <EditItem
+                          <input
                             value={name}
                             id="name"
                             onChange={(e) => setName(e.target.value)}
@@ -251,7 +243,7 @@ const EditProfile = () => {
                           <label htmlFor="gender">성별</label>
                         </td>
                         <td>
-                          <EditGender
+                          <select
                             id="gender"
                             onChange={(e) => setGender(e.target.value)}
                             value={gender}
@@ -261,7 +253,7 @@ const EditProfile = () => {
                             <option value="No Comment">
                               Do not want to mention
                             </option>
-                          </EditGender>
+                          </select>
                         </td>
                       </tr>
                       <tr>
@@ -269,7 +261,7 @@ const EditProfile = () => {
                           <label htmlFor="age">나이</label>
                         </td>
                         <td>
-                          <EditItem
+                          <input
                             type="number"
                             id="age"
                             value={age}
@@ -282,7 +274,10 @@ const EditProfile = () => {
                   <UpdateButton
                     type="submit"
                     disabled={
-                      !(validCheck(pw) === '사용하실 수 있습니다!' && validPW)
+                      !(
+                        validCheck(pw) === '사용하실 수 있습니다!' &&
+                        pw === validPW
+                      )
                     }
                   >
                     Save profile

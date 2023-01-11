@@ -30,6 +30,16 @@ const MainContainer = styled.section`
     flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
+
+    li {
+      > div:first-child {
+        span:nth-child(
+            ${(props) => (props['data-tab'] === '추천수 TOP10' ? '1' : '3')}
+          ) {
+          color: var(--orange);
+        }
+      }
+    }
   }
 `;
 
@@ -72,7 +82,7 @@ const Home = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/questions`)
       .then((res) => {
-        setData(res.data);
+        setData(res.data.sort((a, b) => b.likeCount - a.likeCount));
         axios
           .get(`${process.env.REACT_APP_API_URL}/tags`)
           .then((res) => {
@@ -103,7 +113,7 @@ const Home = () => {
       <Header />
       <main>
         <Nav />
-        <MainContainer>
+        <MainContainer data-tab={tab}>
           <div>
             <MidTitle title="Top Questions" />
             <ButtonLink value="Ask Question" to="/questions/ask" />

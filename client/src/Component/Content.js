@@ -169,4 +169,5 @@ const Content = ({ data, handleDelete }) => {
     </>
   );
 };
+
 export default Content;

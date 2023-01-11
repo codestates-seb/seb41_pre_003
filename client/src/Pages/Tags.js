@@ -86,6 +86,7 @@ const TagButton = styled(Link)`
 const Tags = () => {
   const [tags, setTags] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const [keyword, setKeyword] = useState('');
   const [page, setPage] = useState(1);
   // TODO: 한 페이지 표시 개수
   const limit = 12;
@@ -96,23 +97,6 @@ const Tags = () => {
       .get(`${process.env.REACT_APP_API_URL}/tags`)
       .then((res) => {
         const data = res.data;
-        //   [
-        //     {
-        //         "tagId": 1,
-        //         "tagName": "JAVA",
-        //         "tagCount": 2
-        //     },
-        //     {
-        //         "tagId": 2,
-        //         "tagName": "3부상조",
-        //         "tagCount": 3
-        //     },
-        //     {
-        //         "tagId": 3,
-        //         "tagName": "아루",
-        //         "tagCount": 4
-        //     }
-        // ]
         setTags(data);
         setPage(1);
         setPageCount(Math.ceil(data.length / limit));
@@ -124,25 +108,39 @@ const Tags = () => {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page]);
-
-  const handleFilterTag = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const name = e.target['keyword'].value;
     axios
-      .get(`${process.env.REACT_APP_API_URL}/tags/search?keyword=${name}`)
+      .get(`${process.env.REACT_APP_API_URL}/tags/search?keyword=${keyword}`)
       .then((res) => {
-        setTags(res.data);
+        const data = res.data;
+        setTags(data);
         setPage(1);
-        setPageCount(Math.ceil(res.data.length / limit));
-        setLoading(false);
+        setPageCount(Math.ceil(data.length / limit));
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [keyword]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
+  // const handleFilterTag = (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   const name = e.target['keyword'].value;
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_URL}/tags/search?keyword=${name}`)
+  //     .then((res) => {
+  //       setTags(res.data);
+  //       setPage(1);
+  //       setPageCount(Math.ceil(res.data.length / limit));
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <>
@@ -158,9 +156,13 @@ const Tags = () => {
               others to find and answer your question.
             </p>
           </div>
-          <Filter onSubmit={handleFilterTag}>
+          <Filter>
             <i className="fa-solid fa-magnifying-glass"></i>
-            <input placeholder="Filter by tag name" name="keyword" />
+            <input
+              placeholder="Filter by tag name"
+              name="keyword"
+              onChange={(e) => setKeyword(e.target.value.trim())}
+            />
           </Filter>
           {!isLoading ? (
             <>

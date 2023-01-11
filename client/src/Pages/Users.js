@@ -57,9 +57,9 @@ const UserItem = styled.li`
   padding: 20px;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
+  background-color: var(--light-gray);
 
   &:hover {
-    background-color: var(--light-gray);
     box-shadow: inset 0 0 20px #b7b7b7;
     transition: 0.2s ease-in-out;
   }

@@ -1,6 +1,7 @@
 import logo from '../img/logo.png';
 import styled from 'styled-components';
 import ButtonLink from './ButtonLink';
+import Button from './Button';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -74,23 +75,11 @@ const Search = styled.form`
   }
 `;
 
-const LogoutBtn = styled.button`
-  text-decoration: none;
-  border-radius: 12px;
+const LogoutBtn = styled(Button)`
   background-color: var(--orange);
-  color: white;
-  padding: 13px 20px;
-  font-size: 15px;
-  font-weight: bold;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   &:hover {
     background-color: #c3661c;
-    cursor: pointer;
     box-shadow: inset 0 0 10px #00457a;
-    transition: 0.2s ease-in-out;
   }
 `;
 
@@ -165,7 +154,7 @@ const Header = () => {
             value="Edit profile"
             to={`/users/edit/${localStorage.getItem('memberId')}`}
           />
-          <LogoutBtn onClick={LogOut}>Logout</LogoutBtn>
+          <LogoutBtn onClick={LogOut} value="Logout" />
         </div>
       )}
     </HeaderContainer>

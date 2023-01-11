@@ -13,6 +13,7 @@ const ButtonContainer = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
   &:hover {
     background-color: #0074cc;
     cursor: pointer;
